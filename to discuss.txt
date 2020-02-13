@@ -1,0 +1,26 @@
+Gernerell:
+- Abgrenzung zwischen unseren Projekten? Wer stellt was zur Verfügung?
+- Was muss alles das Backend können?
+
+
+Mit IoT Gruppe:
+- Schnittstellen zu IoT Gruppe? Rest API? Wie kommunizieren die mit uns?
+- Welche Rechte hat IoT Gruppe? Was machen sie?
+
+Smart Contract Spezifisch:
+- Sprache für Smart Contracts? Solidity? Serpent? Vyper?
+- Framework zum deployen/ testen? Truffle?
+- Testenvironmetn? Wollen wir überhaupt Unit tests? Wenn ja JS oder von einer Smart Contracts Sprache?
+- Welche Smart Contracts soll es geben?
+- Was soll darin gespeichert werden?
+- Schonmal init durchführen um arbeiten zu können
+
+
+Fragen zum Nutzer/ Use Case:
+- Sonstige Rechte der Nutzer? z.B. bei eigenem Auto was zur Verfügung gestellt wird?
+- Gibt es eine maximale Länge die ein Auto genutzt werden darf?
+- Wie wird abgerechnet?
+
+
+Sonstiges:
+- Weitere Treffen? Abstände? Was sidn todos für die jeweiligen Gruppen/ Personen?
