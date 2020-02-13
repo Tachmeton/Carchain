@@ -1,6 +1,8 @@
 Gernerell:
 - Abgrenzung zwischen unseren Projekten? Wer stellt was zur Verfügung?
 - Was muss alles das Backend können?
+- Allgemeines Environment aufsetzen. Damit zusammen gearebitet werden kann.Aka File Struktur, npm install datei, usw.
+- Wollen wir nen Canban machen?
 
 
 Mit IoT Gruppe:
@@ -14,6 +16,7 @@ Smart Contract Spezifisch:
 - Welche Smart Contracts soll es geben?
 - Was soll darin gespeichert werden?
 - Schonmal init durchführen um arbeiten zu können
+- Wie gehen wir mit der Zeit um die gebraucht wird um einen Block zu bauen? D.h. der Block ist ja nicht gleich da
 
 
 Fragen zum Nutzer/ Use Case:
