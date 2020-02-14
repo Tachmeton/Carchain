@@ -2,22 +2,23 @@ Gernerell:
 - Abgrenzung zwischen unseren Projekten? Wer stellt was zur Verfügung?
 - Was muss alles das Backend können?
 - Allgemeines Environment aufsetzen. Damit zusammen gearebitet werden kann.Aka File Struktur, npm install datei, usw.
-- Wollen wir nen Canban machen?
 
 
 Mit IoT Gruppe:
-- Schnittstellen zu IoT Gruppe? Rest API? Wie kommunizieren die mit uns?
-- Welche Rechte hat IoT Gruppe? Was machen sie?
+- Schnittstellen zu IoT Gruppe? --> solln sie sleber amchen :) also geben und fertig
 
 Smart Contract Spezifisch:
-- Sprache für Smart Contracts? Solidity? Serpent? Vyper?
-- Framework zum deployen/ testen? Truffle?
-- Testenvironmetn? Wollen wir überhaupt Unit tests? Wenn ja JS oder von einer Smart Contracts Sprache?
+- Sprache für Smart Contracts? Solidity
+- Framework zum deployen/ testen? Truffle
 - Welche Smart Contracts soll es geben?
 - Was soll darin gespeichert werden?
+	mapping auto --> mieter, seit wann gemietet, zeitraum
+	mapping auto --> besitzer
+	auto hat preis, id
 - Schonmal init durchführen um arbeiten zu können
-- Wie gehen wir mit der Zeit um die gebraucht wird um einen Block zu bauen? D.h. der Block ist ja nicht gleich da
 
+Frontend:
+- Welches Framework nutzen?
 
 Fragen zum Nutzer/ Use Case:
 - Sonstige Rechte der Nutzer? z.B. bei eigenem Auto was zur Verfügung gestellt wird?
@@ -26,4 +27,4 @@ Fragen zum Nutzer/ Use Case:
 
 
 Sonstiges:
-- Weitere Treffen? Abstände? Was sidn todos für die jeweiligen Gruppen/ Personen?
+- Weitere Treffen? Abstände? Was sind todos für die jeweiligen Gruppen/ Personen?
