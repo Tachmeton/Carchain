@@ -63,8 +63,8 @@ contract Carchain {
   Marks a car as rented and safes the point from where the car was rented.
   */
   function rentCar(uint256 identifierCar, uint256 identifierLeaser) public {
-    require(carpool[identifierCar].owner > 0, "Car has no one who leased it.");
-    require(carpool[identifierCar].leaser > 0 && isCarInUse(identifierCar) == false, "Car has no one who leased it.");
+    require(carpool[identifierCar].owner > 0, "Car is not in carpool");
+    require(carpool[identifierCar].leaser == 0 && getInUse(identifierCar) == false, "Car has no one who leased it.");
 
     carpool[identifierCar].inUse = true;
     carpool[identifierCar].leaser = identifierLeaser;
@@ -74,7 +74,7 @@ contract Carchain {
   After a Car was rented the car is given back to the free carpool and given the state not rented.
   */
   function returnCarToCarpool(uint256 identifierCar) public {
-    require(isCarInUse(identifierCar), "Car is not in Use and therefore can not be returned.");
+    require(carpool[identifierCar].leaser > 0 && getInUse(identifierCar), "Car is not in Use and therefore can not be returned.");
 
     carpool[identifierCar].inUse = false;
     carpool[identifierCar].leaser = 0;
@@ -97,7 +97,7 @@ contract Carchain {
   /*
   Checks if a Car is already rented/ in Use.
   */
-  function isCarInUse(uint256 identifierCar) public view returns (bool) {
+  function getInUse(uint256 identifierCar) public view returns (bool) {
     return carpool[identifierCar].inUse;
   }
 
