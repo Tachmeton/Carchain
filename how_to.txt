@@ -1,0 +1,4 @@
+npm install
+Genache installieren (am besten mit Interface)
+truffle migrate in ethereum ordner ausführen
+zum ausprobieren: node carchain_interact.js

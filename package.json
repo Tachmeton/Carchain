@@ -1,0 +1,14 @@
+{
+    "name": "carchaindeploy",
+    "version": "1.0.0",
+    "description": "Deploy Carchain Contract",
+    "main": "deploy.js",
+    "scripts": {},
+    "author": "Bastian Frewert",
+    "license": "",
+    "dependencies": {
+        "fs": "0.0.1-security",
+        "solc": "^0.4.25",
+        "web3": "^1.2.6"
+    }
+}
