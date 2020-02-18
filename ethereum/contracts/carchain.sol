@@ -5,11 +5,11 @@ contract Carchain {
 
   //every Car has to have an owner!
   struct Car{
-    uint256 owner;
-    string model;
+    address owner;
     bool inUse;
-    uint256 leaser;
+    address leaser;
     uint256 timeRented;
+    uint256 amountPaid;
     int256 xCoordinate;
     int256 yCoordinate;
     int256 zCoordinate;
@@ -27,13 +27,13 @@ contract Carchain {
   /*
   Adds a new Car to the Carpool.
   */
-  function addCar(uint256 identifierCar, uint256 identifierOwner, string memory model) public{
+  function addCar(uint256 identifierCar, address identifierOwner, uint256 abc) public {
     require(
-      carpool[identifierCar].owner == 0, "Car is already in Carpool and a new Car can not be added."
+      carpool[identifierCar].owner == address(0), "Car is already in Carpool and a new Car can not be added."
       );
 
     Car memory newCar = Car({
-      owner: identifierOwner, model: model, inUse: false, leaser: 0, timeRented: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
+      owner: identifierOwner, inUse: false, leaser: address(0), timeRented: 0, amountPaid: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
       });
 
     carpool[identifierCar] = newCar;
@@ -42,16 +42,16 @@ contract Carchain {
   /*
   Removes a car which is not currently in Use from the total Carpool.
   */
-  function removeCar(uint256 identifierCar, uint256 identifierOwner) public{
+  function removeCar(uint256 identifierCar, address identifierOwner) public{
     require(
-      carpool[identifierCar].inUse == false && carpool[identifierCar].leaser == 0 && carpool[identifierCar].timeRented == 0,"Car still in use and can not be removed."
+      carpool[identifierCar].inUse == false && carpool[identifierCar].leaser == address(0) && carpool[identifierCar].timeRented == 0,"Car still in use and can not be removed."
       );
     require(
       carpool[identifierCar].owner == identifierOwner, "Wrong Owner of Car."
     );
 
     Car memory defaultValueCar = Car({
-      owner: 0, model: "", inUse: false, leaser: 0, timeRented: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
+      owner: address(0), inUse: false, leaser: address(0), timeRented: 0, amountPaid: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
       });
 
     carpool[identifierCar] = defaultValueCar;
@@ -62,22 +62,56 @@ contract Carchain {
   /*
   Marks a car as rented and safes the point from where the car was rented.
   */
-  function rentCar(uint256 identifierCar, uint256 identifierLeaser) public {
-    require(carpool[identifierCar].owner > 0, "Car is not in carpool");
-    require(carpool[identifierCar].leaser == 0 && getInUse(identifierCar) == false, "Car has no one who leased it.");
+  function rentCar(uint256 identifierCar, address identifierLeaser) public payable {
+    require(carpool[identifierCar].owner != address(0), "Car is not in carpool");
+    require(carpool[identifierCar].leaser == address(0) && getInUse(identifierCar) == false, "Car has no one who leased it.");
+    //Mindestmietdauer?
+    require(msg.value < 1800, "You did not pay enough. (1800)");
 
     carpool[identifierCar].inUse = true;
     carpool[identifierCar].leaser = identifierLeaser;
+    //Problem: block.timestamp ist ungefähr 90 sekunden ungenau wegen manipulation von minern.
+    carpool[identifierCar].timeRented = block.timestamp + msg.value;
+  }
+
+  /*
+  Gives a boolean value if a car is now avaible for rent.
+  */
+  function mayRent(uint256 identifierCar) public view returns (bool) {
+    require(carpool[identifierCar].owner != address(0), "Car is not in carpool");
+
+    if(carpool[identifierCar].leaser == address(0) && getInUse(identifierCar) == false){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  /*
+  Gives a boolean value if a Leaser is still Lawfully/ Legally a Leaser and has enough credit.
+  */
+  function isLegalLeaser(uint256 identifierCar, address identifierLeaser) public view returns (bool) {
+    require(carpool[identifierCar].owner > address(0), "Car is not in carpool");
+    require(msg.sender == identifierLeaser, "Sender is not the same as the Parameter Leaser");
+    require(getInUse(identifierCar) == true, "Car is not in use. --> There can not be a leaser.");
+
+    if(carpool[identifierCar].leaser == identifierLeaser && carpool[identifierCar].timeRented < block.timestamp){
+      return true;
+    }
+    return false;
   }
 
   /*
   After a Car was rented the car is given back to the free carpool and given the state not rented.
   */
-  function returnCarToCarpool(uint256 identifierCar) public {
-    require(carpool[identifierCar].leaser > 0 && getInUse(identifierCar), "Car is not in Use and therefore can not be returned.");
+  function returnCarToCarpool(uint256 identifierCar) public payable {
+    require(carpool[identifierCar].leaser > address(0) && getInUse(identifierCar), "Car is not in Use and therefore can not be returned.");
 
+    carpool[identifierCar].timeRented = 0;
+    //payable(carpool[identifierCar].owner).transfer(carpool[identifierCar].amountPaid);
+    carpool[identifierCar].amountPaid = 0;
     carpool[identifierCar].inUse = false;
-    carpool[identifierCar].leaser = 0;
+    carpool[identifierCar].leaser = address(0);
   }
 
 
@@ -86,12 +120,8 @@ contract Carchain {
 
 //getter and setter for Car
 
-  function getOwner(uint256 identifierCar) public view returns (uint256) {
+  function getOwner(uint256 identifierCar) public view returns (address) {
     return carpool[identifierCar].owner;
-  }
-
-  function getModel(uint256 identifierCar) public view returns (string memory) {
-    return carpool[identifierCar].model;
   }
 
   /*
@@ -101,7 +131,7 @@ contract Carchain {
     return carpool[identifierCar].inUse;
   }
 
-  function getLeaser(uint256 identifierCar) public view returns (uint256) {
+  function getLeaser(uint256 identifierCar) public view returns (address) {
     return carpool[identifierCar].leaser;
   }
 
@@ -129,7 +159,7 @@ contract Carchain {
   */
   function resetCar(uint256 identifierCar) public{
     Car memory defaultValueCar = Car({
-      owner: 0, model: "", inUse: false, leaser: 0, timeRented: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
+      owner: address(0), inUse: false, leaser: address(0), timeRented: 0, amountPaid: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
       });
 
     carpool[identifierCar] = defaultValueCar;

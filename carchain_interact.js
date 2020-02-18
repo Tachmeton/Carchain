@@ -24,12 +24,12 @@ sendTransactions()
 
 async function sendTransactions() {
     console.log("add new car");
-    //addCar(uint256 identifierCar, uint256 identifierOwner, string memory model)
-    await carchain.methods.addCar(1, 1, "Mercedes E-Klasse").send({from: fromAddress, gas: 6000000});
+    //addCar(uint256 identifierCar, uint256 identifierOwner)
+    await carchain.methods.addCar(1,0x3d48704143135059A1990dcDF9eEC5C73f750179, 1).send({from: 0x3d48704143135059A1990dcDF9eEC5C73f750179, gas: 6000000});
 
     console.log("rent car number 1");
     //rentCar(uint256 identifierCar, uint256 identifierLeaser)
-    await carchain.methods.rentCar(1,2).send({from: fromAddress, gas: 6000000});
+    await carchain.methods.rentCar(1,0x73f6fCfE3fa7046eEBd19660795beF3a0bDE6827).send({from: 0x73f6fCfE3fa7046eEBd19660795beF3a0bDE6827, gas: 6000000, value: 3600});
 
     console.log("get owner");
     //getOwner(uint256 identifierCar)
@@ -38,8 +38,8 @@ async function sendTransactions() {
 
     console.log("get Leaser");
     //getOwner(uint256 identifierCar)
-    let leaser = await carchain.methods.getLeaser(1).send({from: fromAddress});
-    console.log(`Owner: ${leaser}`);
+    let leaser = await carchain.methods.getLeaser(1).call({from: fromAddress});
+    console.log(`Leaser: ${leaser}`);
 
     console.log("Return Car number 1")
     //returnCarToCarpool(uint256 identifierCar)
