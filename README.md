@@ -1,4 +1,4 @@
-# ivateVerteilte Systeme - Projekt “ChainCar” Gruppe 1 “Mietverwaltung”
+# Verteilte Systeme - Projekt “ChainCar” Gruppe 1 “Mietverwaltung”
 
 [TOC]
 
