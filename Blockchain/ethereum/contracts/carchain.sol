@@ -1,7 +1,7 @@
 pragma solidity >=0.4.21 <0.7.0;
 
 
-contract Carchain {
+contract carchain {
 
   //every Car has to have an owner!
   struct Car{
@@ -10,6 +10,7 @@ contract Carchain {
     address leaser;
     uint256 timeRented;
     uint256 amountPaid;
+    //lattitude longitute
     int256 xCoordinate;
     int256 yCoordinate;
     int256 zCoordinate;
@@ -27,13 +28,13 @@ contract Carchain {
   /*
   Adds a new Car to the Carpool.
   */
-  function addCar(uint256 identifierCar, address identifierOwner, uint256 abc) public {
+  function addCar(uint256 identifierCar) public {
     require(
       carpool[identifierCar].owner == address(0), "Car is already in Carpool and a new Car can not be added."
       );
 
     Car memory newCar = Car({
-      owner: identifierOwner, inUse: false, leaser: address(0), timeRented: 0, amountPaid: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
+      owner: msg.sender, inUse: false, leaser: address(0), timeRented: 0, amountPaid: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
       });
 
     carpool[identifierCar] = newCar;

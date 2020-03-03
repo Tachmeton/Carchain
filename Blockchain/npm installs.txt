@@ -1,3 +1,4 @@
 truffle
 solc@0.4.25
 ganache
+ganache-cli
