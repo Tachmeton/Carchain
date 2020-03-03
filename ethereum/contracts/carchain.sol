@@ -62,14 +62,14 @@ contract Carchain {
   /*
   Marks a car as rented and safes the point from where the car was rented.
   */
-  function rentCar(uint256 identifierCar, address identifierLeaser) public payable {
+  function rentCar(uint256 identifierCar) public payable {
     require(carpool[identifierCar].owner != address(0), "Car is not in carpool");
-    require(carpool[identifierCar].leaser == address(0) && getInUse(identifierCar) == false, "Car has no one who leased it.");
+    require(getInUse(identifierCar) == false, "Car has no one who leased it.");
     //Mindestmietdauer?
     require(msg.value < 1800, "You did not pay enough. (1800)");
 
     carpool[identifierCar].inUse = true;
-    carpool[identifierCar].leaser = identifierLeaser;
+    carpool[identifierCar].leaser = msg.sender;
     //Problem: block.timestamp ist ungefähr 90 sekunden ungenau wegen manipulation von minern.
     carpool[identifierCar].timeRented = block.timestamp + msg.value;
   }
