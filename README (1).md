@@ -1,4 +1,4 @@
-# ivateVerteilte Systeme - Projekt “ChainCar” Gruppe 1 “Mietverwaltung”
+# Verteilte Systeme - Projekt “ChainCar” Gruppe 1 “Mietverwaltung”
 
 [TOC]
 
@@ -14,7 +14,7 @@ Zu klären ist, ob der Eigentümer Zugriff auf sein Fahrzeug haben soll/kann, w�
 
 ## Komponenten
 
-![Komponentendiagramm_01](Doku/assets/komponenten.png)
+// HIER BILD EINFÜGEN
 
 ### Android-App
 
@@ -44,10 +44,6 @@ Zuständig:
 - Nils Riekers
 - Till Fetzer
 - Adrian Koslowski
-- Benedikt Schulz
 
 
-
-
-Quorum (priv Chain)
 
