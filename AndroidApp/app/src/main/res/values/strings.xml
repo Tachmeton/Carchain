@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Chaincar</string>
+    <string name="app_name">Chain Car</string>
+
+    <string name="available">Verfügbar</string>
 </resources>
