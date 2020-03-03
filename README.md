@@ -14,32 +14,36 @@ Zu klären ist, ob der Eigentümer Zugriff auf sein Fahrzeug haben soll/kann, w�
 
 ## Komponenten
 
-// HIER BILD EINFÜGEN
+![Komponentendiagramm_01](Doku/assets/komponenten.png)
 
-### Web-Frontend
+### Android-App
 
 Zuständig:
 
-- Nils Riekers
+- Jan Quintus
 - Simon Gaugler
-- Benedikt Schulz
-
-Das Web-Frontend wird als SPA mit Angular entwickelt.
 
 ### SmartContracts
 
 Zuständig:
 
-- Simon Gaugler
 - Bastian Frewert
+- Simon Riethmüller
+- Lukas Petric
 
 ### Backend
 
 Zuständig:
 
 - Lukas Faiß
-- Benedikt Schulz
-- (Simon Gaugler)
+
+### Car (Pi)
+
+Zuständig:
+
+- Nils Riekers
+- Till Fetzer
+- Adrian Koslowski
 
 
 
