@@ -2,4 +2,7 @@
     <string name="app_name">Chain Car</string>
 
     <string name="available">Verfügbar</string>
+    <string name="vehicle_image_description">Vehicle Image</string>
+    <string name="vehicle_min_max_rent_duration">{1} - {2} Stunden</string>
+    <string name="vehicle_distance">Entfernung: {1}km</string>
 </resources>
