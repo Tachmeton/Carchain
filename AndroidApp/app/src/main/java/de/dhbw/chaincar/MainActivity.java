@@ -1,49 +1,50 @@
 package de.dhbw.chaincar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.ProgressBar;
+import android.view.MenuItem;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import de.dhbw.chaincar.adapter.VehicleAdapter;
-import de.dhbw.chaincar.data.Vehicle;
+import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.tabs.TabLayout;
+import de.dhbw.chaincar.adapter.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView vehicleListView;
-    private ProgressBar vehicleListLoadingIndicator;
+    private ViewPagerAdapter viewPagerAdapter;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        vehicleListView = findViewById(R.id.availableVehicleList);
-        vehicleListLoadingIndicator = findViewById(R.id.listLoadingIndicator);
+        Toolbar toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.app_name));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        ArrayList<Vehicle> vehicles = new ArrayList<>();
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
+        viewPagerAdapter.addFragment(new VehicleList(), "");
+        viewPagerAdapter.addFragment(new KeyList(), "");
+        viewPagerAdapter.addFragment(new Settings(), "");
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
 
-        VehicleAdapter vehicleAdapter = new VehicleAdapter(this, vehicles);
-        vehicleListView.setAdapter(vehicleAdapter);
-        vehicleListLoadingIndicator.setVisibility(View.GONE);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_location);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_key);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_settings);
+
+        tabLayout.getTabAt(0).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(2).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
     }
-
-
 }

@@ -24,4 +24,8 @@ public class Vehicle {
         this.minRentDuration = minRentDuration;
         this.maxRentDuration = maxRentDuration;
     }
+
+    public float getDistance(){
+        return 2.5f;
+    }
 }
