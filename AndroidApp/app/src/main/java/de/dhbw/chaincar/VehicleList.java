@@ -45,14 +45,14 @@ public class VehicleList extends Fragment {
 
         final ArrayList<Vehicle> vehicles = new ArrayList<>();
 
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
-        vehicles.add(new Vehicle("123aksd5", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 1, 12));
+        vehicles.add(new Vehicle("1", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 16.5f, 3, 8));
+        vehicles.add(new Vehicle("2", "VW Golf 7 GTD", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 26f, 1, 24));
+        vehicles.add(new Vehicle("3", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 12.5f, 1, 2));
+        vehicles.add(new Vehicle("4", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 28.5f, 1, 48));
+        vehicles.add(new Vehicle("5", "VW Golf 7 GTD", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 22.5f, 5, 10));
+        vehicles.add(new Vehicle("6", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 30f, 1, 72));
+        vehicles.add(new Vehicle("7", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 16.5f, 2, 6));
+        vehicles.add(new Vehicle("8", "VW Golf 7 GTD", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 24f, 1, 12));
 
         AvailableVehicleAdapter vehicleAdapter = new AvailableVehicleAdapter(view.getContext(), vehicles);
         vehicleListView.setAdapter(vehicleAdapter);

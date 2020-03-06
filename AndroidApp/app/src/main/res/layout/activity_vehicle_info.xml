@@ -23,22 +23,10 @@
                 android:layout_height="250dp"
                 android:contentDescription="@string/vehicle_image_description"
                 android:background="#A0A0A0"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/buttonBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:contentDescription="@string/back_button_description"
-                android:src="@drawable/ic_arrow_back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:scaleY=".75"
-                android:scaleX=".75"/>
 
             <TextView
                 android:id="@+id/vehicleName"
@@ -128,7 +116,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rentTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="999,00 €"
+                android:text="@string/rent_price"
                 android:textSize="18sp"
                 android:textColor="#ffffff"/>
 
@@ -141,7 +129,7 @@
                 app:layout_constraintTop_toBottomOf="@id/vehiclePrice"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="#ffffff"
-                android:text="@string/rent_duration"
+                android:text="@string/time"
                 android:gravity="center_vertical"
                 />
 
@@ -174,5 +162,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
+
+    <ImageView
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/back_button_description"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleY=".75"
+        android:scaleX=".75"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

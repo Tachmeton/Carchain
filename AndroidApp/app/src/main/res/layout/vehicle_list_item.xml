@@ -16,13 +16,14 @@
 
         <ImageView
             android:id="@+id/vehicleImage"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:background="#E0E0E0"
+            android:scaleType="fitXY"
             android:contentDescription="@string/vehicle_image_description" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/imageLoadingIndicator"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

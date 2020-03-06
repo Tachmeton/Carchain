@@ -14,7 +14,8 @@
     <string name="postcode_and_city">{1} {2}</string>
     <string name="country">{1}</string>
     <string name="rent">Mieten</string>
-    <string name="rent_duration">{1} h</string>
+    <string name="rent_price">Preis: {1}</string>
+    <string name="time">{1}:{2} h</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

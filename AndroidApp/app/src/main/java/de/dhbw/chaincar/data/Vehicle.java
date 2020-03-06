@@ -1,7 +1,16 @@
 package de.dhbw.chaincar.data;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.core.content.ContextCompat;
+
+import java.util.Random;
+
+import de.dhbw.chaincar.R;
 
 public class Vehicle implements Parcelable {
     public String id;
@@ -71,8 +80,11 @@ public class Vehicle implements Parcelable {
     };
 
     public float getDistance(){
-        return 2.5f;
+        Random random = new Random();
+        return (random.nextFloat() * 5f);
     }
 
-
+    public Drawable[] getImages(Context context){
+        return new Drawable[]{ ContextCompat.getDrawable(context, R.drawable.gti) };
+    }
 }

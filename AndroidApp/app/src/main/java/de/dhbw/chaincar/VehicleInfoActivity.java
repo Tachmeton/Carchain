@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -42,12 +44,16 @@ public class VehicleInfoActivity extends AppCompatActivity {
         TextView vehicleName = findViewById(R.id.vehicleName);
         TextView streetAndNumber = findViewById(R.id.streetAndNumber);
         TextView postCodeAndCity = findViewById(R.id.postCodeAndCity);
+        ImageView vehicleImage = findViewById(R.id.galery);
         TextView country = findViewById(R.id.country);
         price = findViewById(R.id.vehiclePrice);
         rentDurationText = findViewById(R.id.rentDurationText);
         SeekBar rentDurationSeekBar = findViewById(R.id.rentDuration);
+        Button buttonRent = findViewById(R.id.buttonRent);
 
         vehicleName.setText(vehicle.name);
+
+        vehicleImage.setImageDrawable(vehicle.getImages(this)[0]);
 
         streetAndNumber.setText(getString(R.string.street_and_number)
                 .replace("{1}", vehicle.homeStreet)
@@ -65,32 +71,42 @@ public class VehicleInfoActivity extends AppCompatActivity {
         format.setMaximumFractionDigits(2);
         format.setCurrency(Currency.getInstance("EUR"));
 
-        rentDurationText.setText(getString(R.string.rent_duration).replace("{1}", String.valueOf(vehicle.minRentDuration)));
-        price.setText(format.format(vehicle.pricePerHour * vehicle.minRentDuration));
+        rentDurationText.setText(MyUtil.toTimeString(this, vehicle.minRentDuration));
+        price.setText(getString(R.string.rent_price).replace("{1}", format.format(vehicle.pricePerHour * vehicle.minRentDuration)));
 
         rentDurationSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                float rentDur = vehicle.minRentDuration + ((vehicle.maxRentDuration - 1) * (progress / 100f));
-                updateRentDuration(rentDur);
-
-                price.setText(format.format(vehicle.pricePerHour * rentDur));
+                updateRentDuration(vehicle.minRentDuration + ((vehicle.maxRentDuration - vehicle.minRentDuration) * (progress / 100f)));
+                price.setText(getString(R.string.rent_price).replace("{1}", format.format(vehicle.pricePerHour * rentDuration)));
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar) { }
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
 
+        buttonRent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Renting " + vehicle.name + " for " + MyUtil.toTimeString(getBaseContext(), rentDuration) +
+                                    " at a cost of " + format.format(vehicle.pricePerHour * rentDuration));
             }
         });
     }
 
     private void updateRentDuration(float val){
-        rentDurationText.setText(getString(R.string.rent_duration).replace("{1}", String.valueOf(val)));
+        int whole = (int)val;
+        float frac = val - whole;
+
+        if(frac < 0.25f) frac = 0f;
+        if(frac >= 0.25f && frac < 0.75f) frac = .5f;
+        if(frac >= 0.75f) frac = 1f;
+
+        val = whole + frac;
+
+        rentDurationText.setText(MyUtil.toTimeString(this, val));
         rentDuration = val;
     }
 }
