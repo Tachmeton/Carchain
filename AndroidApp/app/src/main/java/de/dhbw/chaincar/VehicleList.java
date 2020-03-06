@@ -62,6 +62,7 @@ public class VehicleList extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), VehicleInfoActivity.class);
+                intent.putExtra("vehicle", vehicles.get(position));
                 startActivity(intent);
             }
         });

@@ -4,6 +4,175 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VehicleInfoActivity">
+    tools:context=".VehicleInfoActivity"
+    android:background="@color/colorPrimaryDark"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="100dp">
+
+            <ImageView
+                android:id="@+id/galery"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:contentDescription="@string/vehicle_image_description"
+                android:background="#A0A0A0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/buttonBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/back_button_description"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleY=".75"
+                android:scaleX=".75"/>
+
+            <TextView
+                android:id="@+id/vehicleName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="15dp"
+                app:layout_constraintTop_toBottomOf="@id/galery"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Vehicle Name"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#ffffff"/>
+
+            <TextView
+                android:id="@+id/titleHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="10dp"
+                app:layout_constraintTop_toBottomOf="@id/vehicleName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/home"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#ffffff"/>
+            <TextView
+                android:id="@+id/streetAndNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="15dp"
+                app:layout_constraintTop_toBottomOf="@id/titleHome"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/street_and_number"
+                android:textSize="18sp"
+                android:textColor="#ffffff"/>
+            <TextView
+                android:id="@+id/postCodeAndCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="15dp"
+                app:layout_constraintTop_toBottomOf="@id/streetAndNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/postcode_and_city"
+                android:textSize="18sp"
+                android:textColor="#ffffff"/>
+            <TextView
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="15dp"
+                app:layout_constraintTop_toBottomOf="@id/postCodeAndCity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/country"
+                android:textSize="18sp"
+                android:textColor="#ffffff"/>
+
+            <TextView
+                android:id="@+id/rentTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="10dp"
+                app:layout_constraintTop_toBottomOf="@id/country"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/rent"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#ffffff"/>
+            <TextView
+                android:id="@+id/vehiclePrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="15dp"
+                app:layout_constraintTop_toBottomOf="@id/rentTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="999,00 €"
+                android:textSize="18sp"
+                android:textColor="#ffffff"/>
+
+            <TextView
+                android:id="@+id/rentDurationText"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:layout_marginHorizontal="15dp"
+                app:layout_constraintTop_toBottomOf="@id/vehiclePrice"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="#ffffff"
+                android:text="@string/rent_duration"
+                android:gravity="center_vertical"
+                />
+
+            <SeekBar
+                android:id="@+id/rentDuration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:progressBackgroundTint="#000000"
+                android:progressTint="#ffffff"
+                android:thumbTint="#ffffff"
+                app:layout_constraintEnd_toStartOf="@id/rentDurationText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vehiclePrice" />
+
+            <Button
+                android:id="@+id/buttonRent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/rent"
+                android:backgroundTint="#ffffff"
+                android:layout_marginHorizontal="15dp"
+                app:layout_constraintTop_toBottomOf="@id/rentDuration"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

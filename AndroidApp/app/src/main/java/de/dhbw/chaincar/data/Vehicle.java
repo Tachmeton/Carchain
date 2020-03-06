@@ -1,6 +1,9 @@
 package de.dhbw.chaincar.data;
 
-public class Vehicle {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Vehicle implements Parcelable {
     public String id;
     public String name;
     public String homeCountry;
@@ -11,6 +14,19 @@ public class Vehicle {
     public float pricePerHour;
     public float minRentDuration;
     public float maxRentDuration;
+
+    public Vehicle(Parcel in){
+        this.id = in.readString();
+        this.name = in.readString();
+        this.homeCountry = in.readString();
+        this.homeCity = in.readString();
+        this.homePostCode = in.readString();
+        this.homeStreet = in.readString();
+        this.homeStreetNumber = in.readString();
+        this.pricePerHour = in.readFloat();
+        this.minRentDuration = in.readFloat();
+        this.maxRentDuration = in.readFloat();
+    }
 
     public Vehicle(String id, String name, String homeCountry, String homeCity, String homePostCode, String homeStreet, String homeStreetNumber, float pricePerHour, float minRentDuration, float maxRentDuration) {
         this.id = id;
@@ -25,7 +41,38 @@ public class Vehicle {
         this.maxRentDuration = maxRentDuration;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(homeCountry);
+        dest.writeString(homeCity);
+        dest.writeString(homePostCode);
+        dest.writeString(homeStreet);
+        dest.writeString(homeStreetNumber);
+        dest.writeFloat(pricePerHour);
+        dest.writeFloat(minRentDuration);
+        dest.writeFloat(maxRentDuration);
+    }
+
+    public static final Parcelable.Creator<Vehicle> CREATOR = new Parcelable.Creator<Vehicle>() {
+        public Vehicle createFromParcel(Parcel in) {
+            return new Vehicle(in);
+        }
+
+        public Vehicle[] newArray(int size) {
+            return new Vehicle[size];
+        }
+    };
+
     public float getDistance(){
         return 2.5f;
     }
+
+
 }
