@@ -69,7 +69,7 @@ enum CarState {
   */
   function rentCar(uint256 identifierCar) public payable {
     require(carpool[identifierCar].owner != address(0), "Car is not in carpool");
-    require(getInUse(identifierCar) == false, "Car has no one who leased it.");
+    require(getCurrentState(identifierCar) == CarState.Free, "Car has no one who leased it.");
     //Mindestmietdauer?
     require(msg.value > 1800, "You did not pay enough. (1800)");
 
@@ -85,7 +85,7 @@ enum CarState {
   function mayRent(uint256 identifierCar) public view returns (bool) {
     require(carpool[identifierCar].owner != address(0), "Car is not in carpool");
 
-    if(carpool[identifierCar].leaser == address(0) && getInUse(identifierCar) == false){
+    if(carpool[identifierCar].leaser == address(0) && getCurrentState(identifierCar) == CarState.Free){
       return true;
     }else{
       return false;
@@ -98,7 +98,7 @@ enum CarState {
   function isLegalLeaser(uint256 identifierCar, address identifierLeaser) public view returns (bool) {
     require(carpool[identifierCar].owner > address(0), "Car is not in carpool");
     require(msg.sender == identifierLeaser, "Sender is not the same as the Parameter Leaser");
-    require(getInUse(identifierCar) == true, "Car is not in use. --> There can not be a leaser.");
+    require(getCurrentState(identifierCar) == CarState.Leased, "Car is not in use. --> There can not be a leaser.");
 
     if(carpool[identifierCar].leaser == identifierLeaser && carpool[identifierCar].timeRented < getTimeNow()){
       return true;
@@ -110,7 +110,7 @@ enum CarState {
   After a Car was rented the car is given back to the free carpool and given the state not rented.
   */
   function returnCarToCarpool(uint256 identifierCar) public payable {
-    require(carpool[identifierCar].leaser > address(0) && getInUse(identifierCar), "Car is not in Use and therefore can not be returned.");
+    require(carpool[identifierCar].leaser > address(0) && getCurrentState(identifierCar) == CarState.Leased, "Car is not in Use and therefore can not be returned.");
 
     carpool[identifierCar].timeRented = 0;
     carpool[identifierCar].owner.transfer(carpool[identifierCar].amountPaid);
@@ -132,7 +132,7 @@ enum CarState {
   /*
   Checks if a Car is already rented/ in Use.
   */
-  function getCurrentState(uint256 identifierCar) public view returns (bool) {
+  function getCurrentState(uint256 identifierCar) public view returns (CarState) {
     return carpool[identifierCar].currentState;
   }
 
@@ -144,17 +144,14 @@ enum CarState {
     return carpool[identifierCar].timeRented;
   }
 
-  function getxCoordinate(uint256 identifierCar) public view returns (int256) {
-    return carpool[identifierCar].xCoordinate;
+  function getLatitude(uint256 identifierCar) public view returns (int256) {
+    return carpool[identifierCar].latitude;
   }
 
-  function getyCoordinate(uint256 identifierCar) public view returns (int256) {
-    return carpool[identifierCar].yCoordinate;
+  function getLongitude(uint256 identifierCar) public view returns (int256) {
+    return carpool[identifierCar].longitude;
   }
 
-  function getzCoordinate(uint256 identifierCar) public view returns (int256) {
-    return carpool[identifierCar].zCoordinate;
-  }
 
 //--------------------------------------------------------------------------------------------------------------------
 
@@ -164,13 +161,13 @@ enum CarState {
   */
   function resetCar(uint256 identifierCar) public{
     Car memory defaultValueCar = Car({
-      owner: address(0), currentState: CarState.Free, leaser: address(0), timeRented: 0, amountPaid: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
+      owner: address(0), currentState: CarState.Free, leaser: address(0), timeRented: 0, amountPaid: 0, longitude: 0, latitude: 0
       });
 
     carpool[identifierCar] = defaultValueCar;
   }
 
-  function getTimeNow() private{
+  function getTimeNow() private returns (uint256){
     return now;
   }
 }
