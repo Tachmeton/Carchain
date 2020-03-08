@@ -11,11 +11,11 @@ let fromAddress = '0x28f814Ff05aF5DbFF0401A6c98AB0942DbA95a63';
 let renterAddress = '0x3d48704143135059A1990dcDF9eEC5C73f750179';
 
 console.log(__dirname + '/ethereum/build/contracts/carchain.json');
-let abiStr = fs.readFileSync(__dirname + '/ethereum/build/contracts/carchain.json', 'utf-8');
-let abi = JSON.parse(abiStr);
+let carchainStr = fs.readFileSync(__dirname + '/ethereum/build/contracts/carchain.json', 'utf-8');
+let carchainAbi = JSON.parse(carchainStr);
 
 
-let carchain = new web3.eth.Contract(abi.abi, contractAdress);
+let carchain = new web3.eth.Contract(carchainAbi.abi, contractAdress);
 
 sendTransactions()
     .then(function() {
@@ -32,7 +32,7 @@ async function sendTransactions() {
 
     console.log("rent car number 1");
     //rentCar(uint256 identifierCar, uint256 identifierLeaser)
-    await carchain.methods.rentCar(1).send({from: renterAddress, gas: 6000000, value: 3600});
+    await carchain.methods.rentCar(1).send({from: renterAddress, gas: 6000000, value: 36000});
 
     console.log("get owner");
     //getOwner(uint256 identifierCar)
