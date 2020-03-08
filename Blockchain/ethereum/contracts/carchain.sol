@@ -92,10 +92,9 @@ enum CarState {
   /*
   Gives a boolean value if a Leaser is still Lawfully/ Legally a Leaser and has enough credit.
   */
-  function isLegalLeaser(address identifierCar, address identifierLeaser) public knownCar(identifierCar) view returns (bool) {
-    require(getCurrentState(identifierCar) == CarState.Leased, "Car is not in use. --> There can not be a leaser.");
-
-    if(carpool[identifierCar].leaser == identifierLeaser && carpool[identifierCar].timeRented < getTimeNow()){
+  function isLegalLeaser(address identifierCar, address identifierLeaser) public
+            knownCar(identifierCar) isLeased(identifierCar) isLeasedBy(identifierCar, identifierLeaser) view returns (bool) {
+    if(carpool[identifierCar].timeRented < getTimeNow()){
       return true;
     }
     return false;
@@ -118,7 +117,7 @@ enum CarState {
 
 //--------------------------------------------------------------------------------------------------------------------
 
-//getter and setter for Car
+//public getter for Car
 
   function getOwner(address identifierCar) public knownCar(identifierCar) view returns (address) {
     return carpool[identifierCar].owner;
@@ -162,8 +161,17 @@ enum CarState {
     carpool[identifierCar] = defaultValueCar;
   }
 
+  //--------------------------------------------------------------------------------------------------------------------
+
+  //Private Methods
+
   function getTimeNow() private view returns (uint256){
     return now;
+  }
+
+  function makeCarFree (address identifierCar) private {
+    carpool[identifierCar].leaser = 0;
+    carpool[identifierCar].currentState = CarState.Free;
   }
 
 
