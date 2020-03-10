@@ -15,7 +15,7 @@ enum CarState {
     CarState currentState;
     address leaser;
     uint256 timeRented;
-    uint256 amountPaid;
+    uint256 amountEarned;
     int256 longitude;
     int256 latitude;
   }
@@ -24,7 +24,6 @@ enum CarState {
 
 
   constructor() public {
-  
   }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -38,7 +37,7 @@ enum CarState {
       );
 
     Car memory newCar = Car({
-      owner: msg.sender, currentState: CarState.Free, leaser: address(0), timeRented: 0, amountPaid: 0,longitude: 0, latitude: 0
+      owner: msg.sender, currentState: CarState.Free, leaser: address(0), timeRented: 0, amountEarned: 0,longitude: 0, latitude: 0
       });
 
     carpool[identifierCar] = newCar;
@@ -47,19 +46,9 @@ enum CarState {
   /*
   Removes a car which is not currently in Use from the total Carpool.
   */
-  function removeCar(address identifierCar, address identifierOwner) public knownCar(identifierCar) onlyOwner (identifierCar, identifierOwner) {
-    require(
-      carpool[identifierCar].currentState == CarState.Free && carpool[identifierCar].leaser == address(0) && carpool[identifierCar].timeRented == 0,"Car still in use and can not be removed."
-      );
-    require(
-      carpool[identifierCar].owner == identifierOwner, "Wrong Owner of Car."
-    );
-
-    Car memory defaultValueCar = Car({
-      owner: address(0), currentState: CarState.Free, leaser: address(0), timeRented: 0, amountPaid: 0, longitude: 0, latitude: 0
-      });
-
-    carpool[identifierCar] = defaultValueCar;
+  function removeCar(address payable identifierCar) public
+            knownCar(identifierCar) onlyOwner(identifierCar, msg.sender) carFree(identifierCar) payable {
+    delete carpool[identifierCar];
   }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -67,11 +56,13 @@ enum CarState {
   /*
   Marks a car as rented and safes the point from where the car was rented.
   */
-  function rentCar(address identifierCar) public knownCar(identifierCar) payable {
-    require(getCurrentState(identifierCar) == CarState.Free, "Car has no one who leased it.");
+  function rentCar(address payable identifierCar) public knownCar(identifierCar) carFree(identifierCar) payable {
     //Mindestmietdauer?
-    require(msg.value > 1800, "You did not pay enough. (1800)");
+    require(msg.value > 2300, "You did not pay enough. (Minimum: 2300)");
 
+    carpool[identifierCar].amountEarned = msg.value;
+    address payable beneficiary = identifierCar;
+    beneficiary.transfer(msg.value - 2300);
     carpool[identifierCar].currentState = CarState.Leased;
     carpool[identifierCar].leaser = msg.sender;
     //Problem: block.timestamp ist worst case 90 sekunden ungenau wegen manipulation von minern.
@@ -103,14 +94,11 @@ enum CarState {
   /*
   After a Car was rented the car is given back to the free carpool and given the state not rented.
   */
-  function returnCarToCarpool(address identifierCar, address identifierLeaser) public
-            knownCar(identifierCar) isLeased(identifierCar) isLeasedBy(identifierCar, identifierLeaser) payable {
-
+  function returnCarToCarpool(address payable identifierCar) public
+            knownCar(identifierCar) isLeased(identifierCar) isLeasedBy(identifierCar, msg.sender) payable {
     carpool[identifierCar].timeRented = 0;
-    carpool[identifierCar].owner.transfer(carpool[identifierCar].amountPaid);
-    carpool[identifierCar].amountPaid = 0;
     carpool[identifierCar].currentState = CarState.Leased;
-    carpool[identifierCar].leaser = address(0);
+    delete carpool[identifierCar].leaser;
   }
 
 
@@ -155,7 +143,7 @@ enum CarState {
   */
   function resetCar(address identifierCar) public{
     Car memory defaultValueCar = Car({
-      owner: address(0), currentState: CarState.Free, leaser: address(0), timeRented: 0, amountPaid: 0, longitude: 0, latitude: 0
+      owner: address(0), currentState: CarState.Free, leaser: address(0), timeRented: 0, amountEarned: 0, longitude: 0, latitude: 0
       });
 
     carpool[identifierCar] = defaultValueCar;
@@ -170,7 +158,7 @@ enum CarState {
   }
 
   function makeCarFree (address identifierCar) private {
-    carpool[identifierCar].leaser = 0;
+    delete carpool[identifierCar].leaser;
     carpool[identifierCar].currentState = CarState.Free;
   }
 
@@ -192,6 +180,11 @@ enum CarState {
 
   modifier isLeasedBy (address identifierCar, address identifierLeaser) {
     require(getLeaser(identifierCar) == identifierLeaser, "Not the right Leaser of the Car.");
+    _;
+  }
+
+  modifier carFree (address identifierCar) {
+    require(getCurrentState(identifierCar) == CarState.Free, "Car is not free.");
     _;
   }
 

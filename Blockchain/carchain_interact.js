@@ -9,6 +9,7 @@ web3.setProvider(
 let contractAdress = '0xdb268b971C46d61bd512071D57706dEADe11369B';
 let fromAddress = '0x28f814Ff05aF5DbFF0401A6c98AB0942DbA95a63';
 let renterAddress = '0x3d48704143135059A1990dcDF9eEC5C73f750179';
+let carWallet = '0xfCB0306AadaFF0CD11A9576180bbd6a7787ca509';
 
 console.log(__dirname + '/ethereum/build/contracts/carchain.json');
 let carchainStr = fs.readFileSync(__dirname + '/ethereum/build/contracts/carchain.json', 'utf-8');
@@ -27,24 +28,26 @@ sendTransactions()
 
 async function sendTransactions() {
     console.log("add new car");
-    //addCar(uint256 identifierCar, uint256 identifierOwner)
-    await carchain.methods.addCar(1).send({from: fromAddress, gas: 6000000});
+    await carchain.methods.addCar(carWallet).send({from: fromAddress, gas: 6000000});
 
     console.log("rent car number 1");
-    //rentCar(uint256 identifierCar, uint256 identifierLeaser)
-    await carchain.methods.rentCar(1).send({from: renterAddress, gas: 6000000, value: 36000});
+    await carchain.methods.rentCar(carWallet).send({from: renterAddress, gas: 6000000, value: 1000000000000002300});
 
     console.log("get owner");
-    //getOwner(uint256 identifierCar)
-    let owner = await carchain.methods.getOwner(1).call({from: fromAddress});
+    let owner = await carchain.methods.getOwner(carWallet).call({from: fromAddress});
     console.log(`Owner: ${owner}`);
 
     console.log("get Leaser");
-    //getOwner(uint256 identifierCar)
-    let leaser = await carchain.methods.getLeaser(1).call({from: fromAddress});
+    let leaser = await carchain.methods.getLeaser(carWallet).call({from: fromAddress});
     console.log(`Leaser: ${leaser}`);
 
-    console.log("Return Car number 1")
-    //returnCarToCarpool(uint256 identifierCar)
-    await carchain.methods.returnCarToCarpool(1).send({from: fromAddress, gas: 60000});
+    console.log("get Amount Earned");
+    let amount = await carchain.methods.getLeaser(carWallet).call({from: fromAddress});
+    console.log(`Amount: ${amount}`)
+
+    console.log("Return Car rented")
+    await carchain.methods.returnCarToCarpool(carWallet).send({from: renterAddress, gas: 60000});
+
+    console.log("Reset");
+    await carchain.methods.resetCar(carWallet).send({from: renterAddress, gas: 600000});
 }
