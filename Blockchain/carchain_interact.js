@@ -3,7 +3,7 @@ let Web3 = require('web3')
 
 let web3 = new Web3();
 web3.setProvider(
-    new web3.providers.HttpProvider('http://localhost:7545')
+    new web3.providers.HttpProvider('193.196.54.51:8545')
     );
 
 let contractAdress = '0xdb268b971C46d61bd512071D57706dEADe11369B';
