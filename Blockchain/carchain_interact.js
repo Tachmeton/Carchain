@@ -3,7 +3,7 @@ let Web3 = require('web3')
 
 let web3 = new Web3();
 web3.setProvider(
-    new web3.providers.HttpProvider('193.196.54.51:8545')
+    new web3.providers.HttpProvider('http://193.196.54.51:8545')
     );
 
 let contractAdress = '0xdb268b971C46d61bd512071D57706dEADe11369B';
@@ -40,10 +40,6 @@ async function sendTransactions() {
     console.log("get Leaser");
     let leaser = await carchain.methods.getLeaser(carWallet).call({from: fromAddress});
     console.log(`Leaser: ${leaser}`);
-
-    console.log("get Amount Earned");
-    let amount = await carchain.methods.getLeaser(carWallet).call({from: fromAddress});
-    console.log(`Amount: ${amount}`)
 
     console.log("Return Car rented")
     await carchain.methods.returnCarToCarpool(carWallet).send({from: renterAddress, gas: 60000});
