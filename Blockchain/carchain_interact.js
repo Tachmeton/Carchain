@@ -46,4 +46,7 @@ async function sendTransactions() {
 
     console.log("Reset");
     await carchain.methods.resetCar(carWallet).send({from: renterAddress, gas: 600000});
+
+    console.log("Remove Car");
+    await carchain.methods.removeCar(carWallet).send({from: renterAddress, gas: 600000});
 }

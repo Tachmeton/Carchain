@@ -32,10 +32,11 @@ enum CarState {
 
   mapping (address => Car) carpool;
   address[1000] allCars;
-  uint256 private identifierAll = 0;
+  uint256 private realLengthAll;
 
 
   constructor() public {
+    realLengthAll = 0;
   }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -57,17 +58,22 @@ enum CarState {
         ps: ps, mietpreis: mietpreis, maxMietdauer: maxMietdauer, minMietdauer: minMietdauer
         });
 
-      allCars[identifierAll] = identifierCar;
-      identifierAll++;
+      allCars[realLengthAll] = identifierCar;
+      realLengthAll++;
       carpool[identifierCar] = newCar;
   }
 
   /*
   Removes a car which is not currently in Use from the total Carpool.
   */
-  function removeCar(address payable identifierCar) public
-            knownCar(identifierCar) onlyOwner(identifierCar, msg.sender) carFree(identifierCar) payable {
-    
+  function removeCar(address identifierCar) public
+            knownCar(identifierCar) onlyOwner(identifierCar, msg.sender) carFree(identifierCar) {
+    uint256 index = 0;
+    index = getPostionInAllCars(identifierCar);
+    if(allCars[index] == identifierCar){
+      deleteCarFromAllCars(index);
+      realLengthAll--;
+    }
     delete carpool[identifierCar];
   }
 
@@ -123,8 +129,8 @@ enum CarState {
     delete carpool[identifierCar].leaser;
   }
 
-  function getAvailableVehicles() public view returns (address[1000] memory){
-    address[1000] memory avaibleCars;
+  function getAvailableVehicles() public view returns (address[100] memory){
+    address[100] memory avaibleCars;
     uint256 identifierAll = 0;
     uint256 identifierAvaible = 0;
     if(allCars.length != maxArrayLength){
@@ -234,7 +240,7 @@ enum CarState {
     carpool[identifierCar].currentState = CarState.Free;
   }
 
-  function getPostionInAllCars(address identifierCar) private returns (uint256){
+  function getPostionInAllCars(address identifierCar) private view returns (uint256){
     if(allCars.length != maxArrayLength){
       for(uint256 i = 0; i < allCars.length; ++i){
         if(allCars[i] == identifierCar) {
@@ -243,6 +249,18 @@ enum CarState {
       }
     }
     return maxArrayLength;
+  }
+
+  function deleteCarFromAllCars(uint256 index) private {
+    if (index >= realLengthAll) return;
+
+    if(realLengthAll == 1){
+      delete allCars[0];
+      return;
+    }
+    allCars[index] = allCars[realLengthAll - 1];
+    delete allCars[realLengthAll - 1];
+    return;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
