@@ -3,6 +3,8 @@ pragma solidity >=0.4.21 <0.7.0;
 
 contract carchain {
 
+uint256 constant private maxArrayLength = 2**256-1;
+
 enum CarState {
     Free,
     Leased,
@@ -18,9 +20,19 @@ enum CarState {
     uint256 amountEarned;
     int256 longitude;
     int256 latitude;
+    string nummernschild;
+    string typ;
+    string hersteller;
+    string farbe;
+    uint256 ps;
+    uint256 mietpreis;  //pro Minute
+    uint256 maxMietdauer;
+    uint256 minMietdauer;
   }
 
   mapping (address => Car) carpool;
+  address[1000] allCars;
+  uint256 private identifierAll = 0;
 
 
   constructor() public {
@@ -31,16 +43,23 @@ enum CarState {
   /*
   Adds a new Car to the Carpool.
   */
-  function addCar(address identifierCar) public {
-    require(
-      carpool[identifierCar].owner == address(0), "ID already used."
-      );
+  function addCar(address identifierCar,
+    string memory nummernschild, string memory typ, string memory hersteller, string memory farbe,
+    uint256 ps, uint256 mietpreis, uint256 maxMietdauer, uint256 minMietdauer)
+    public {
+      require(
+        carpool[identifierCar].owner == address(0), "ID already used."
+        );
 
-    Car memory newCar = Car({
-      owner: msg.sender, currentState: CarState.Free, leaser: address(0), timeRented: 0, amountEarned: 0,longitude: 0, latitude: 0
-      });
+      Car memory newCar = Car({
+        owner: msg.sender, currentState: CarState.Free, leaser: address(0),timeRented: 0, amountEarned: 0,
+        longitude: 0, latitude: 0,nummernschild: nummernschild, typ: typ, hersteller: hersteller, farbe: farbe,
+        ps: ps, mietpreis: mietpreis, maxMietdauer: maxMietdauer, minMietdauer: minMietdauer
+        });
 
-    carpool[identifierCar] = newCar;
+      allCars[identifierAll] = identifierCar;
+      identifierAll++;
+      carpool[identifierCar] = newCar;
   }
 
   /*
@@ -48,6 +67,7 @@ enum CarState {
   */
   function removeCar(address payable identifierCar) public
             knownCar(identifierCar) onlyOwner(identifierCar, msg.sender) carFree(identifierCar) payable {
+    
     delete carpool[identifierCar];
   }
 
@@ -58,7 +78,9 @@ enum CarState {
   */
   function rentCar(address payable identifierCar) public knownCar(identifierCar) carFree(identifierCar) payable {
     //Mindestmietdauer?
-    require(msg.value > 2300, "You did not pay enough. (Minimum: 2300)");
+    require(msg.value >= 2300, "You did not pay enough. (Minimum: 2300)");
+    require(msg.value >= carpool[identifierCar].mietpreis * carpool[identifierCar].minMietdauer + 2300,
+     "You did not pay more than min Duration of Rent * rental price + 2300");
 
     carpool[identifierCar].amountEarned = msg.value;
     address payable beneficiary = identifierCar;
@@ -66,7 +88,7 @@ enum CarState {
     carpool[identifierCar].currentState = CarState.Leased;
     carpool[identifierCar].leaser = msg.sender;
     //Problem: block.timestamp ist worst case 90 sekunden ungenau wegen manipulation von minern.
-    carpool[identifierCar].timeRented = getTimeNow() + msg.value;
+    carpool[identifierCar].timeRented = getTimeNow() + (msg.value / carpool[identifierCar].mietpreis);
   }
 
   /*
@@ -99,6 +121,22 @@ enum CarState {
     carpool[identifierCar].timeRented = 0;
     carpool[identifierCar].currentState = CarState.Leased;
     delete carpool[identifierCar].leaser;
+  }
+
+  function getAvailableVehicles() public view returns (address[1000] memory){
+    address[1000] memory avaibleCars;
+    uint256 identifierAll = 0;
+    uint256 identifierAvaible = 0;
+    if(allCars.length != maxArrayLength){
+      while(identifierAll < allCars.length && identifierAvaible < avaibleCars.length){
+        if(carpool[allCars[identifierAll]].owner != address(0) && mayRent(allCars[identifierAll])) {
+          avaibleCars[identifierAvaible] = allCars[identifierAll];
+          identifierAvaible++;
+        }
+        identifierAll++;
+      }
+    }
+    return avaibleCars;
   }
 
 
@@ -134,6 +172,38 @@ enum CarState {
     return carpool[identifierCar].longitude;
   }
 
+  function getNummernschild(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
+    return carpool[identifierCar].nummernschild;
+  }
+
+  function getTyp(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
+    return carpool[identifierCar].typ;
+  }
+
+  function getHersteller(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
+    return carpool[identifierCar].hersteller;
+  }
+
+  function getFarbe(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
+    return carpool[identifierCar].farbe;
+  }
+
+  function getPs(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
+    return carpool[identifierCar].ps;
+  }
+
+  function getMietpreis(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
+    return carpool[identifierCar].mietpreis;
+  }
+
+  function getMaxMietdauer(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
+    return carpool[identifierCar].maxMietdauer;
+  }
+
+  function getMinMietdauer(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
+    return carpool[identifierCar].minMietdauer;
+  }
+
 
 //--------------------------------------------------------------------------------------------------------------------
 
@@ -143,7 +213,9 @@ enum CarState {
   */
   function resetCar(address identifierCar) public{
     Car memory defaultValueCar = Car({
-      owner: address(0), currentState: CarState.Free, leaser: address(0), timeRented: 0, amountEarned: 0, longitude: 0, latitude: 0
+      owner: msg.sender, currentState: CarState.Free, leaser: address(0),timeRented: 0, amountEarned: 0,
+       longitude: 0, latitude: 0,nummernschild: "", typ: "", hersteller: "", farbe: "",
+        ps: 0, mietpreis: 0, maxMietdauer: 0, minMietdauer: 0
       });
 
     carpool[identifierCar] = defaultValueCar;
@@ -162,6 +234,20 @@ enum CarState {
     carpool[identifierCar].currentState = CarState.Free;
   }
 
+  function getPostionInAllCars(address identifierCar) private returns (uint256){
+    if(allCars.length != maxArrayLength){
+      for(uint256 i = 0; i < allCars.length; ++i){
+        if(allCars[i] == identifierCar) {
+          return i;
+        }
+      }
+    }
+    return maxArrayLength;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+
+  //Requires for the beginning of functions
 
   modifier knownCar (address identifierCar) {
     require(carpool[identifierCar].owner != address(0), "Car is not in carpool");
