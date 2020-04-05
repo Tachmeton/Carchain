@@ -45,9 +45,11 @@ async function sendTransactions() {
     let timeRented = await carchain.methods.getTimeRented(carWallet).call({from: carWallet});
     console.log(`time Rented: ${timeRented}`);
 
+    /*
     console.log("Get Time Now");
     let timeNow = await carchain.methods.getTimeNow().call({from: carWallet});
     console.log(`timeNow: ${timeNow}`);
+    */
 
     console.log("is Legal Leaser");
     let allowed = await carchain.methods.isLegalLeaser(carWallet, renterAddress).call({from: carWallet});
