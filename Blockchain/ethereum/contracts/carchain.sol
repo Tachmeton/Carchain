@@ -113,7 +113,7 @@ enum CarState {
   */
   function isLegalLeaser(address identifierCar, address identifierLeaser) public
             knownCar(identifierCar) isLeased(identifierCar) isLeasedBy(identifierCar, identifierLeaser) view returns (bool) {
-    if(carpool[identifierCar].timeRented < getTimeNow()){
+    if(carpool[identifierCar].timeRented >= getTimeNow()){
       return true;
     }
     return false;
@@ -166,6 +166,10 @@ enum CarState {
     return carpool[identifierCar].leaser;
   }
 
+  /*
+  Get the Time till when the Car is rented.
+  The return value the passed time since the start of the Unix epoch (1st January 1970, 00:00)
+  */
   function getTimeRented(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
     return carpool[identifierCar].timeRented;
   }
