@@ -44,6 +44,7 @@ public class VehicleList extends Fragment {
         vehicleListLoadingIndicator = view.findViewById(R.id.listLoadingIndicator);
 
         final ArrayList<Vehicle> vehicles = new ArrayList<>();
+        //TODO: Get actual Vehicles from BC
 
         vehicles.add(new Vehicle("1", "VW Golf 7 GTI", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 16.5f, 3, 8));
         vehicles.add(new Vehicle("2", "VW Golf 7 GTD", "Deutschland", "Reutlingen", "72764", "Musterstraße", "1", 26f, 1, 24));

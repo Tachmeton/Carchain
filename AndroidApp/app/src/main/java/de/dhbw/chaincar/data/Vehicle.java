@@ -37,7 +37,9 @@ public class Vehicle implements Parcelable {
         this.maxRentDuration = in.readFloat();
     }
 
-    public Vehicle(String id, String name, String homeCountry, String homeCity, String homePostCode, String homeStreet, String homeStreetNumber, float pricePerHour, float minRentDuration, float maxRentDuration) {
+    public Vehicle(String id, String name, String homeCountry, String homeCity, String homePostCode,
+                   String homeStreet, String homeStreetNumber, float pricePerHour,
+                   float minRentDuration, float maxRentDuration) {
         this.id = id;
         this.name = name;
         this.homeCountry = homeCountry;
