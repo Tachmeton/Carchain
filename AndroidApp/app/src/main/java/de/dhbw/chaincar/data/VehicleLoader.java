@@ -21,7 +21,7 @@ public class VehicleLoader {
     }
 
     public List<Vehicle> getVehicles(){
-        
+
     }
 
     private Drawable[] getPicturesForVehicle(){
