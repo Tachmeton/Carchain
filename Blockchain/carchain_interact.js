@@ -3,19 +3,20 @@ let Web3 = require('web3')
 
 let web3 = new Web3();
 web3.setProvider(
-    new web3.providers.HttpProvider('http://localhost:7545')
+    new web3.providers.HttpProvider('http://193.196.54.51:8545')
     );
 
 let contractAdress = '0xdb268b971C46d61bd512071D57706dEADe11369B';
 let fromAddress = '0x28f814Ff05aF5DbFF0401A6c98AB0942DbA95a63';
 let renterAddress = '0x3d48704143135059A1990dcDF9eEC5C73f750179';
+let carWallet = '0xfCB0306AadaFF0CD11A9576180bbd6a7787ca509';
 
 console.log(__dirname + '/ethereum/build/contracts/carchain.json');
-let abiStr = fs.readFileSync(__dirname + '/ethereum/build/contracts/carchain.json', 'utf-8');
-let abi = JSON.parse(abiStr);
+let carchainStr = fs.readFileSync(__dirname + '/ethereum/build/contracts/carchain.json', 'utf-8');
+let carchainAbi = JSON.parse(carchainStr);
 
 
-let carchain = new web3.eth.Contract(abi.abi, contractAdress);
+let carchain = new web3.eth.Contract(carchainAbi.abi, contractAdress);
 
 sendTransactions()
     .then(function() {
@@ -27,24 +28,39 @@ sendTransactions()
 
 async function sendTransactions() {
     console.log("add new car");
-    //addCar(uint256 identifierCar, uint256 identifierOwner)
-    await carchain.methods.addCar(1).send({from: fromAddress, gas: 6000000});
+    await carchain.methods.addCar(carWallet, "DE-PB-AA-1234", "SUV", "Mercedes", "schwarz", 500, 1, 600, 30).send({from: fromAddress, gas: 6000000});
 
     console.log("rent car number 1");
-    //rentCar(uint256 identifierCar, uint256 identifierLeaser)
-    await carchain.methods.rentCar(1).send({from: renterAddress, gas: 6000000, value: 3600});
+    await carchain.methods.rentCar(carWallet).send({from: renterAddress, gas: 6000000, value: 1000000000000002300});
 
     console.log("get owner");
-    //getOwner(uint256 identifierCar)
-    let owner = await carchain.methods.getOwner(1).call({from: fromAddress});
+    let owner = await carchain.methods.getOwner(carWallet).call({from: fromAddress});
     console.log(`Owner: ${owner}`);
 
     console.log("get Leaser");
-    //getOwner(uint256 identifierCar)
-    let leaser = await carchain.methods.getLeaser(1).call({from: fromAddress});
+    let leaser = await carchain.methods.getLeaser(carWallet).call({from: fromAddress});
     console.log(`Leaser: ${leaser}`);
 
-    console.log("Return Car number 1")
-    //returnCarToCarpool(uint256 identifierCar)
-    await carchain.methods.returnCarToCarpool(1).send({from: fromAddress, gas: 60000});
+    console.log("Get Time Rented");
+    let timeRented = await carchain.methods.getTimeRented(carWallet).call({from: carWallet});
+    console.log(`time Rented: ${timeRented}`);
+
+    /*
+    console.log("Get Time Now");
+    let timeNow = await carchain.methods.getTimeNow().call({from: carWallet});
+    console.log(`timeNow: ${timeNow}`);
+    */
+
+    console.log("is Legal Leaser");
+    let allowed = await carchain.methods.isLegalLeaser(carWallet, renterAddress).call({from: carWallet});
+    console.log(`allowed: ${allowed}`);
+
+    console.log("Return Car rented")
+    await carchain.methods.returnCarToCarpool(carWallet).send({from: renterAddress, gas: 60000});
+
+    console.log("Reset");
+    await carchain.methods.resetCar(carWallet).send({from: renterAddress, gas: 600000});
+
+    console.log("Remove Car");
+    await carchain.methods.removeCar(carWallet).send({from: renterAddress, gas: 600000});
 }

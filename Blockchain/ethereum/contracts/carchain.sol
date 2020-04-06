@@ -3,24 +3,40 @@ pragma solidity >=0.4.21 <0.7.0;
 
 contract carchain {
 
+uint256 constant private maxArrayLength = 2**256-1;
+
+enum CarState {
+    Free,
+    Leased,
+    Blocked
+}
+
   //every Car has to have an owner!
   struct Car{
     address owner;
-    bool inUse;
+    CarState currentState;
     address leaser;
     uint256 timeRented;
-    uint256 amountPaid;
-    //lattitude longitute
-    int256 xCoordinate;
-    int256 yCoordinate;
-    int256 zCoordinate;
+    uint256 amountEarned;
+    int256 longitude;
+    int256 latitude;
+    string nummernschild;
+    string typ;
+    string hersteller;
+    string farbe;
+    uint256 ps;
+    uint256 mietpreis;  //pro Minute
+    uint256 maxMietdauer;
+    uint256 minMietdauer;
   }
 
-  mapping (uint256 => Car) carpool;
+  mapping (address => Car) carpool;
+  address[1000] allCars;
+  uint256 private realLengthAll;
 
 
   constructor() public {
-  
+    realLengthAll = 0;
   }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -28,34 +44,37 @@ contract carchain {
   /*
   Adds a new Car to the Carpool.
   */
-  function addCar(uint256 identifierCar) public {
-    require(
-      carpool[identifierCar].owner == address(0), "Car is already in Carpool and a new Car can not be added."
-      );
+  function addCar(address identifierCar,
+    string memory nummernschild, string memory typ, string memory hersteller, string memory farbe,
+    uint256 ps, uint256 mietpreis, uint256 maxMietdauer, uint256 minMietdauer)
+    public {
+      require(
+        carpool[identifierCar].owner == address(0), "ID already used."
+        );
 
-    Car memory newCar = Car({
-      owner: msg.sender, inUse: false, leaser: address(0), timeRented: 0, amountPaid: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
-      });
+      Car memory newCar = Car({
+        owner: msg.sender, currentState: CarState.Free, leaser: address(0),timeRented: 0, amountEarned: 0,
+        longitude: 0, latitude: 0,nummernschild: nummernschild, typ: typ, hersteller: hersteller, farbe: farbe,
+        ps: ps, mietpreis: mietpreis, maxMietdauer: maxMietdauer, minMietdauer: minMietdauer
+        });
 
-    carpool[identifierCar] = newCar;
+      allCars[realLengthAll] = identifierCar;
+      realLengthAll++;
+      carpool[identifierCar] = newCar;
   }
 
   /*
   Removes a car which is not currently in Use from the total Carpool.
   */
-  function removeCar(uint256 identifierCar, address identifierOwner) public{
-    require(
-      carpool[identifierCar].inUse == false && carpool[identifierCar].leaser == address(0) && carpool[identifierCar].timeRented == 0,"Car still in use and can not be removed."
-      );
-    require(
-      carpool[identifierCar].owner == identifierOwner, "Wrong Owner of Car."
-    );
-
-    Car memory defaultValueCar = Car({
-      owner: address(0), inUse: false, leaser: address(0), timeRented: 0, amountPaid: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
-      });
-
-    carpool[identifierCar] = defaultValueCar;
+  function removeCar(address identifierCar) public
+            knownCar(identifierCar) onlyOwner(identifierCar, msg.sender) carFree(identifierCar) {
+    uint256 index = 0;
+    index = getPostionInAllCars(identifierCar);
+    if(allCars[index] == identifierCar){
+      deleteCarFromAllCars(index);
+      realLengthAll--;
+    }
+    delete carpool[identifierCar];
   }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -63,25 +82,26 @@ contract carchain {
   /*
   Marks a car as rented and safes the point from where the car was rented.
   */
-  function rentCar(uint256 identifierCar) public payable {
-    require(carpool[identifierCar].owner != address(0), "Car is not in carpool");
-    require(getInUse(identifierCar) == false, "Car has no one who leased it.");
+  function rentCar(address payable identifierCar) public knownCar(identifierCar) carFree(identifierCar) payable {
     //Mindestmietdauer?
-    require(msg.value < 1800, "You did not pay enough. (1800)");
+    require(msg.value >= 2300, "You did not pay enough. (Minimum: 2300)");
+    require(msg.value >= carpool[identifierCar].mietpreis * carpool[identifierCar].minMietdauer + 2300,
+     "You did not pay more than min Duration of Rent * rental price + 2300");
 
-    carpool[identifierCar].inUse = true;
+    carpool[identifierCar].amountEarned = msg.value;
+    address payable beneficiary = identifierCar;
+    beneficiary.transfer(msg.value - 2300);
+    carpool[identifierCar].currentState = CarState.Leased;
     carpool[identifierCar].leaser = msg.sender;
-    //Problem: block.timestamp ist ungefähr 90 sekunden ungenau wegen manipulation von minern.
-    carpool[identifierCar].timeRented = block.timestamp + msg.value;
+    //Problem: block.timestamp ist worst case 90 sekunden ungenau wegen manipulation von minern.
+    carpool[identifierCar].timeRented = getTimeNow() + (msg.value / carpool[identifierCar].mietpreis);
   }
 
   /*
   Gives a boolean value if a car is now avaible for rent.
   */
-  function mayRent(uint256 identifierCar) public view returns (bool) {
-    require(carpool[identifierCar].owner != address(0), "Car is not in carpool");
-
-    if(carpool[identifierCar].leaser == address(0) && getInUse(identifierCar) == false){
+  function mayRent(address identifierCar) public knownCar(identifierCar) view returns (bool) {
+    if(carpool[identifierCar].leaser == address(0) && getCurrentState(identifierCar) == CarState.Free){
       return true;
     }else{
       return false;
@@ -91,12 +111,9 @@ contract carchain {
   /*
   Gives a boolean value if a Leaser is still Lawfully/ Legally a Leaser and has enough credit.
   */
-  function isLegalLeaser(uint256 identifierCar, address identifierLeaser) public view returns (bool) {
-    require(carpool[identifierCar].owner > address(0), "Car is not in carpool");
-    require(msg.sender == identifierLeaser, "Sender is not the same as the Parameter Leaser");
-    require(getInUse(identifierCar) == true, "Car is not in use. --> There can not be a leaser.");
-
-    if(carpool[identifierCar].leaser == identifierLeaser && carpool[identifierCar].timeRented < block.timestamp){
+  function isLegalLeaser(address identifierCar, address identifierLeaser) public
+            knownCar(identifierCar) isLeased(identifierCar) isLeasedBy(identifierCar, identifierLeaser) view returns (bool) {
+    if(carpool[identifierCar].timeRented >= getTimeNow()){
       return true;
     }
     return false;
@@ -105,52 +122,98 @@ contract carchain {
   /*
   After a Car was rented the car is given back to the free carpool and given the state not rented.
   */
-  function returnCarToCarpool(uint256 identifierCar) public payable {
-    require(carpool[identifierCar].leaser > address(0) && getInUse(identifierCar), "Car is not in Use and therefore can not be returned.");
-
+  function returnCarToCarpool(address payable identifierCar) public
+            knownCar(identifierCar) isLeased(identifierCar) isLeasedBy(identifierCar, msg.sender) payable {
     carpool[identifierCar].timeRented = 0;
-    //payable(carpool[identifierCar].owner).transfer(carpool[identifierCar].amountPaid);
-    carpool[identifierCar].amountPaid = 0;
-    carpool[identifierCar].inUse = false;
-    carpool[identifierCar].leaser = address(0);
+    carpool[identifierCar].currentState = CarState.Leased;
+    delete carpool[identifierCar].leaser;
+  }
+
+  function getAvailableVehicles() public view returns (address[100] memory){
+    address[100] memory avaibleCars;
+    uint256 identifierAll = 0;
+    uint256 identifierAvaible = 0;
+    if(allCars.length != maxArrayLength){
+      while(identifierAll < allCars.length && identifierAvaible < avaibleCars.length){
+        if(carpool[allCars[identifierAll]].owner != address(0) && mayRent(allCars[identifierAll])) {
+          avaibleCars[identifierAvaible] = allCars[identifierAll];
+          identifierAvaible++;
+        }
+        identifierAll++;
+      }
+    }
+    return avaibleCars;
   }
 
 
 
 //--------------------------------------------------------------------------------------------------------------------
 
-//getter and setter for Car
+//public getter for Car
 
-  function getOwner(uint256 identifierCar) public view returns (address) {
+  function getOwner(address identifierCar) public knownCar(identifierCar) view returns (address) {
     return carpool[identifierCar].owner;
   }
 
   /*
   Checks if a Car is already rented/ in Use.
   */
-  function getInUse(uint256 identifierCar) public view returns (bool) {
-    return carpool[identifierCar].inUse;
+  function getCurrentState(address identifierCar) public knownCar(identifierCar) view returns (CarState) {
+    return carpool[identifierCar].currentState;
   }
 
-  function getLeaser(uint256 identifierCar) public view returns (address) {
+  function getLeaser(address identifierCar) public knownCar(identifierCar) view returns (address) {
     return carpool[identifierCar].leaser;
   }
 
-  function getTimeRented(uint256 identifierCar) public view returns (uint256) {
+  /*
+  Get the Time till when the Car is rented.
+  The return value the passed time since the start of the Unix epoch (1st January 1970, 00:00)
+  */
+  function getTimeRented(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
     return carpool[identifierCar].timeRented;
   }
 
-  function getxCoordinate(uint256 identifierCar) public view returns (int256) {
-    return carpool[identifierCar].xCoordinate;
+  function getLatitude(address identifierCar) public knownCar(identifierCar) view returns (int256) {
+    return carpool[identifierCar].latitude;
   }
 
-  function getyCoordinate(uint256 identifierCar) public view returns (int256) {
-    return carpool[identifierCar].yCoordinate;
+  function getLongitude(address identifierCar) public knownCar(identifierCar) view returns (int256) {
+    return carpool[identifierCar].longitude;
   }
 
-  function getzCoordinate(uint256 identifierCar) public view returns (int256) {
-    return carpool[identifierCar].zCoordinate;
+  function getNummernschild(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
+    return carpool[identifierCar].nummernschild;
   }
+
+  function getTyp(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
+    return carpool[identifierCar].typ;
+  }
+
+  function getHersteller(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
+    return carpool[identifierCar].hersteller;
+  }
+
+  function getFarbe(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
+    return carpool[identifierCar].farbe;
+  }
+
+  function getPs(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
+    return carpool[identifierCar].ps;
+  }
+
+  function getMietpreis(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
+    return carpool[identifierCar].mietpreis;
+  }
+
+  function getMaxMietdauer(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
+    return carpool[identifierCar].maxMietdauer;
+  }
+
+  function getMinMietdauer(address identifierCar) public knownCar(identifierCar) view returns (uint256) {
+    return carpool[identifierCar].minMietdauer;
+  }
+
 
 //--------------------------------------------------------------------------------------------------------------------
 
@@ -158,11 +221,80 @@ contract carchain {
   Resets a car from the total Carpool.
   Just for debugging Reasons. Should not make to the final version.
   */
-  function resetCar(uint256 identifierCar) public{
+  function resetCar(address identifierCar) public{
     Car memory defaultValueCar = Car({
-      owner: address(0), inUse: false, leaser: address(0), timeRented: 0, amountPaid: 0, xCoordinate: 0, yCoordinate: 0, zCoordinate: 0
+      owner: msg.sender, currentState: CarState.Free, leaser: address(0),timeRented: 0, amountEarned: 0,
+       longitude: 0, latitude: 0,nummernschild: "", typ: "", hersteller: "", farbe: "",
+        ps: 0, mietpreis: 0, maxMietdauer: 0, minMietdauer: 0
       });
 
     carpool[identifierCar] = defaultValueCar;
   }
+
+  //--------------------------------------------------------------------------------------------------------------------
+
+  //Private Methods
+
+  function getTimeNow() private view returns (uint256){
+    return now;
+  }
+
+  function makeCarFree (address identifierCar) private {
+    delete carpool[identifierCar].leaser;
+    carpool[identifierCar].currentState = CarState.Free;
+  }
+
+  function getPostionInAllCars(address identifierCar) private view returns (uint256){
+    if(allCars.length != maxArrayLength){
+      for(uint256 i = 0; i < allCars.length; ++i){
+        if(allCars[i] == identifierCar) {
+          return i;
+        }
+      }
+    }
+    return maxArrayLength;
+  }
+
+  function deleteCarFromAllCars(uint256 index) private {
+    if (index >= realLengthAll) return;
+
+    if(realLengthAll == 1){
+      delete allCars[0];
+      return;
+    }
+    allCars[index] = allCars[realLengthAll - 1];
+    delete allCars[realLengthAll - 1];
+    return;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+
+  //Requires for the beginning of functions
+
+  modifier knownCar (address identifierCar) {
+    require(carpool[identifierCar].owner != address(0), "Car is not in carpool");
+    _;
+  }
+
+  modifier onlyOwner (address identifierCar, address identifierOwner) {
+    require(carpool[identifierCar].owner == identifierOwner, "Not the right owner of the Car.");
+    _;
+  }
+
+  modifier isLeased (address identifierCar) {
+    require(getCurrentState(identifierCar) == CarState.Leased, "Car is not Leased");
+    _;
+  }
+
+  modifier isLeasedBy (address identifierCar, address identifierLeaser) {
+    require(getLeaser(identifierCar) == identifierLeaser, "Not the right Leaser of the Car.");
+    _;
+  }
+
+  modifier carFree (address identifierCar) {
+    require(getCurrentState(identifierCar) == CarState.Free, "Car is not free.");
+    _;
+  }
+
 }
+
