@@ -26,7 +26,18 @@ sendTransactions()
     })
 
     async function sendTransactions() {
+        console.log("add new car");
+        await carchain.methods.addCar(carWallet, "DE-PB-AA-1234", "SUV", "Mercedes", "schwarz", 500, 1, 600, 30).send({from: fromAddress, gas: 6000000});
+
+
         console.log("get avaible cars.");
         let array = await carchain.methods.getAvailableVehicles().call({from: fromAddress, gas: 6000000});
         console.log(array);
+
+
+        console.log("Reset");
+        await carchain.methods.resetCar(carWallet).send({from: renterAddress, gas: 600000});
+
+        console.log("Remove Car");
+        await carchain.methods.removeCar(carWallet).send({from: renterAddress, gas: 600000});
     }
