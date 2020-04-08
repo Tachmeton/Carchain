@@ -25,8 +25,8 @@ public class VehicleLoader {
         this.context = context;
     }
 
-    public List<Vehicle> getVehicles() throws Exception {
-        List<Vehicle> vehicles = new ArrayList<>();
+    public ArrayList<Vehicle> getVehicles() throws Exception {
+        ArrayList<Vehicle> vehicles = new ArrayList<>();
         Carchain contract = BCConnector.getInstance(context).getContract();
         contract.getAvailableVehicles().send().forEach(bigIntId -> {
             Log.d(TAG, "Loading Data for Car " + bigIntId);
