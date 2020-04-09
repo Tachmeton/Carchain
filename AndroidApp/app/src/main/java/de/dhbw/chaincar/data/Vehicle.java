@@ -2,14 +2,12 @@ package de.dhbw.chaincar.data;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.core.content.ContextCompat;
-
+import java.util.List;
 import java.util.Random;
-
+import de.dhbw.chaincar.data.Image;
 import de.dhbw.chaincar.R;
 
 public class Vehicle implements Parcelable {
@@ -23,6 +21,9 @@ public class Vehicle implements Parcelable {
     public float pricePerHour;
     public float minRentDuration;
     public float maxRentDuration;
+    private List<Image> images;
+
+
 
     public Vehicle(Parcel in){
         this.id = in.readString();
@@ -50,6 +51,20 @@ public class Vehicle implements Parcelable {
         this.pricePerHour = pricePerHour;
         this.minRentDuration = minRentDuration;
         this.maxRentDuration = maxRentDuration;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public void addImages(Image... imagesToAdd){
+        for(Image img : imagesToAdd){
+            this.images.add(img);
+        }
     }
 
     @Override
