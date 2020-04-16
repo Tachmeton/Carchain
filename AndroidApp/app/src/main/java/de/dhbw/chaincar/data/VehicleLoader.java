@@ -7,7 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import java8.util.concurrent.CompletableFuture;
+//import java8.util.concurrent.CompletableFuture;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -42,9 +42,14 @@ public class VehicleLoader {
         ArrayList<Vehicle> vehicles = new ArrayList<>();
         Carchain contract = BCConnector.getInstance(context).getContract();
         Log.d(TAG, "is valid contract: " + contract.isValid());
-        Log.d(TAG, "" + contract.getFarbe(carWallet).send());
+
+        //Log.d(TAG, "" + contract.getFarbe(carWallet).send());
+
         //CompletableFuture<List> future = contract.getAvailableVehicles().sendAsync();
-        /*contract.getAvailableVehicles().flowable().subscribe(x -> {
+
+        Log.d(TAG, "List: " + contract.getAvailableVehicles().send());
+
+       /* contract.getAvailableVehicles().flowable().subscribe(x -> {
             Log.d(TAG, "Received flowable list, size: "+ x.size());
         });*/
 
