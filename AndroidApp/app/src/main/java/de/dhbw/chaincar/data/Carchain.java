@@ -1,5 +1,7 @@
 package de.dhbw.chaincar.data;
 
+import android.util.Log;
+
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collections;
@@ -174,6 +176,7 @@ public class Carchain extends Contract {
                     @SuppressWarnings("unchecked")
                     public List call() throws Exception {
                         List<Type> result = (List<Type>) executeCallSingleValueReturn(function, List.class);
+                        Log.d("Carchain.getAvailableVehicles.call()", "found result: " + result);
                         return convertToNative(result);
                     }
                 });

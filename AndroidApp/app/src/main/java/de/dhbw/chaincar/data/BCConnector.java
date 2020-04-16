@@ -2,10 +2,12 @@ package de.dhbw.chaincar.data;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.ECKeyPair;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
 
 import java.io.BufferedReader;
@@ -43,6 +45,22 @@ public class BCConnector {
     private BCConnector(Context context) {
         this.context = context;
         Web3j web3 = Web3j.build(new HttpService("http://193.196.54.51:8545"));
+        try {
+            Web3ClientVersion clientVersion = web3.web3ClientVersion().sendAsync().get();
+            if(!clientVersion.hasError()){
+                //Connected
+                Log.d("BCConnector", "Successufully connected to BC!!");
+                Log.d("BCConnector", "Version: " + clientVersion.getWeb3ClientVersion());
+            }
+            else {
+                Log.d("BCConnector", "NOT connected to BC!!");
+                //Show Error
+            }
+        }
+        catch (Exception e) {
+            //Show Error
+            e.printStackTrace();
+        }
         this.contract = Carchain.load(contractAdress, web3, Credentials.create(renterPrivKey, renterAddress), gas_price, gas_limit);
     }
 
