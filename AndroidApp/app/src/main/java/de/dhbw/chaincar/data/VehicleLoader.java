@@ -47,7 +47,9 @@ public class VehicleLoader {
 
         //CompletableFuture<List> future = contract.getAvailableVehicles().sendAsync();
 
-        Log.d(TAG, "List: " + contract.getAvailableVehicles().send());
+        //Log.d(TAG, "List: " + contract.getAvailableVehicles().send());
+        Log.d(TAG, "List ASYNC: " + contract.getAvailableVehicles().sendAsync().get());
+        Log.d(TAG, "List ASYNC: " + contract.getHersteller(carWallet).sendAsync().get());
 
        /* contract.getAvailableVehicles().flowable().subscribe(x -> {
             Log.d(TAG, "Received flowable list, size: "+ x.size());
