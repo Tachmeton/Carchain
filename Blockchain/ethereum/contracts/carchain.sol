@@ -21,6 +21,7 @@ enum CarState {
     int256 longitude;
     int256 latitude;
     string nummernschild;
+    string modell;
     string typ;
     string hersteller;
     string farbe;
@@ -45,7 +46,7 @@ enum CarState {
   Adds a new Car to the Carpool.
   */
   function addCar(address identifierCar,
-    string memory nummernschild, string memory typ, string memory hersteller, string memory farbe,
+    string memory nummernschild,string memory modell, string memory typ, string memory hersteller, string memory farbe,
     uint256 ps, uint256 mietpreis, uint256 maxMietdauer, uint256 minMietdauer)
     public {
       require(
@@ -54,7 +55,7 @@ enum CarState {
 
       Car memory newCar = Car({
         owner: msg.sender, currentState: CarState.Free, leaser: address(0),timeRented: 0, amountEarned: 0,
-        longitude: 0, latitude: 0,nummernschild: nummernschild, typ: typ, hersteller: hersteller, farbe: farbe,
+        longitude: 0, latitude: 0,nummernschild: nummernschild, modell: modell, typ: typ, hersteller: hersteller, farbe: farbe,
         ps: ps, mietpreis: mietpreis, maxMietdauer: maxMietdauer, minMietdauer: minMietdauer
         });
 
@@ -190,6 +191,10 @@ enum CarState {
     return carpool[identifierCar].typ;
   }
 
+  function getModell(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
+    return carpool[identifierCar].modell;
+  }
+
   function getHersteller(address identifierCar) public knownCar(identifierCar) view returns (string memory) {
     return carpool[identifierCar].hersteller;
   }
@@ -224,7 +229,7 @@ enum CarState {
   function resetCar(address identifierCar) public{
     Car memory defaultValueCar = Car({
       owner: msg.sender, currentState: CarState.Free, leaser: address(0),timeRented: 0, amountEarned: 0,
-       longitude: 0, latitude: 0,nummernschild: "", typ: "", hersteller: "", farbe: "",
+       longitude: 0, latitude: 0,nummernschild: "", modell: "", typ: "", hersteller: "", farbe: "",
         ps: 0, mietpreis: 0, maxMietdauer: 0, minMietdauer: 0
       });
 
