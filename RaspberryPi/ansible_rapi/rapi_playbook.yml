@@ -46,12 +46,12 @@
       shell: ssh-keyscan git.smagcloud.de >> ~/.ssh/known_hosts
 
     # Klonen des Carchain Repositorys
-    - name: clone the private project repository
-      git:
-        force: yes
-        key_file: ~/.ssh/id_rsa.git
-        repo: git@git.smagcloud.de:DHBW17B/carchain.git
-        dest: /home/pi/git
+    #- name: clone the private project repository
+    #  git:
+    #    force: yes
+    #    key_file: ~/.ssh/id_rsa.git
+    #    repo: git@git.smagcloud.de:DHBW17B/carchain.git
+    #    dest: /home/pi/git
 
     # Kopieren des Unit Files für Systemd
     - name: copy unit file
@@ -68,3 +68,8 @@
         systemctl daemon-reload
         systemctl enable car_js.service
         systemctl start car_js.service
+
+    # Registrieren des Cars an der Blockchain
+    - name: register car
+      shell: |
+        node /home/pi/git/carchain/RaspberryPi/ansible_rapi/data/register_car.js
