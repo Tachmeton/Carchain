@@ -2,4 +2,5 @@
 carchain-pi.dnsuser.de
 [all:vars]
 ansible_connection=ssh
-ansible_ssh_user=root
+ansible_ssh_user=pi
+ansible_ssh_pass=carchainDHBW2k20
