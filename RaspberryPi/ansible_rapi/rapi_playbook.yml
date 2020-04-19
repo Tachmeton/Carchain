@@ -23,10 +23,10 @@
         - packages
 
     # Installieren der benoetigten NPM Packete
-    #- name: install npm packages
-    #  become: yes
-    #  shell: |
-    #    sed 's/#.*//' npm-requirements.txt | xargs npm install -g
+    - name: install npm packages
+      become: yes
+      shell: |
+        sed 's/#.*//' npm-requirements.txt | xargs npm install -g
 
     # Kopieren des privaten RSA Schlüssel für Gitlab
     - name: copy the gitlab private rsa key
@@ -46,12 +46,12 @@
       shell: ssh-keyscan git.smagcloud.de >> ~/.ssh/known_hosts
 
     # Klonen des Carchain Repositorys
-    #- name: clone the private project repository
-    #  git:
-    #    force: yes
-    #    key_file: ~/.ssh/id_rsa.git
-    #    repo: git@git.smagcloud.de:DHBW17B/carchain.git
-    #    dest: /home/pi/git
+    - name: clone the private project repository
+      git:
+        force: yes
+        key_file: ~/.ssh/id_rsa.git
+        repo: git@git.smagcloud.de:DHBW17B/carchain.git
+        dest: /home/pi/git
 
     # Kopieren des Unit Files für Systemd
     - name: copy unit file
@@ -62,12 +62,14 @@
         mode: 0777
 
     # Systemd Konfigurieren und Car-Skript starten
-    - name: configure systemd and start exporter
+    - name: configure systemd and start car_js.service & node_exporter
       become: yes
       shell: |
         systemctl daemon-reload
         systemctl enable car_js.service
         systemctl start car_js.service
+        systemctl enable prometheus-node-exporter
+        systemctl start prometheus-node-exporter
 
     # Registrieren des Cars an der Blockchain
     - name: register car
