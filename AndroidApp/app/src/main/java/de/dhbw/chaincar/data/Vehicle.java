@@ -7,7 +7,6 @@ import android.os.Parcelable;
 import androidx.core.content.ContextCompat;
 import java.util.List;
 import java.util.Random;
-import de.dhbw.chaincar.data.Image;
 import de.dhbw.chaincar.R;
 
 public class Vehicle implements Parcelable {
@@ -18,12 +17,16 @@ public class Vehicle implements Parcelable {
     public String homePostCode;
     public String homeStreet;
     public String homeStreetNumber;
+    public String numberPlate;
+    public String model;
+    public String vehicleType;
+    public String manufacturer;
+    public String vehicleColor;
+    public int ps;
     public float pricePerHour;
     public float minRentDuration;
     public float maxRentDuration;
     private List<Image> images;
-
-
 
     public Vehicle(Parcel in){
         this.id = in.readString();
@@ -33,13 +36,20 @@ public class Vehicle implements Parcelable {
         this.homePostCode = in.readString();
         this.homeStreet = in.readString();
         this.homeStreetNumber = in.readString();
+        this.numberPlate = in.readString();
+        this.model = in.readString();
+        this.vehicleType = in.readString();
+        this.manufacturer = in.readString();
+        this.vehicleColor = in.readString();
+        this.ps = in.readInt();
         this.pricePerHour = in.readFloat();
         this.minRentDuration = in.readFloat();
         this.maxRentDuration = in.readFloat();
     }
 
     public Vehicle(String id, String name, String homeCountry, String homeCity, String homePostCode,
-                   String homeStreet, String homeStreetNumber, float pricePerHour,
+                   String homeStreet, String homeStreetNumber, String numberPlate, String model, String vehicleType,
+                   String manufacturer, String vehicleColor, int ps, float pricePerHour,
                    float minRentDuration, float maxRentDuration) {
         this.id = id;
         this.name = name;
@@ -48,6 +58,12 @@ public class Vehicle implements Parcelable {
         this.homePostCode = homePostCode;
         this.homeStreet = homeStreet;
         this.homeStreetNumber = homeStreetNumber;
+        this.numberPlate = numberPlate;
+        this.model = model;
+        this.vehicleType = vehicleType;
+        this.manufacturer = manufacturer;
+        this.vehicleColor = vehicleColor;
+        this.ps = ps;
         this.pricePerHour = pricePerHour;
         this.minRentDuration = minRentDuration;
         this.maxRentDuration = maxRentDuration;
@@ -81,6 +97,12 @@ public class Vehicle implements Parcelable {
         dest.writeString(homePostCode);
         dest.writeString(homeStreet);
         dest.writeString(homeStreetNumber);
+        dest.writeString(numberPlate);
+        dest.writeString(model);
+        dest.writeString(vehicleType);
+        dest.writeString(manufacturer);
+        dest.writeString(vehicleColor);
+        dest.writeInt(ps);
         dest.writeFloat(pricePerHour);
         dest.writeFloat(minRentDuration);
         dest.writeFloat(maxRentDuration);
