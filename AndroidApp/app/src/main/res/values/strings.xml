@@ -4,6 +4,7 @@
     <string name="available">Verfügbar</string>
     <string name="vehicle_image_description">Vehicle Image</string>
     <string name="vehicle_min_max_rent_duration">{1} - {2} Stunden</string>
+    <string name="vehicle_rent_duration">{1} Stunden</string>
     <string name="vehicle_distance">Entfernung: {1} km</string>
     <string name="wallet_not_connected">Wallet nicht verbunden.</string>
     <string name="wallet_connected">Wallet verbunden.</string>
@@ -23,6 +24,7 @@
     <string name="rent">Mieten</string>
     <string name="rent_price">Preis: {1}</string>
     <string name="time">{1}:{2} h</string>
+    <string name="close">Schließen</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
