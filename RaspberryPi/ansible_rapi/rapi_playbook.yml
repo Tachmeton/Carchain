@@ -1,0 +1,77 @@
+- name: Main Play 
+  # Direktiven für die NeMo-Hosts
+  hosts: RaPis
+  # Beginn der Task Liste
+  tasks:
+    # Node Repository enabeln
+    - name: enable node-repo
+      become: yes
+      shell: |
+        curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+
+    # Installieren der benoetigten Pakete für den Betrieb des Carchain-RaPis
+    - name: install nodejs, node_exporter
+      become: yes
+      apt: 
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      with_items:
+        - 'nodejs'
+        - 'prometheus-node-exporter'
+      tags:
+        - packages
+
+    # Installieren der benoetigten NPM Packete
+    - name: install npm packages
+      become: yes
+      shell: |
+        sed 's/#.*//' npm-requirements.txt | xargs npm install -g
+
+    # Kopieren des privaten RSA Schlüssel für Gitlab
+    - name: copy the gitlab private rsa key
+      copy:
+        src: data/id_rsa
+        dest: ~/.ssh/id_rsa.git
+        mode: 0600
+
+    # Privaten RSA Schlüssel 
+    - name: tell ssh to use the github rsa key
+      template:
+        src: data/ssh_config.j2
+        dest: ~/.ssh/config
+
+    # smagit präventiv in die Liste der bekannten Hosts aufnehmen
+    - name: add git.smagcloud.de fingerprint
+      shell: ssh-keyscan git.smagcloud.de >> ~/.ssh/known_hosts
+
+    # Klonen des Carchain Repositorys
+    - name: clone the private project repository
+      git:
+        force: yes
+        key_file: ~/.ssh/id_rsa.git
+        repo: git@git.smagcloud.de:DHBW17B/carchain.git
+        dest: /home/pi/git
+
+    # Kopieren des Unit Files für Systemd
+    - name: copy unit file
+      become: yes
+      copy:
+        src: data/car_js.service
+        dest: /lib/systemd/system/car_js.service
+        mode: 0777
+
+    # Systemd Konfigurieren und Car-Skript starten
+    - name: configure systemd and start car_js.service & node_exporter
+      become: yes
+      shell: |
+        systemctl daemon-reload
+        systemctl enable car_js.service
+        systemctl start car_js.service
+        systemctl enable prometheus-node-exporter
+        systemctl start prometheus-node-exporter
+
+    # Registrieren des Cars an der Blockchain
+    - name: register car
+      shell: |
+        node /home/pi/git/carchain/RaspberryPi/ansible_rapi/data/register_car.js
