@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "f876704a-1949-4c99-accd-2a3e4ab0bee1",
+		"name": "VerteilteSysteme",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "193.196.54.51:3005/addImage",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "carid",
+							"value": "RT-VS-2020",
+							"type": "text"
+						},
+						{
+							"key": "carimage",
+							"type": "file",
+							"src": "/home/pi/git/carchain/RaspberryPi/ansible_rapi/data/Golf_7_GTI.jpg"
+						}
+					]
+				},
+				"url": "193.196.54.51:3005/addImage"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

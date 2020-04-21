@@ -22,7 +22,7 @@
       tags:
         - packages
 
-    # Installieren der benoetigten NPM Packete
+    # Installieren der für das Skript benoetigten NPM Packete
     - name: install npm packages
       become: yes
       shell: |
