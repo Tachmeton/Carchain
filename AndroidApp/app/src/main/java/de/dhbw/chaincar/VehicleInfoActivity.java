@@ -42,6 +42,12 @@ public class VehicleInfoActivity extends AppCompatActivity {
         });
 
         TextView vehicleName = findViewById(R.id.vehicleName);
+        TextView model = findViewById(R.id.model);
+        TextView vehicleType = findViewById(R.id.type);
+        TextView manufacturer = findViewById(R.id.manufacturer);
+        TextView ps = findViewById(R.id.ps);
+        TextView vehicleColor = findViewById(R.id.color);
+        TextView numberPlate = findViewById(R.id.numberplate);
         TextView streetAndNumber = findViewById(R.id.streetAndNumber);
         TextView postCodeAndCity = findViewById(R.id.postCodeAndCity);
         ImageView vehicleImage = findViewById(R.id.galery);
@@ -54,6 +60,19 @@ public class VehicleInfoActivity extends AppCompatActivity {
         vehicleName.setText(vehicle.name);
 
         vehicleImage.setImageDrawable(vehicle.getImages(this)[0]);
+
+        model.setText(getString(R.string.model)
+                .replace("{1}", vehicle.model));
+        vehicleType.setText(getString(R.string.type)
+                .replace("{1}", vehicle.vehicleType));
+        manufacturer.setText(getString(R.string.manufacturer)
+                .replace("{1}", vehicle.manufacturer));
+        ps.setText(getString(R.string.ps)
+                .replace("{1}", String.valueOf(vehicle.ps)));
+        vehicleColor.setText(getString(R.string.color)
+                .replace("{1}", vehicle.vehicleColor));
+        numberPlate.setText(getString(R.string.numberplate)
+                .replace("{1}", vehicle.numberPlate));
 
         streetAndNumber.setText(getString(R.string.street_and_number)
                 .replace("{1}", vehicle.homeStreet)

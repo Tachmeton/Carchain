@@ -9,6 +9,13 @@
     <string name="wallet_connected">Wallet verbunden.</string>
     <string name="connect_wallet">Wallet verbinden</string>
     <string name="disconnect_wallet">Wallet trennen</string>
+    <string name="details">Fahrzeugdetails</string>
+    <string name="model">Modell: {1}</string>
+    <string name="type">Typ: {1}</string>
+    <string name="manufacturer">Hersteller: {1}</string>
+    <string name="ps">Leistung (PS): {1}</string>
+    <string name="color">Farbe: {1}</string>
+    <string name="numberplate">Nummernschild: {1}</string>
     <string name="home">Heimatadresse</string>
     <string name="street_and_number">{1} {2}</string>
     <string name="postcode_and_city">{1} {2}</string>
