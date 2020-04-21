@@ -22,12 +22,6 @@
       tags:
         - packages
 
-    # Installieren der benoetigten NPM Packete
-    - name: install npm packages
-      become: yes
-      shell: |
-        sed 's/#.*//' npm-requirements.txt | xargs npm install -g
-
     # Kopieren des privaten RSA Schlüssel für Gitlab
     - name: copy the gitlab private rsa key
       copy:
@@ -52,6 +46,12 @@
         key_file: ~/.ssh/id_rsa.git
         repo: git@git.smagcloud.de:DHBW17B/carchain.git
         dest: /home/pi/git
+        
+    # Installieren der benoetigten NPM Packete
+    - name: install npm packages
+      become: yes
+      shell: |
+        sed 's/#.*//' npm-requirements.txt | xargs npm install -g
 
     # Kopieren des Unit Files für Systemd
     - name: copy unit file
