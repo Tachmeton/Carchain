@@ -51,7 +51,7 @@
     - name: install npm packages
       become: yes
       shell: |
-        sed 's/#.*//' npm-requirements.txt | xargs npm install -g
+        sed 's/#.*//' /home/pi/git/carchain/RaspberryPi/ansible_rapi/data/npm-requirements.txt | xargs npm install -g
 
     # Kopieren des Unit Files für Systemd
     - name: copy unit file
