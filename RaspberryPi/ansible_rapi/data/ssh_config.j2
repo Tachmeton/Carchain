@@ -1,0 +1,7 @@
+# templates/ssh_config.j2
+
+{{ ansible_managed | comment }}
+
+Host git.smagcloud.de
+IdentityFile ~/.ssh/id_rsa.git
+IdentitiesOnly yes

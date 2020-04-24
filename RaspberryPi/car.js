@@ -113,6 +113,9 @@ function qrLookup() {
             console.log("Ungültiger QR-Code!");  
           }
         }
+        else{
+          yellowLED.writeSync(0);
+        }
         //redLED.writeSync(1);
         yellowLED.writeSync(0);
         //greenLED.writeSync(0);

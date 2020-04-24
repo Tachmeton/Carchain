@@ -29,7 +29,4 @@ sendTransactions()
 async function sendTransactions() {
     console.log("add new car");
     await carchain.methods.addCar(carWallet, "DE-PB-AA-1234", "GLE", "SUV", "Mercedes", "schwarz", 500, 1, 600, 30).send({from: fromAddress, gas: 6000000});
-
-    console.log("rent car number 1");
-    await carchain.methods.rentCar(carWallet).send({from: renterAddress, gas: 6000000, value: 1000000000000002300});
 }

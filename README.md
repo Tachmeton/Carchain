@@ -1,4 +1,4 @@
-# Verteilte Systeme - Projekt “ChainCar” Gruppe 1 “Mietverwaltung”
+# Verteilte Systeme - Projekt “Carchain”
 
 [TOC]
 
@@ -12,42 +12,33 @@ Möchte der Kunde ein verfügbares Fahrzeug mieten, wird eine Transaktion ausgel
 
 Zu klären ist, ob der Eigentümer Zugriff auf sein Fahrzeug haben soll/kann, während ein Kunde dieses gemietet hat oder nicht.
 
+# Architektur
+
 ## Komponenten
 
 ![Komponentendiagramm_01](Doku/assets/komponenten.png)
 
-### Android-App
+# Setup
 
-Zuständig:
+## Blockchain
 
-- Jan Quintus
-- Simon Gaugler
+## App
 
-### SmartContracts
+## Rasperry Pie
 
-Zuständig:
+## Datenbank
 
-- Bastian Frewert
-- Simon Riethmüller
-- Lukas Petric
+# Beschreibung der Funktionalität
 
-### Backend
+## Blockchain
 
-Zuständig:
+## App
 
-- Lukas Faiß
+## Rasperry Pie
 
-### Car (Pi)
+## Datenbank
 
-Zuständig:
+# Erweiterungen
 
-- Nils Riekers
-- Till Fetzer
-- Adrian Koslowski
-- Benedikt Schulz
-
-
-
-
-Quorum (priv Chain)
+# Probleme
 
