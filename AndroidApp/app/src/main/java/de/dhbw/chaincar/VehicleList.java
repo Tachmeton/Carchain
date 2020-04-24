@@ -49,12 +49,8 @@ public class VehicleList extends Fragment {
         try {
             // vehicles = VehicleLoader.getInstance(getContext()).getVehicles();
             vehicles = new ArrayList<>();
-            //"RT-VS-2020", "VW Golf 7 GTI", "Kombi", "VW", "schwarz", 245, 17, 480, 60
-            //String id, String name, String homeCountry, String homeCity, String homePostCode,
-            //                   String homeStreet, String homeStreetNumber, String numberPlate, String model, String vehicleType,
-            //                   String manufacturer, String vehicleColor, int ps, float pricePerHour,
-            //                   float minRentDuration, float maxRentDuration
 
+            // TODO: Fetch vehicles from Blockchain
             vehicles.add(new Vehicle("1", "VW Golf 7 GTI",
                     "Deutschland", "Reutlingen", "72764",
                     "Musterstraße", "1", "RT-VS-2020",

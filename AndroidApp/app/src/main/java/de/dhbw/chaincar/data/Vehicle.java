@@ -119,8 +119,7 @@ public class Vehicle implements Parcelable {
     };
 
     public float getDistance(){
-        Random random = new Random();
-        return (random.nextFloat() * 5f);
+        return 1.25f;
     }
 
     public Drawable[] getImages(Context context){
