@@ -7,7 +7,7 @@ const jimp = require('jimp');
 // Einstellungen für die Kamera
 const myCamera = new PiCamera({
   mode: 'photo',
-  output: `${ __dirname }/test.jpg`,
+  output: `${ __dirname }/qr_picture.jpg`,
   width: 1920,
   height: 1080,
   nopreview: true,
@@ -71,7 +71,7 @@ function qrLookup() {
       
       // QR-Code auf dem aufgenommenen Bild erkennen
       async function run() {
-        const img = await jimp.read(fs.readFileSync('./test.jpg'));
+        const img = await jimp.read(fs.readFileSync('./qr_picture.jpg'));
         const qr = new QRReader();
 
         const value = await new Promise((resolve, reject) => {
