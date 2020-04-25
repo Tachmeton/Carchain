@@ -19,26 +19,44 @@ Zu klären ist, ob der Eigentümer Zugriff auf sein Fahrzeug haben soll/kann, w�
 ![Komponentendiagramm_01](Doku/assets/komponenten.png)
 
 # Setup
+Im Folgenden wird das Setup für die Carchain beschrieben. Um ein funktioniertendes Setup zu erstellen müssen alle Komponenten installiert werden.<br><br>
+Empfohlene Reihenfolge beim Installieren:
+1. Blockchain
+2. Smart Contract
+3. Datenbank
+4. Raspberry Pie
+5. App installieren
 
 ## Blockchain
+Um am Smart Contract zu entwicklen wird eine Blockchain gebraucht um den Smart Contrac auch deployen zu können.
+Biser wird dazu Ganache genutzt. Es ist egal ob dabei die Desktop Variante oder Kommandozeielnvariante (Ganache-cli) genutzt wird. <br>
+Um das gleiche Setup zu bekommen wie bisher genutzt wurde und damit richtige Testeinstellungen zu bkeommen muss Ganache installiert werden.<br>
+Zur Installation von Ganache Desktop: https://www.trufflesuite.com/ganache <br>
+Zur Installation von Ganache-cli: https://github.com/trufflesuite/ganache-cli <br>
+
+## Smart Contract
+
+## Datenbank
 
 ## App
 
-## Rasperry Pie
-
-## Datenbank
+## Raspberry Pie
 
 # Beschreibung der Funktionalität
 
 ## Blockchain
 
+## Datenbank
+
 ## App
 
-## Rasperry Pie
-
-## Datenbank
+## Raspberry Pie
 
 # Erweiterungen
 
 # Probleme
+
+# ToDos
+* Smart Contract auf Public Blockchain einsetzen
+* Web3J in der App implementierung
 
