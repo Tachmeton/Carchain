@@ -45,7 +45,7 @@
         force: yes
         key_file: ~/.ssh/id_rsa.git
         repo: git@github.com:Tachmeton/Carchain.git
-        dest: /home/pi/git
+        dest: /home/pi/git/Carchain
         
     # Installieren der benoetigten NPM Packete
     - name: install npm packages
