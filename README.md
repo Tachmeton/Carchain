@@ -33,6 +33,12 @@ Biser wird dazu Ganache genutzt. Es ist egal ob dabei die Desktop Variante oder 
 Um das gleiche Setup zu bekommen wie bisher genutzt wurde und damit richtige Testeinstellungen zu bkeommen muss Ganache installiert werden.<br>
 Zur Installation von Ganache Desktop: https://www.trufflesuite.com/ganache <br>
 Zur Installation von Ganache-cli: https://github.com/trufflesuite/ganache-cli <br>
+<br>
+Wie man die Einstellungen ändert, unterscheidet sich zwischen der Cli und der Desktop Variante. Im Folgenden wird sich auf die CLI Variante beschränkt, da diese am besten einzusetzten sit wenn man nicht nur an der Blockchain entwicklen will sondern auch die Verbindung zu der App oder dem RaspberryPie testen möchte. <br>
+Einstellungen zum Start der Blockchain:<br>
+ganache-cli -m "dragon canoe knife need marine business arctic honey make layer company solar" -h "<IP-Adresse>" -p <Port> -e 10000 &<br>
+<br>
+Die Message die hier Ganache mitgegeben wird bestimmt welche Adressen die Wallets, die schon vornherien genereiert und zur Verfügung gestellt werden, haben. Voreingestllt ist für die Entwicklung 10.000 Ether, die jede Wallet von vornherein bekommt. Sobald der Command ausgeführt wurde gibt es nun eine Blockchian, die für die weitere Entwicklung genutzt werden kann.
 
 ## Smart Contract
 
