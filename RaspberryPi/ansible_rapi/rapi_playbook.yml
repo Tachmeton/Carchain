@@ -46,12 +46,18 @@
         key_file: ~/.ssh/id_rsa.git
         repo: git@github.com:Tachmeton/Carchain.git
         dest: /home/pi/git/Carchain
-        
+
     # Installieren der benoetigten NPM Packete
-    - name: install npm packages
-      become: yes
-      shell: |
-        sed 's/#.*//' /home/pi/git/Carchain/RaspberryPi/ansible_rapi/data/npm-requirements.txt | xargs npm install -g
+    - name: Install required node.js packages globally.
+      npm:
+        path: /home/pi/git/Carchain/RaspberryPi/ansible_rapi/data/package-lock.json
+        global: yes
+
+    # Installieren der benoetigten NPM Packete
+    #- name: install npm packages
+    #  become: yes
+    #  shell: |
+    #    sed 's/#.*//' /home/pi/git/Carchain/RaspberryPi/ansible_rapi/data/npm-requirements.txt | xargs npm install -g
 
         # Kopieren des Unit Files für Systemd
     - name: copy unit file
