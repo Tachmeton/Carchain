@@ -36,8 +36,8 @@
         dest: ~/.ssh/config
 
     # smagit präventiv in die Liste der bekannten Hosts aufnehmen
-    - name: add git.github.com fingerprint
-      shell: ssh-keyscan git.github.com >> ~/.ssh/known_hosts
+    - name: add github.com fingerprint
+      shell: ssh-keyscan github.com >> ~/.ssh/known_hosts
 
     # Klonen des Carchain Repositorys
     - name: clone the private project repository
