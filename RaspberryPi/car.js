@@ -78,49 +78,45 @@ function qrLookup() {
           qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
           qr.decode(img.bitmap);
         });
-        
-        console.log(value.result);
-        qrResult = value.result;
-        // JSON-Antwort hat folgendes Schema:
-        // { result: 'http://asyncawait.net',
-        //   points:
-        //     [ FinderPattern {
-        //         x: 68.5,
-        //         y: 252,
-        //         count: 10,
-        // ...
-        // console.log(value);
-        if (qrResult !== undefined) {
-          console.log("QR-Code gefunden!");
-          // wird eigentlich per APP übergeben!!!!
-          qrResult = '0x3d48704143135059A1990dcDF9eEC5C73f750179';
 
+        qrResult = value.result;
+        console.log(value);
+
+	console.log(qrResult);
+	// Wenn ein QR-Code gefunden wurde
+        if (qrResult !== undefined) {
+          console.log("qr code found");
+
+          // Abfragen der vorhandenen Wallet-Adressen
           chainAddresses = await web3.eth.getAccounts();
           console.log(chainAddresses);
           
+	  // Wenn übergebene Adresse in der Blockchain vorhanden ist
           if (chainAddresses.includes(qrResult)){
-            console.log("IST DRIN :)))");
+            console.log("qr code is valid");
             renterAddress = qrResult
             checkLeaser()
               .then(function() {
-                  console.log("qr check done");
+                  console.log("qr code check done");
               })
               .catch(function(error) {
                   console.log(error);
               })
           }
           else{
-            console.log("Ungültiger QR-Code!");  
+            console.log("qr code is not valid");  
           }
         }
         else{
           yellowLED.writeSync(0);
         }
         //redLED.writeSync(1);
-        yellowLED.writeSync(0);
+	yellowLED.writeSync(0);
         //greenLED.writeSync(0);
       }
-    })
+   }).then(function() {
+      yellowLED.writeSync(0);
+      })
   .catch((error) => {
     redLED.writeSync(1);
     yellowLED.writeSync(0);
@@ -130,6 +126,8 @@ function qrLookup() {
 
 function registerCar() {
   console.log("registerCar");
+  // Regestrieren des Autos an der Blockchain und Bilderupload wird eigentlich innerhalb der Automatisierungs-Pipeline durchgeführt, sollte daher nur zu Entwicklungszwecken durchgeführt werden
+  require('./ansible_rapi/data/register_car.js');
 }
 
 setInterval(function() {
