@@ -64,7 +64,32 @@ zu finden.
 # Beschreibung der Funktionalität
 
 ## Blockchain
+Die Blockchain an sich dient als Hub für die Smart Contracts. Auf geschieht alles, was mit der Verwaltung der Mietdaten. Des Weiteren läuft über die Blockchain die Bezahlung um Autos zu mieten. Deswegen ist es im späteren Sinnvoll die Contracts auf eine Public Blockchain zu deployen, damit die Bezahlung auch wirklich einen Impakt hat. Aktuell ist der Smart Contract der weiter unten beschrieben wird nur auf der Development Blockchain Ganache getestet.
 
+## Smart Contract
+Der Smart Contract ist im Ordner Blockchain/ethereum in der Datei carchain.sol implementiert. Als Smart Contract Programmiersprahce wurde Solidity benutzt.
+
+### Speichern der Auto Daten
+Die wichtigste Aufgabe, die der Smart Contract übernimmt, ist das speichern, der Daten über die zu vermietenden Autos. Diese sind in einer Map gespeichert, die bei Erstellung des Contracts aufgebaut wird. Die Map bildet die Wallet Adressen der Autos auf eine Car-Struktur ab.<br>
+In selbiger Car Struktur sind gespeichert:
+* Daten über den Owner
+* Daten über den aktuellen Mietstatus
+* die Zeit wie lange das Auto aktuell gemietet ist
+* der insgesammt bekommende Ether
+* der normale Standort des Autos
+* Daten über das Auto an sich
+* Konditionen zum Mieten des Autos <br>
+
+### Modifier
+Solidity bietet die Möglichkeit Modifier, mithilfe von requires zu defineiren. Modifier dienen in diesem Projekt dazu, vor dem richtigen Start einer Funktion zu checken ob der Aufrufer dazu berechtigt ist selbige aufzurufen und ob alle Vorraussetzungen für einen kompletten Durchlauf der Funktion gegeben ist. Bisher implementierte Modifier:<br>
+* knownCar - Existiert das Auto welches die Funktion betrifft
+* onlyOwner - Ist die übergebene Wallet Adresse Owner des übergebenen Autos
+* isLeased - Befindet sich das Auto schon im gemieteten Zustand
+* isLeasedBy - Ist als Leaser die übergebene Wallet Adresse eingetragen
+* carFree - Ist das Auto aktuell frei <br><br>
+Bei allen Methoden, wo ein Auto mit beeinflusst ist, sollte die Funktion knownCar vorher aufgerufen werden um während der Ausführung der Fnktion nicht auf Fehler zu stoßen. Auch die Restriktion auf Adressen die nur bestimmt Funktionen ausführen dürfen sit wichtig. Hierfür sollte der Modifier onlyOwner verwendet werden. Man köannte noch andenken, dass ein Auto mehrere Owner hat. Dies ist aktuell aebr nciht implementiert. Die Checks ob ein Auto schon geleased ist oder von wem geleased wurde oder es frei ist, werden natürlich dann eingesetzt wenn es um den akuten Mietvorgang geht.
+### Funktionen des Smart Contract
+Über das Speichern der Autodaten hinaus bietet der Smart Contract die Möglichkeit die Daten zu verändern. Dazu dienen verschiedene Arten von Funktionen.
 ## Datenbank
 
 ## App
