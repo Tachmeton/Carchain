@@ -30,7 +30,7 @@ Empfohlene Reihenfolge beim Installieren:
 ## Blockchain
 Um am Smart Contract zu entwicklen wird eine Blockchain gebraucht um den Smart Contrac auch deployen zu können.
 Biser wird dazu Ganache genutzt. Es ist egal ob dabei die Desktop Variante oder Kommandozeielnvariante (Ganache-cli) genutzt wird. <br>
-Um das gleiche Setup zu bekommen wie bisher genutzt wurde und damit richtige Testeinstellungen zu bkeommen muss Ganache installiert werden.<br>
+Um das gleiche Setup zu bekommen wie bisher genutzt wurde und damit richtige Testeinstellungen zu bkeommen muss Ganache installiert werden.<br><br>
 Zur Installation von Ganache Desktop: https://www.trufflesuite.com/ganache <br>
 Zur Installation von Ganache-cli: https://github.com/trufflesuite/ganache-cli <br>
 <br>
