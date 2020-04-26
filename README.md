@@ -82,16 +82,47 @@ In selbiger Car Struktur sind gespeichert:
 
 ### Modifier
 Solidity bietet die Möglichkeit Modifier, mithilfe von requires zu defineiren. Modifier dienen in diesem Projekt dazu, vor dem richtigen Start einer Funktion zu checken ob der Aufrufer dazu berechtigt ist selbige aufzurufen und ob alle Vorraussetzungen für einen kompletten Durchlauf der Funktion gegeben ist. Bisher implementierte Modifier:<br>
-* knownCar - Existiert das Auto welches die Funktion betrifft
-* onlyOwner - Ist die übergebene Wallet Adresse Owner des übergebenen Autos
-* isLeased - Befindet sich das Auto schon im gemieteten Zustand
-* isLeasedBy - Ist als Leaser die übergebene Wallet Adresse eingetragen
-* carFree - Ist das Auto aktuell frei <br><br>
-Bei allen Methoden, wo ein Auto mit beeinflusst ist, sollte die Funktion knownCar vorher aufgerufen werden um während der Ausführung der Fnktion nicht auf Fehler zu stoßen. Auch die Restriktion auf Adressen die nur bestimmt Funktionen ausführen dürfen sit wichtig. Hierfür sollte der Modifier onlyOwner verwendet werden. Man köannte noch andenken, dass ein Auto mehrere Owner hat. Dies ist aktuell aebr nciht implementiert. Die Checks ob ein Auto schon geleased ist oder von wem geleased wurde oder es frei ist, werden natürlich dann eingesetzt wenn es um den akuten Mietvorgang geht.
+<table>
+  <thead>
+    <tr>
+      <th>Name des Modifiers</th>
+      <th>Parameter</th>
+      <th>Funktion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>knownCar</td>
+      <td>Identifier/ Walletadresse des Autos</td>
+      <td>Festellen ob das Auto welches die Funktion betrifft überhaupt exisitiert</td>
+    </tr>
+    <tr>
+      <td>onlyOwner</td>
+      <td>Identifier/ Walletadresse des Autos<br>Identifier/ Walletadresse des vorgeblichen Owners</td>
+      <td>Feststellen ob die übergebene Wallet Adresse Owner des übergebenen Autos ist</td>
+    </tr>
+    <tr>
+      <td>isLeased</td>
+      <td>Identifier/ Walletadresse des Autos</td>
+      <td>Befindet sich das Auto schon im gemieteten Zustand</td>
+    </tr>
+    <tr>
+      <td>isLeasedBy</td>
+      <td>Identifier/ Walletadresse des Autos<br>Identifier/ Walletadresse des Leasers</td>
+      <td>Ist als Leaser die Walletadresse des vorgeblichen Mieters eingetragen</td>
+    </tr>
+    <tr>
+      <td>carFree</td>
+      <td>Identifier/ Walletadresse des Autos</td>
+      <td>Ist das Auto aktuell frei</td>
+    </tr>
+  </tbody>
+</table>
+<br><br>
+Bei allen Methoden, wo ein Auto mit beeinflusst ist, sollte die Funktion knownCar vorher aufgerufen werden um während der Ausführung der Funktion nicht auf Fehler zu stoßen. Auch die Restriktion auf Adressen die nur bestimmt Funktionen ausführen dürfen sit wichtig. Hierfür sollte der Modifier onlyOwner verwendet werden. Man köannte noch andenken, dass ein Auto mehrere Owner hat. Dies ist aktuell aebr nciht implementiert. Die Checks ob ein Auto schon geleased ist oder von wem geleased wurde oder es frei ist, werden natürlich dann eingesetzt wenn es um den akuten Mietvorgang geht.
 ### Funktionen des Smart Contract
-Über das Speichern der Autodaten hinaus bietet der Smart Contract die Möglichkeit die Daten zu verändern. Dazu dienen verschiedene Arten von Funktionen. Im Folgenden werden die Funktionen nach ihrer möglcihen Nutzung in den anderen Teilen des Projektes aufgegliedert.<br><br>
-Für die App gibt es Funktionen, die hauptsächlich dazu dienen die aktuell freien Autos auszugeben und darauf folgend weitere Daten über sie zu entnehmen.<br>
-Dafür implentierte Funktionen sind:<br>
+Über das Speichern der Autodaten hinaus bietet der Smart Contract die Möglichkeit die Daten zu verändern. Dazu dienen verschiedene Arten von Funktionen.<br>
+Die implementierten public Funktionen sind im Folgenden aufgelistet mit ihrer möglichen Einsatzfunktion:<br>
 <table>
   <thead>
     <tr>
@@ -107,7 +138,7 @@ Dafür implentierte Funktionen sind:<br>
   <tbody>
     <tr>
       <td>getter zugehörig zum Attribut des Autos</td>
-      <td>Identifier des Autos als Adresse</td>
+      <td>Identifier/ Walletadresse des Autos</td>
       <td>knownCar</td>
       <td>Ja</td>
       <td>das Attribut im getter</td>
@@ -179,6 +210,8 @@ Dafür implentierte Funktionen sind:<br>
     </tr>
   </tbody>
 </table>
+<br>
+Will man die Funktionen einmal ausprobieren oder einen kompletten Durchlauf sehen und ob dieser funktioniert. Eignet sich neben Unit Tests, die noch zu implementieren sind die Dateien carchain_interact.js und carchain_interact2.js im Ordner /Blockchain/ethereum. Die erste carchain_interact Datei legt eine Auto an, was in Folge dessen gemietet wird. Darufhin werden einzelne Attribute des Autos abgefragt und das Auto zum Schluss wieder gelöscht. In der zweiten Datei wird ein Auto angelegt, woraufhin alle verfügbaren Auots angefragt weren und danach die Blockchain wieder resettet wird. Beide Dateien sind dazu gedacht mit der Blockchian rumspielen zu können und Funktionen mit der Hilfe von Java Script zu testen und ein Gfefühl für die Blockchian zu bekommen.
 <br>
 ## Datenbank
 
