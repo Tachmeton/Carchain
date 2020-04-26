@@ -24,7 +24,7 @@ Empfohlene Reihenfolge beim Installieren:
 1. Blockchain
 2. Smart Contract
 3. Datenbank
-4. Raspberry Pie
+4. Raspberry Pi
 5. App installieren
 
 ## Blockchain
@@ -59,7 +59,18 @@ zu finden.
 
 ## App
 
-## Raspberry Pie
+## Raspberry Pi
+Um die Funktionalitäten des Raspberry Pi's im Gesamtkontext des Projekts nutzen zu können muss zunächst eine passende Entwicklungsumgebung aufgebaut werden. Hierfür ist es notwendig an das Camera Serial Interface des Pi's eine Kamera anzuschließen und diese in den Einstellungen zu aktivieren (sudo raspi-config --> Enable Camera).
+
+Desweiteren sind für den produktiven Betrieb 3 LEDs und 2 Buttons notwendig. Diese werden über die GPIO-Pins des Raspberry Pi's angesteuert werden. Dabei ist folgende Zuordnung zwischen den Pins und der Hardware zu treffen:
+
+⋅⋅* Pin 17: Regestrieren Button (Blau)
+⋅⋅* Pin 18: QR-Lookup Button (Gelb)
+⋅⋅* Pin 19: Rote LED
+⋅⋅* Pin 20: Gelbe LED
+⋅⋅* Pin 21: Grüne LED
+
+...tbd! Mehr kommt morgen
 
 # Beschreibung der Funktionalität
 
