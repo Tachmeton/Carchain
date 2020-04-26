@@ -223,7 +223,9 @@ Will man die Funktionen einmal ausprobieren oder einen kompletten Durchlauf sehe
 
 # Probleme
 
-# ToDos
+# Offene Punkte
+* Web3 Implementierung in der App
+* Unit Tests für Smart Contract schreiben
 * Smart Contract auf Public Blockchain einsetzen
-* Web3J in der App implementierung
+
 
