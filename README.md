@@ -98,22 +98,13 @@ Dafür implentierte Funktionen sind:<br>
       <th>Name der Funktion</th>
       <th>Übergabeparameter</th>
       <th>Modifier</th>
-      <th>Ja</th>
+      <th>View</th>
       <th>Rückgabewerte</th>
       <th>Payable</th>
       <th>Einsatzgebiet</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>getAvailableVehicles</td>
-      <td> - </td>
-      <td> - </td>
-      <td>Ja</td>
-      <td>Array aus Wallet Adressen zugehörig zu den freien Autos</td>
-      <td>Nein</td>
-      <td>App</td>
-    </tr>
     <tr>
       <td>getter zugehörig zum Attribut des Autos</td>
       <td>Identifier des Autos als Adresse</td>
@@ -152,11 +143,38 @@ Dafür implentierte Funktionen sind:<br>
     </tr>
     <tr>
       <td>mayRent</td>
-      <td>Identifier des Autos</td>
+      <td>Identifier/ Walletadresse des Autos</td>
       <td>knownCar</td>
+      <td>Ja</td>
+      <td>Boolean Value</td>
       <td>Nein</td>
+      <td>App</td>
+    </tr>
+    <tr>
+      <td>isLegalLeaser</td>
+      <td>Identifier/ Walletadresse des Autos, Identifier/ Walletadresse des Mieters</td>
+      <td>knownCar, isLeased. isLeasedBy</td>
+      <td>Ja</td>
+      <td>Boolean Value</td>
+      <td>Nein</td>
+      <td>RaspberryPie</td>
+    </tr>
+    <tr>
+      <td>returnCarToCarpool</td>
+      <td>Identifier/ Walletadresse des Autos</td>
+      <td>knownCar, isLeased. isLeasedBy</td>
+      <td>Ja</td>
+      <td> - </td>
+      <td>Nein</td>
+      <td>App</td>
+    </tr>
+    <tr>
+      <td>getAvailableVehicles</td>
+      <td> - </td>
       <td> - </td>
       <td>Ja</td>
+      <td>Array aus Wallet Adressen zugehörig zu den freien Autos</td>
+      <td>Nein</td>
       <td>App</td>
     </tr>
   </tbody>
