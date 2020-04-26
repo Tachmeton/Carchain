@@ -36,12 +36,25 @@ Zur Installation von Ganache-cli: https://github.com/trufflesuite/ganache-cli <b
 <br>
 Wie man die Einstellungen ändert, unterscheidet sich zwischen der Cli und der Desktop Variante. Im Folgenden wird sich auf die CLI Variante beschränkt, da diese am besten einzusetzten sit wenn man nicht nur an der Blockchain entwicklen will sondern auch die Verbindung zu der App oder dem RaspberryPie testen möchte. <br>
 Einstellungen zum Start der Blockchain:<br>
-ganache-cli -m "dragon canoe knife need marine business arctic honey make layer company solar" -h "<IP-Adresse>" -p <Port> -e 10000 &<br>
+ganache-cli -m "dragon canoe knife need marine business arctic honey make layer company solar" -h "<IP-Adresse>" -p <Port> -e 10000 &<br>
 <br>
 Die Message die hier Ganache mitgegeben wird bestimmt welche Adressen die Wallets, die schon vornherien genereiert und zur Verfügung gestellt werden, haben. Voreingestllt ist für die Entwicklung 10.000 Ether, die jede Wallet von vornherein bekommt. Sobald der Command ausgeführt wurde gibt es nun eine Blockchian, die für die weitere Entwicklung genutzt werden kann.
 
 ## Smart Contract
-
+Um mit den Smart Contracts arbeiten zu können sind einige Installationen nötig.
+Diese werden mit npm (dem Node Package Manager) installiert. Zur Installation:<br>
+https://www.npmjs.com/get-npm <br>
+Dazu einfach nach Downlaod des Git Repositpries im Blockchain Ordner folgenden Befehel ausführen:<br>
+npm install<br>
+<br>
+Das Kompilieren, Testen und das Deployen des Smart Contracts geschieht nun mit Truffle. Zu allererst muss dazu im Ordner /Blockchain/ethereum/ die Datei truffle-config.js angepasst werden. Dazu kann ein Server erstellt werden. Ein Beispiel hierfür ist hier zu sehen:
+![Einstellungen zum Deployen](Doku/assets/Einstellungen_Blockchian_Deploy.png)
+Neben Host und Port gibt es gas. Gas dient dazu zu bestimmen wieviel maximal an Gas ausgegeben werden darf um den Contract zu deployen. Network_id ist auch speziell für die Blockchain, falls es unterschiedlcihe Blockchians auf der gleichen IP gibt. Nachdem die Einstellungen getätigt sind kann nun der Contract compiled und deployed werden. Dazu dient das Kommando:<br>
+truffle migrate --network <Network-Name> <br>
+Der Network-Name ist dabei der Name, der in der truffle-config.js in den networks eingetragen wurde. Weitere Dokumentation zu dem Kommando truffle migrate ist unter<br>
+https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations<br>
+zu finden.
+ 
 ## Datenbank
 
 ## App
