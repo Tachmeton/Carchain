@@ -229,7 +229,7 @@ Will man die Funktionen einmal ausprobieren oder einen kompletten Durchlauf sehe
 * Smart Contract auf Public Blockchain einsetzen
 
 # Bisherige Verantwortliche
-Blockchain - Tachmeton
-App - Simon Gaugler, Jan Quintus
-Datenbank - lfs1991
-RaspberryPie - nilsriekers, nils.riekers
+Blockchain - Tachmeton (Bastian Frewert)<br>
+App - Simon Gaugler, Jan Quintus<br>
+Datenbank - lfs1991 (Lukas Faiß)<br>
+RaspberryPie - nilsriekers, nils.riekers<br>
