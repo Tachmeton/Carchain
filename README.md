@@ -54,12 +54,20 @@ truffle migrate --network <Network-Name> <br>
 Der Network-Name ist dabei der Name, der in der truffle-config.js in den networks eingetragen wurde. Weitere Dokumentation zu dem Kommando truffle migrate ist unter<br><br>
 https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations<br><br>
 zu finden.
- 
+
 ## Datenbank
 
 ## App
 
-## Raspberry Pie
+Derzeit wird die App als APK-Paket angeboten und muss manuell installiert werden. Eine Distribution über die gängigen AppStores wie bspw. GooglePlay ist natürlich angedacht, sobald eine Veröffentlichung denkbar ist. 
+
+Um die App zu installieren, muss mittels einem Datei-Manager die APK-Datei ausgewählt werden. In aktuelleren Android Versionen muss zunächst in den Einstellungen die Sicherheitsrichtlinie “Apps aus Fremdquellen installieren” aktiviert werden. Dann kann die App mit einem Klick auf die Datei installiert und ausgeführt werden. 
+
+Zum aktuellen Zeitpunkt wird die entsprechende Wallet-Adresse noch vorgegeben und vom Server/Blockchain abgerufen, sodass in diesem Stadium die weitere Funktionalität getestet werden kann. Später ist angedacht, beim ersten Start der App ein Wallet-File zu generieren und mit den Credentials des Users zu sichern. Dieses Wallet kann dann aufgeladen werden.
+
+Beim starten der App wird automatisch der aktuelle Standort abgerufen (sofern Berechtigung erteilt) und die verfügbaren Autos im Umkreis geladen und angezeigt [aktuell Demodaten].
+
+## RaspberryPi
 
 # Beschreibung der Funktionalität
 
@@ -217,7 +225,15 @@ Will man die Funktionen einmal ausprobieren oder einen kompletten Durchlauf sehe
 
 ## App
 
-## Raspberry Pie
+Die App besitzt die drei Hauptreiter “Entdecken/Durchsuchen”, “Digitale Schlüssel/akt. Mieten” und “Einstellungen”.
+
+Im “Entdecken”-Reiter können die verfügbaren Fahrzeuge eingesehen und gefiltert werden. Standardmäßig ist die Liste nach Entfernung des Autos in aufsteigender Reihenfolge sortiert. Mit einem Klick auf das Auto können Detail-Informationen angezeigt werden und die gewünschte Mietdauer eingestellt werden. Mit einem Klick auf “Mieten” wird eine Miete initiiert - sofern genug Guthaben im Wallet verfügbar ist.
+
+Das gemietete Fahrzeug wird dann im Reiter “Digitale Schlüssel / aktive Mieten” angezeigt. Hier kann eingesehen werden, wie weit das Auto entfernt ist und wie lange die Miete noch läuft. Ein Klick auf das Auto generiert den digitalen Autoschlüssel - einen QR-Code - der Informationen enthält, mit der das Auto (RaspberryPi) den Mieter identifizieren kann und überprüfen, ob der Nutzer zum Zutritt berechtigt ist.
+
+Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden können.
+
+## RaspberryPi
 
 # Erweiterungen
 
