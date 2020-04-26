@@ -24,7 +24,7 @@ Empfohlene Reihenfolge beim Installieren:
 1. Blockchain
 2. Smart Contract
 3. Datenbank
-4. Raspberry Pie
+4. Raspberry Pi
 5. App installieren
 
 ## Blockchain
@@ -59,7 +59,7 @@ zu finden.
 
 ## App
 
-Derzeit wird die App als APK-Paket angeboten und muss manuell installiert werden. Eine Distribution über die gängigen AppStores wie bspw. GooglePlay ist natürlich angedacht, sobald eine Veröffentlichung denkbar ist. 
+Derzeit wird die App als APK-Paket angeboten und muss manuell installiert werden. Eine Distribution über die gängigen AppStores wie bspw. GooglePlay ist natürlich angedacht, sobald eine Veröffentlichung denkbar ist.
 
 Um die App zu installieren, muss mittels einem Datei-Manager die APK-Datei ausgewählt werden. In aktuelleren Android Versionen muss zunächst in den Einstellungen die Sicherheitsrichtlinie “Apps aus Fremdquellen installieren” aktiviert werden. Dann kann die App mit einem Klick auf die Datei installiert und ausgeführt werden. 
 
@@ -67,7 +67,19 @@ Zum aktuellen Zeitpunkt wird die entsprechende Wallet-Adresse noch vorgegeben un
 
 Beim starten der App wird automatisch der aktuelle Standort abgerufen (sofern Berechtigung erteilt) und die verfügbaren Autos im Umkreis geladen und angezeigt [aktuell Demodaten].
 
-## RaspberryPi
+## Raspberry Pi
+Um die Funktionalitäten des Raspberry Pi's im Gesamtkontext des Projekts nutzen zu können muss zunächst eine passende Entwicklungsumgebung aufgebaut werden. Hierfür ist es notwendig an das Camera Serial Interface des Pi's eine Kamera anzuschließen und diese in den Einstellungen zu aktivieren (sudo raspi-config --> Enable Camera).
+
+Desweiteren sind für den produktiven Betrieb 3 LEDs und 2 Buttons notwendig. Diese werden über die GPIO-Pins des Raspberry Pi's angesteuert werden. Dabei ist folgende Zuordnung zwischen den Pins und der Hardware zu treffen:
+
+* Pin 17: Regestrieren Button (Blau)
+* Pin 18: QR-Lookup Button (Gelb)
+* Pin 19: Rote LED
+* Pin 20: Gelbe LED
+* Pin 21: Grüne LED
+
+...tbd! Mehr kommt morgen
+>>>>>>> d32ac7fcc213640b62003e12445fe5c17ac06550
 
 # Beschreibung der Funktionalität
 
