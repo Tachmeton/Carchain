@@ -15,7 +15,6 @@ var schtring = __dirname.replace('RaspberryPi', 'Blockchain/ethereum/build/contr
 let carchainStr = fs.readFileSync(schtring, 'utf-8');
 let carchainAbi = JSON.parse(carchainStr);
 
-
 let carchain = new web3.eth.Contract(carchainAbi.abi, contractAdress);
 
 sendTransactions()
@@ -27,8 +26,8 @@ sendTransactions()
     })
 
 async function sendTransactions() {
-    console.log("add new car");
-    await carchain.methods.addCar(carWallet, "DE-PB-AA-1234", "GLE", "SUV", "Mercedes", "schwarz", 500, 1, 600, 30).send({from: fromAddress, gas: 6000000});
+    //console.log("add new car");
+    //await carchain.methods.addCar(carWallet, "RT-VS-2020", "VW Golf 7 GTI", "Kombi", "VW", "schwarz", 245, 17, 480, 60).send({from: fromAddress, gas: 6000000});
 
     console.log("rent car number 1");
     await carchain.methods.rentCar(carWallet).send({from: renterAddress, gas: 6000000, value: 1000000000000002300});
