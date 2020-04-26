@@ -64,11 +64,11 @@ Um die Funktionalitäten des Raspberry Pi's im Gesamtkontext des Projekts nutzen
 
 Desweiteren sind für den produktiven Betrieb 3 LEDs und 2 Buttons notwendig. Diese werden über die GPIO-Pins des Raspberry Pi's angesteuert werden. Dabei ist folgende Zuordnung zwischen den Pins und der Hardware zu treffen:
 
-⋅⋅* Pin 17: Regestrieren Button (Blau)
-⋅⋅* Pin 18: QR-Lookup Button (Gelb)
-⋅⋅* Pin 19: Rote LED
-⋅⋅* Pin 20: Gelbe LED
-⋅⋅* Pin 21: Grüne LED
+* Pin 17: Regestrieren Button (Blau)
+* Pin 18: QR-Lookup Button (Gelb)
+* Pin 19: Rote LED
+* Pin 20: Gelbe LED
+* Pin 21: Grüne LED
 
 ...tbd! Mehr kommt morgen
 
