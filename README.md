@@ -228,4 +228,8 @@ Will man die Funktionen einmal ausprobieren oder einen kompletten Durchlauf sehe
 * Unit Tests für Smart Contract schreiben
 * Smart Contract auf Public Blockchain einsetzen
 
-
+# Bisherige Verantwortliche
+Blockchain - Tachmeton
+App - Simon Gaugler, Jan Quintus
+Datenbank - lfs1991
+RaspberryPie - nilsriekers, nils.riekers
