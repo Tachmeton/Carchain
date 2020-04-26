@@ -89,7 +89,79 @@ Solidity bietet die Möglichkeit Modifier, mithilfe von requires zu defineiren. 
 * carFree - Ist das Auto aktuell frei <br><br>
 Bei allen Methoden, wo ein Auto mit beeinflusst ist, sollte die Funktion knownCar vorher aufgerufen werden um während der Ausführung der Fnktion nicht auf Fehler zu stoßen. Auch die Restriktion auf Adressen die nur bestimmt Funktionen ausführen dürfen sit wichtig. Hierfür sollte der Modifier onlyOwner verwendet werden. Man köannte noch andenken, dass ein Auto mehrere Owner hat. Dies ist aktuell aebr nciht implementiert. Die Checks ob ein Auto schon geleased ist oder von wem geleased wurde oder es frei ist, werden natürlich dann eingesetzt wenn es um den akuten Mietvorgang geht.
 ### Funktionen des Smart Contract
-Über das Speichern der Autodaten hinaus bietet der Smart Contract die Möglichkeit die Daten zu verändern. Dazu dienen verschiedene Arten von Funktionen.
+Über das Speichern der Autodaten hinaus bietet der Smart Contract die Möglichkeit die Daten zu verändern. Dazu dienen verschiedene Arten von Funktionen. Im Folgenden werden die Funktionen nach ihrer möglcihen Nutzung in den anderen Teilen des Projektes aufgegliedert.<br><br>
+Für die App gibt es Funktionen, die hauptsächlich dazu dienen die aktuell freien Autos auszugeben und darauf folgend weitere Daten über sie zu entnehmen.<br>
+Dafür implentierte Funktionen sind:<br>
+<table>
+  <thead>
+    <tr>
+      <th>Name der Funktion</th>
+      <th>Übergabeparameter</th>
+      <th>Modifier</th>
+      <th>Ja</th>
+      <th>Rückgabewerte</th>
+      <th>Payable</th>
+      <th>Einsatzgebiet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>getAvailableVehicles</td>
+      <td> - </td>
+      <td> - </td>
+      <td>Ja</td>
+      <td>Array aus Wallet Adressen zugehörig zu den freien Autos</td>
+      <td>Nein</td>
+      <td>App</td>
+    </tr>
+    <tr>
+      <td>getter zugehörig zum Attribut des Autos</td>
+      <td>Identifier des Autos als Adresse</td>
+      <td>knownCar</td>
+      <td>Ja</td>
+      <td>das Attribut im getter</td>
+      <td>Nein</td>
+      <td>App</td>
+    </tr>
+    <tr>
+      <td>addCar</td>
+      <td>Alle Daten zugehörig zum Auto</td>
+      <td>ID ist noch nicht genutzt</td>
+      <td>Nein</td>
+      <td> - </td>
+      <td>Nein</td>
+      <td>App</td>
+    </tr>
+    <tr>
+      <td>removeCar</td>
+      <td>Identifier/ Walletadresse des Autos</td>
+      <td>knownCar, onlyOwner, carFree</td>
+      <td>Nein</td>
+      <td> - </td>
+      <td>Nein</td>
+      <td>App</td>
+    </tr>
+    <tr>
+      <td>rentCar</td>
+      <td>Identifier/ Walletadresse des Autos</td>
+      <td>knownCar, carFree</td>
+      <td>Nein</td>
+      <td> - </td>
+      <td>Ja</td>
+      <td>App</td>
+    </tr>
+    <tr>
+      <td>mayRent</td>
+      <td>Identifier des Autos</td>
+      <td>knownCar</td>
+      <td>Nein</td>
+      <td> - </td>
+      <td>Ja</td>
+      <td>App</td>
+    </tr>
+  </tbody>
+</table>
+<br>
 ## Datenbank
 
 ## App
