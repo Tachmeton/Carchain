@@ -36,24 +36,30 @@
         dest: ~/.ssh/config
 
     # smagit präventiv in die Liste der bekannten Hosts aufnehmen
-    - name: add git.smagcloud.de fingerprint
-      shell: ssh-keyscan git.smagcloud.de >> ~/.ssh/known_hosts
+    - name: add github.com fingerprint
+      shell: ssh-keyscan github.com >> ~/.ssh/known_hosts
 
     # Klonen des Carchain Repositorys
     - name: clone the private project repository
       git:
         force: yes
         key_file: ~/.ssh/id_rsa.git
-        repo: git@git.smagcloud.de:DHBW17B/carchain.git
-        dest: /home/pi/git
-        
-    # Installieren der benoetigten NPM Packete
-    - name: install npm packages
-      become: yes
-      shell: |
-        sed 's/#.*//' /home/pi/git/carchain/RaspberryPi/ansible_rapi/data/npm-requirements.txt | xargs npm install -g
+        repo: git@github.com:Tachmeton/Carchain.git
+        dest: /home/pi/git/Carchain
 
-    # Kopieren des Unit Files für Systemd
+    # Installieren der benoetigten NPM Packete
+    - name: Install required node.js packages globally.
+      npm:
+        path: /home/pi/git/Carchain/RaspberryPi/ansible_rapi/data/package-lock.json
+        global: yes
+
+    # Installieren der benoetigten NPM Packete
+    #- name: install npm packages
+    #  become: yes
+    #  shell: |
+    #    sed 's/#.*//' /home/pi/git/Carchain/RaspberryPi/ansible_rapi/data/npm-requirements.txt | xargs npm install -g
+
+        # Kopieren des Unit Files für Systemd
     - name: copy unit file
       become: yes
       copy:
@@ -72,6 +78,6 @@
         systemctl start prometheus-node-exporter
 
     # Registrieren des Cars an der Blockchain
-    - name: register car
+    - name: register car (register_car.js)
       shell: |
-        node /home/pi/git/carchain/RaspberryPi/ansible_rapi/data/register_car.js
+        node /home/pi/git/Carchain/RaspberryPi/ansible_rapi/data/register_car.js

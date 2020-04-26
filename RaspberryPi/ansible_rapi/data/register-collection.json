@@ -27,7 +27,11 @@
 						{
 							"key": "carimage",
 							"type": "file",
+<<<<<<< HEAD
 							"src": "/home/pi/git/carchain/RaspberryPi/ansible_rapi/data/Golf_7_GTI.jpg"
+=======
+							"src": "/home/pi/git/Carchain/RaspberryPi/ansible_rapi/data/Golf_7_GTI.jpg"
+>>>>>>> 91fc2a53ca3a45bac4ac2394c64caab6a1f72690
 						}
 					]
 				},
