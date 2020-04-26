@@ -42,17 +42,17 @@ Die Message die hier Ganache mitgegeben wird bestimmt welche Adressen die Wallet
 
 ## Smart Contract
 Um mit den Smart Contracts arbeiten zu können sind einige Installationen nötig.
-Diese werden mit npm (dem Node Package Manager) installiert. Zur Installation:<br>
-https://www.npmjs.com/get-npm <br>
+Diese werden mit npm (dem Node Package Manager) installiert. Zur Installation:<br><br>
+https://www.npmjs.com/get-npm <br><br>
 Dazu einfach nach Downlaod des Git Repositpries im Blockchain Ordner folgenden Befehel ausführen:<br>
 npm install<br>
 <br>
 Das Kompilieren, Testen und das Deployen des Smart Contracts geschieht nun mit Truffle. Zu allererst muss dazu im Ordner /Blockchain/ethereum/ die Datei truffle-config.js angepasst werden. Dazu kann ein Server erstellt werden. Ein Beispiel hierfür ist hier zu sehen:
-![Einstellungen zum Deployen](Doku/assets/Einstellungen_Blockchian_Deploy.png)
+![Einstellungen zum Deployen](Doku/assets/Einstellungen_Blockchian_Deploy.PNG)
 Neben Host und Port gibt es gas. Gas dient dazu zu bestimmen wieviel maximal an Gas ausgegeben werden darf um den Contract zu deployen. Network_id ist auch speziell für die Blockchain, falls es unterschiedlcihe Blockchians auf der gleichen IP gibt. Nachdem die Einstellungen getätigt sind kann nun der Contract compiled und deployed werden. Dazu dient das Kommando:<br>
 truffle migrate --network <Network-Name> <br>
-Der Network-Name ist dabei der Name, der in der truffle-config.js in den networks eingetragen wurde. Weitere Dokumentation zu dem Kommando truffle migrate ist unter<br>
-https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations<br>
+Der Network-Name ist dabei der Name, der in der truffle-config.js in den networks eingetragen wurde. Weitere Dokumentation zu dem Kommando truffle migrate ist unter<br><br>
+https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations<br><br>
 zu finden.
  
 ## Datenbank
