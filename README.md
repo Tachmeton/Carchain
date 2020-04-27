@@ -118,10 +118,10 @@ https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/host.
 3. Ein Playbook, dieses enthält eine Menge von Tasks, also Aufgaben die von Ansbile auf der liste von Systemen in dem Inventory durchgeführt werden. Hier kann man deklarativ im yaml format den gewünschten Systemzustand beschreiben.
 <br> https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/rapi_playbook.yml 
 Unser Playbook enthält dabei folgende Tasks: 
-  * Installieren von NodeJS, NPM und dem Node-Exporter über APT + enable Node-Repository 
+  * Installieren von Node.Js, NPM und dem Node-Exporter über APT + enable Node-Repository 
   * Kopieren des privaten SSH-Schlüssels für Zugriff auf Git
   * Konfiguration von OpenSSH (durch ssh_config.j2) & ssh-keyscan git.smagcloud.de
-  * Klonen des Repos (git@git.smagcloud.de:DHBW17B/carchain.git)
+  * Klonen des Repos (git@github.com:Tachmeton/Carchain.git)
   * Installieren der benötigten NPM-Pakete (aus npm-requirements.txt)
   * Kopieren des angelegten Unit-Files (durch car_js.service) für automatisches Starten
   * Konfiguration von Systemd (car_js.service & node-exporter starten + enablen)
@@ -129,7 +129,7 @@ Unser Playbook enthält dabei folgende Tasks:
 Die von den Tasks verwendeten Hilfs-Dateien sind dabei in einem extra angelegten "Data"-Ordner im Repository vorhanden:<br>
 https://github.com/Tachmeton/Carchain/tree/master/RaspberryPi/ansible_rapi/data<br>
 
-Das Playbook kann durch den Befehl "ansible-playbook rapi_playbook.yaml" ausgeführt werden. Ansible provisioniert anschließend den Raspberry Pi automatisiert. Das Ergebnis ist, dass das Entwicklungs-Repository auf den Raspberry Pi gekloned wurde, alle benötigten Abhängigkeiten installiert und das Node-JS Skript, dass die Funktionen "Regestrieren" und "QR-Lookup" bereitstellt, als Systemd-Dienst gestartet wurde. Ebenfalls wird der für das Monitoring benötigte sogenannte "Prometheus-Node-Exporter" installiert und gestartet.
+Das Playbook kann durch den Befehl "ansible-playbook rapi_playbook.yaml" ausgeführt werden. Ansible provisioniert anschließend den Raspberry Pi automatisiert. Das Ergebnis ist, dass das Entwicklungs-Repository auf den Raspberry Pi gekloned wurde, alle benötigten Abhängigkeiten installiert und das Node.Js Skript, dass die Funktionen "Regestrieren" und "QR-Lookup" bereitstellt, als Systemd-Dienst gestartet wurde. Ebenfalls wird der für das Monitoring benötigte sogenannte "Prometheus-Node-Exporter" installiert und gestartet.
 
 **Monitoring**<p>
 
@@ -137,7 +137,7 @@ Das optional umgesetzte Monitoring des RaPis mit Prometheus und Grafana wurde er
 
 Prometheus und Grafana selbst betreiben wir über Docker, das wir entsprechend auf dem Server installiert haben. Als Grundlage haben wir die offiziellen Standard-Images von Prometheus und Grafana verwendet. Da die Container an sich zustandslos sind und nach dem Stoppen unverändert vorliegen, haben wir für einen persistenten Speicher 2 Volumes angelegt, einen für Prometheus und einen für Grafana, die entsprechend in die Container gemountet werden. Dies hat denn Sinn dass nach einem Neustart des Servers unsere vorherigen gespeicherten Monitoring-Daten weiterhin verfügbar sind. Ein eingerichteter Cronjob sorgt dafür nach einem Neustart des Servers die beiden Container automatisch wieder gestartet werden.
 
-Prometheus bestitzt eine Time Series Database, in die per HTTP gesammelte Metriken geschrieben werden. Die Konfiguration geschieht über eine YAML-Datei, die mit in den Container gemountet wird: <br>https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/monitoring_rapi/prometheus_config_carchain.yaml<br> In der Datei haben wir ein Scrape-Intervall von 15 Sekunden festgelegt, d.h. alle 15 Sekunden führt Prometheus eine HTTP-Anfrage zu dem Raspberry Pi aus, in unserem Fall über die Domain carchain-pi.dnsuser.de.
+Prometheus bestitzt eine Time Series Database, in die per HTTP gesammelte Metriken geschrieben werden. Die Konfiguration geschieht über eine YAML-Datei, die mit in den Container gemountet wird: <br>https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/monitoring_rapi/prometheus_config_carchain.yaml<br> In der Datei haben wir ein Scrape-Intervall von 15 Sekunden festgelegt, d.h. alle 15 Sekunden führt Prometheus eine HTTP-Anfrage zu dem Raspberry Pi aus, in unserem Fall über die Domain "carchain-pi.dnsuser.de".
 
 Damit auf dem Raspberry Pi überhaupt an einem HTTP-Endpunkt Metriken bereitgestellt werden, kommt unter Prometheus ein sogennanter Exporter zum Einsatz der hierfür verantwortlich ist. Wir haben uns für den Einsatz des offiziell von Prometheus bereitgestellten Node-Exporter entschieden. Der Node-Exporter wurde in der automatisierten Bereitstellungspipeline zuvor installiert und gestartet. Der Node-Exporter ist in der Lage allgemeine HW und OS Metriken auf dem TCP port 9100 bereitzustellen. 
 
@@ -329,6 +329,7 @@ Das OnOff-Modul für das Steuern der GPIO-Pins verwendet. Es wird ein Event ausg
 
 ### Regestrieren<a id="chapter-00452"></a>
 
+Anmerkung der Inhalt der Funktion wurde ausgelagert, da diese primär innerhalb der automatisierten Bereitstellungspipeline ausgeführt werden sollte: <br> https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/data/register_car.js <br>
 * Bei Knopfdruck: Registrieren (auch realisiert in Bereitstellungs-Pipeline, aber gleiche ausgeführte Funktion)
 * Nutzen der Smart-Contract Funktion: “addCar”
 * Picture Upload über HTTP-Put mit newman
