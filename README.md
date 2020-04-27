@@ -10,18 +10,18 @@
   3.3 [Datenbank](#chapter-0033)<br>
   3.4 [App](#chapter-0034)<br>
   3.5 [Raspberry Pi](#chapter-0035)
-4. [Beschreibung der Funktionalität](#chapter-004)
+4. [Beschreibung der Funktionalität](#chapter-004)<br>
   4.1 [Blockchain](#chapter-0041)<br>
   4.2 [Smart Contract](#chapter-0042)<br>
-      4.2.1 [Speicherung der Daten](#chapter-00421)<br>
-      4.2.2 [Modifier](#chapter-00422)<br>
-      4.2.3 [Funktionen des Smart Contract](#chapter-00423)
+    4.2.1 [Speicherung der Daten](#chapter-00421)<br>
+    4.2.2 [Modifier](#chapter-00422)<br>
+    4.2.3 [Funktionen des Smart Contract](#chapter-00423)<br>
   4.3 [Datenbank](#chapter-0043)<br>
   4.4 [App](#chapter-0044)<br>
-  4.5 [Raspberry Pi](#chapter-0045)
-      4.5.1 [Allgemein](#chapter-00451)<br>
-      4.5.2 [Regestrieren](#chapter-00452)<br>
-      4.5.3 [QR-Lookup](#chapter-00453)
+  4.5 [Raspberry Pi](#chapter-0045)<br>
+    4.5.1 [Allgemein](#chapter-00451)<br>
+    4.5.2 [Regestrieren](#chapter-00452)<br>
+    4.5.3 [QR-Lookup](#chapter-00453)
 5. [Offene Punkte](#chapter-005)
 6. [Bisherige Verantwortliche](#chapter-006)
 
