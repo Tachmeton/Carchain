@@ -78,8 +78,11 @@ Desweiteren sind für den produktiven Betrieb 3 LEDs und 2 Buttons notwendig. Di
 * Pin 20: Gelbe LED
 * Pin 21: Grüne LED
 
-...tbd! Mehr kommt morgen
->>>>>>> d32ac7fcc213640b62003e12445fe5c17ac06550
+Die rote LED gibt im Projektkontext an, dass das Auto gesperrt ist, die gelbe LED symbolisiert das gerade intern eine Verarbeitung geschieht und die grüne LED steht entsprechend dafür, dass das Auto geunlocked ist. Die beiden Buttons werden dafür verwendet die beiden Hauptfunktionalitäten auszulösen: Der blaue um das Auto an der Blockchain und dem Datenbankserver anzulegen und der gelbe Button um einen QR-Lookup durchzuführen und das Auto gegebenenfalls anschließend zu entsperren.
+
+Innerhalb unserer Entwicklungsumgebung wurden die genannten Komponenten auf einer Steckplatine platziert und entsprechend verkabelt. Die Steckplatine wurde über einen T-Cobbler mit den Pins des Raspberry Pis verbunden. Die notwendigen Hintergrundinformationen um die Verkabelung durchzuführen wurden mit Hilfe der Seite <br> https://www.w3schools.com/nodejs/nodejs_raspberrypi_gpio_intro.asp <br> erarbeitet.
+
+Der Zugriff auf den Raspberry Pi in diesem Projekt geschieht über die Domain "carchain-pi.dnsuser.de". Die entsprechenden Stellen im Quellcode sind entsprechend bei einer geänderten Umsetzung zu ersetzen. Der Raspberry Pi befand sich innerhalb der Entwicklungsumgebung in einem lokalen Netz (192.168.178.0/24) eines Routers mit der lokalen IP: 192.168.178.1. An dem Netzwerk-Interface des Raspberry Pis wurde die statischen lokalen IP 192.168.178.42 angelegt. Damit die Domain "carchain-pi.dnsuser.de" stetig auf die sich ändernde öffentliche IP des Routers verweiset, wurde ein DynDNS-Dienst in der Konfiguration des Routers eingerichtet. Damit Anfragen aus dem Internet durch Router auf den Raspberry Pi innerhalb des lokalen Netzes weitergeleitet werden, wurde ein Port-Forwarding eingerichtet (Port: 22, für SSH-Verbindungen, Port 9100: für den "Prometheus-Node-Exporter").
 
 # Beschreibung der Funktionalität
 
