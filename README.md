@@ -247,10 +247,6 @@ Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden k
 
 ## RaspberryPi
 
-# Erweiterungen
-
-# Probleme
-
 # Offene Punkte
 * Web3 Implementierung in der App
 * Unit Tests für Smart Contract schreiben
