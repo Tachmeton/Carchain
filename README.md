@@ -233,6 +233,7 @@ Die implementierten public Funktionen sind im Folgenden aufgelistet mit ihrer m�
 <br>
 Will man die Funktionen einmal ausprobieren oder einen kompletten Durchlauf sehen und ob dieser funktioniert. Eignet sich neben Unit Tests, die noch zu implementieren sind die Dateien carchain_interact.js und carchain_interact2.js im Ordner /Blockchain/ethereum. Die erste carchain_interact Datei legt eine Auto an, was in Folge dessen gemietet wird. Darufhin werden einzelne Attribute des Autos abgefragt und das Auto zum Schluss wieder gelöscht. In der zweiten Datei wird ein Auto angelegt, woraufhin alle verfügbaren Auots angefragt weren und danach die Blockchain wieder resettet wird. Beide Dateien sind dazu gedacht mit der Blockchian rumspielen zu können und Funktionen mit der Hilfe von Java Script zu testen und ein Gfefühl für die Blockchian zu bekommen.
 <br>
+
 ## Datenbank
 
 ## App
