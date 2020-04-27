@@ -285,6 +285,25 @@ Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden k
 
 ## RaspberryPi
 
+### Regestrieren
+* OnOff-Modul für steuern der GPIO-Pins (LEDs+Buttons)
+* Bei Knopfdruck: Registrieren (später realisiert in Bereitstellungs-Pipeline, gleiche Funktion)
+* Einbinden der Web3-Schnittstelle
+* Nutzen der Smart-Contract Funktion: “addCar”
+* Picture Upload über HTTP-Put mit newman
+* register-collection.json für Beschreibung der HTTP-Anfrage
+
+### QR-Lookup
+* Bei Knopfdruck: QR-Lookup → Gelbe “In Bearbeitung”-LED
+* Aufnahme und speichern eines Fotos mit Pi-Camera-Modul
+* Suchen nach QR-Code mit Qrcode-Reader-Modul
+* Falls Wallet-Adresse gefunden: Abfragen ob existent an Blockchain (Web3)
+* Nutzen der Smart-Contract Funktion: “isLegalLeaser”
+ * True: Grüne LED = Offen (+Gelb aus)
+ * False: Rote LED = Geschlossen (+Gelb aus)
+* 15 s Intervall-Schleife im Hintergrund: Überprüfen von “isLegalLeaser” + LED-Steuerung
+
+
 # Offene Punkte
 * Web3 Implementierung in der App
 * Unit Tests für Smart Contract schreiben
