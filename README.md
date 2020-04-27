@@ -93,7 +93,7 @@ https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/ansib
 2. Ein Inventory, dass alle IPs/Hostnames der Systeme/Autos die orchestriert werden sollen enthält (in dieses wurde der Hostname des Raspberry Pis zusammen mit den Zugangsdaten hinterlegt):
 https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/host.file
 3. Ein Playbook, dieses enthält eine Menge von Tasks, also Aufgaben die von Ansbile auf der liste von Systemen in dem Inventory durchgeführt werden. Hier kann man deklarativ im yaml format den gewünschten Systemzustand beschreiben.
-<br> https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/rapi_playbook.yml <br>
+<br> https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/rapi_playbook.yml 
 Unser Playbook enthält dabei folgende Tasks: 
   * Installieren von NodeJS, NPM und dem Node-Exporter über APT + enable Node-Repository 
   * Kopieren des privaten SSH-Schlüssels für Zugriff auf Git
@@ -103,6 +103,8 @@ Unser Playbook enthält dabei folgende Tasks:
   * Kopieren des angelegten Unit-Files (durch car_js.service) für automatisches Starten
   * Konfiguration von Systemd (car_js.service & node-exporter starten + enablen)
   * Ausführen von register_car.js (Registrieren des PIs an der BC + Bild-Upload an DB)
+Die von den Tasks verwendeten Hilfs-Dateien sind dabei in einem extra angelegten "Data"-Ordner im Repository vorhanden:<br>
+https://github.com/Tachmeton/Carchain/tree/master/RaspberryPi/ansible_rapi/data<br>
 
 Das Playbook kann durch den Befehl "ansible-playbook rapi_playbook.yaml" ausgeführt werden. Ansible provisioniert anschließend den Raspberry Pi automatisiert. Das Ergebnis ist, dass das Entwicklungs-Repository auf den Raspberry Pi gekloned wurde, alle benötigten Abhängigkeiten installiert und das Node-JS Skript, dass die Funktionen "Regestrieren" und "QR-Lookup" bereitstellt, als Systemd-Dienst gestartet wurde. Ebenfalls wird der für das Monitoring benötigte sogenannte "Prometheus-Node-Exporter" installiert und gestartet.
 
