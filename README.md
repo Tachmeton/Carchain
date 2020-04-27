@@ -307,13 +307,11 @@ Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden k
 
 ## RaspberryPi<a id="chapter-0045"></a>
 
-Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in Node.Js umgesetzten Funktionen aus der Datei car.js stichpunktartig beschrieben:
+Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in Node.Js umgesetzten Funktionen (Regestrieren + QR-Lookup) aus der Datei "car.js" stichpunktartig beschrieben:
 <br> https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/car.js <br>
 
 ### Allgemein<a id="chapter-00451"></a>
-* OnOff-Modul für das Steuern der GPIO-Pins verwendet (LEDs+Buttons)
-* Einbinden der Web3-Schnittstelle
-* Über den Node package manager müssen im Voraus folgende Pakete installiert werden (werden aber eigentlich automatisiert in der Bereitstellungs-Pipeline installiert)
+Für den Betrieb des Skripts müssen im Voraus über den Node package manager folgende Pakete installiert werden (werden aber eigentlich bereits automatisiert in der Bereitstellungs-Pipeline installiert):
   * fs@0.0.1-security
   * jimp@0.5.4
   * newman@5.0.0
@@ -322,6 +320,8 @@ Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in 
   * qrcode-reader@1.0.4
   * solc@0.4.25
   * web3@1.2.6
+  
+Das OnOff-Modul für das Steuern der GPIO-Pins verwendet. Es wird ein Event ausgelöst sobald einer der beiden Buttons gedrückt wird, wenn dies der Fall ist wird die entsprechende dahinterliegende Funktion ausgelöst. Mit Blockchain wird über die eingebundene Web3-Schnittstelle kommuniziert. Zudem läuft eine dauerhaft im Intervall von 15 Sekunden ausgeführte Schleife im Hintergrund, diese überprüft an der Blockchain über die eingebundene “isLegalLeaser” Smart-Contract Funktion, ob der zuletzt hinterlegte Mieter eines Autos weiterhin der Mieter ist. Dies hat den Sinn, dass ein ausgeliehenes Auto nicht unbegrenzt genutzt werden kann und sich spätestens 15 Sekunden nach dem ausgelaufenen Mietvertrag wieder sperrt.
 
 ### Regestrieren<a id="chapter-00452"></a>
 
@@ -335,11 +335,9 @@ Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in 
 * Aufnahme und speichern eines Fotos mit Pi-Camera-Modul
 * Suchen nach QR-Code mit Qrcode-Reader-Modul
 * Falls Wallet-Adresse gefunden: Abfragen ob existent an Blockchain (Web3)
-* Nutzen der Smart-Contract Funktion: “isLegalLeaser”
+* Nutzen der Smart-Contract Funktion: “isLegalLeaser” um zu überprüfen, ob der Nutzer der übergebenen Wallet-Adresse berechtigt ist auf das Auto zuzugreifen
   * True: Grüne LED = Offen (+Gelb aus)
   * False: Rote LED = Geschlossen (+Gelb aus)
-* 15 s Intervall-Schleife im Hintergrund: Überprüfen von “isLegalLeaser” + LED-Steuerung
-
 
 # Offene Punkte<a id="chapter-005"></a>
 * Web3 Implementierung in der App
