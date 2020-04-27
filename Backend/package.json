@@ -1,0 +1,27 @@
+{
+  "name": "blockchain-backend",
+  "version": "1.0.0",
+  "description": "the rest backend to storing and query pictures of cars",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "backend",
+    "carchain",
+    "rest"
+  ],
+  "author": "lfs",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "crypto-js": "^4.0.0",
+    "express": "^4.17.1",
+    "express-pino-logger": "^4.0.0",
+    "filereader": "^0.10.3",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "multer": "^1.4.2",
+    "pg": "^7.18.2"
+  }
+}
