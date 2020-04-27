@@ -285,13 +285,25 @@ Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden k
 
 ## RaspberryPi
 
-Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in Node.Js umgesetzten Funktionen aus der Datei car.js beschrieben:
+Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in Node.Js umgesetzten Funktionen aus der Datei car.js stichpunktartig beschrieben:
 <br> https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/car.js <br>
 
-### Regestrieren
-* OnOff-Modul für steuern der GPIO-Pins (LEDs+Buttons)
-* Bei Knopfdruck: Registrieren (später realisiert in Bereitstellungs-Pipeline, gleiche Funktion)
+### Allgemein
+* OnOff-Modul für das Steuern der GPIO-Pins verwendet (LEDs+Buttons)
 * Einbinden der Web3-Schnittstelle
+* Über den Node package manager müssen im Voraus folgende Pakete installiert werden (werden aber eigentlich automatisiert in der Bereitstellungs-Pipeline installiert)
+  * fs@0.0.1-security
+  * jimp@0.5.4
+  * newman@5.0.0
+  * onoff@5.0.1
+  * pi-camera@1.3.0
+  * qrcode-reader@1.0.4
+  * solc@0.4.25
+  * web3@1.2.6
+
+### Regestrieren
+
+* Bei Knopfdruck: Registrieren (auch realisiert in Bereitstellungs-Pipeline, aber gleiche ausgeführte Funktion)
 * Nutzen der Smart-Contract Funktion: “addCar”
 * Picture Upload über HTTP-Put mit newman
 * register-collection.json für Beschreibung der HTTP-Anfrage
