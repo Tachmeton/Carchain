@@ -4,7 +4,6 @@
 
 1. [Aufgabenstellung und Beschreibung](#chapter-001)
 2. [Architektur](#chapter-002)
-  2.1 [Komponenten](#chapter-0021)<br>
 3. [Setup](#chapter-003)<br>
   3.1 [Blockchain](#chapter-0031)<br>
   3.2 [Smart Contract](#chapter-0032)<br>
@@ -37,8 +36,6 @@ Möchte der Kunde ein verfügbares Fahrzeug mieten, wird eine Transaktion ausgel
 Zu klären ist, ob der Eigentümer Zugriff auf sein Fahrzeug haben soll/kann, während ein Kunde dieses gemietet hat oder nicht.
 
 # Architektur<a id="chapter-002"></a>
-
-## Komponenten<a id="chapter-0021"></a>
 
 ![Komponentendiagramm_01](Doku/assets/komponenten.png)
 
