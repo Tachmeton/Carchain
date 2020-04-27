@@ -313,4 +313,4 @@ Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden k
 Blockchain - Tachmeton (Bastian Frewert)<br>
 App - Simon Gaugler, Jan Quintus<br>
 Datenbank - lfs1991 (Lukas Faiß)<br>
-RaspberryPie - nilsriekers, nils.riekers<br>
+Raspberry Pi - nilsriekers, (Nils Riekers)<br>
