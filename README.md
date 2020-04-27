@@ -19,8 +19,8 @@ Zu klären ist, ob der Eigentümer Zugriff auf sein Fahrzeug haben soll/kann, w�
 ![Komponentendiagramm_01](Doku/assets/komponenten.png)
 
 # Setup
-Im Folgenden wird das Setup für die Carchain beschrieben. Um ein funktioniertendes Setup zu erstellen müssen alle Komponenten installiert werden.<br><br>
-Empfohlene Reihenfolge beim Installieren:
+Im Folgenden wird das Setup für die Carchain beschrieben. Um ein funktioniertendes Setup zu erstellen müssen alle Komponenten provisioniert werden.<br><br>
+Empfohlene Reihenfolge beim bereitstellen:
 1. Blockchain
 2. Smart Contract
 3. Datenbank
@@ -83,6 +83,10 @@ Die rote LED gibt im Projektkontext an, dass das Auto gesperrt ist, die gelbe LE
 Innerhalb unserer Entwicklungsumgebung wurden die genannten Komponenten auf einer Steckplatine platziert und entsprechend verkabelt. Die Steckplatine wurde über einen T-Cobbler mit den Pins des Raspberry Pis verbunden. Die notwendigen Hintergrundinformationen um die Verkabelung durchzuführen wurden mit Hilfe der Seite <br> https://www.w3schools.com/nodejs/nodejs_raspberrypi_gpio_intro.asp <br> erarbeitet.
 
 Der Zugriff auf den Raspberry Pi in diesem Projekt geschieht über die Domain "carchain-pi.dnsuser.de". Die entsprechenden Stellen im Quellcode sind entsprechend bei einer geänderten Umsetzung zu ersetzen. Der Raspberry Pi befand sich innerhalb der Entwicklungsumgebung in einem lokalen Netz (192.168.178.0/24) eines Routers mit der lokalen IP: 192.168.178.1. An dem Netzwerk-Interface des Raspberry Pis wurde die statischen lokalen IP 192.168.178.42 angelegt. Damit die Domain "carchain-pi.dnsuser.de" stetig auf die sich ändernde öffentliche IP des Routers verweiset, wurde ein DynDNS-Dienst in der Konfiguration des Routers eingerichtet. Damit Anfragen aus dem Internet durch Router auf den Raspberry Pi innerhalb des lokalen Netzes weitergeleitet werden, wurde ein Port-Forwarding eingerichtet (Port: 22, für SSH-Verbindungen, Port 9100: für den "Prometheus-Node-Exporter").
+
+Über die eigentliche Zielsetung des Projekts hinaus wurde im Projektverlauf noch eine Automatisierte-Bereitstellungspipeline mit Ansible erstellt, um neue Raspberry Pis/Autos einfach automatisiert provisionieren zu können und ein Monitoring des Raspberry Pis/Autos mit Prometheus und Grafana eingerichtet. Hierfür ist es notwendig Ansible, Prometheus und Grafana auf einem Server zu installieren. Im Projektkontext wurde der gleiche Server verwendet auf dem auch die Blockchain läuft. Prometheus und Grafana wurden in zwei Docker Containern betrieben.
+
+Wie bereits erwähnt wird Ansible für die automatisierte Bereitstellungspipeline verwendet. Ansible besteht aus drei elementaren Komponenten: Einer allgemeinen Konfigurationsdatei, die wir nicht nennenswert bearbeitet haben, wir haben lediglich den Pfad zu unserem Inventory angegeben. Das inventory enthält alle Ips oder Hostnames der Knoten bzw. Computern/Raspis die orchestriert werden sollen. in das inventory haben wir den hostname, also carchain-pi.
 
 # Beschreibung der Funktionalität
 
