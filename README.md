@@ -84,9 +84,26 @@ Innerhalb unserer Entwicklungsumgebung wurden die genannten Komponenten auf eine
 
 Der Zugriff auf den Raspberry Pi in diesem Projekt geschieht über die Domain "carchain-pi.dnsuser.de". Die entsprechenden Stellen im Quellcode sind entsprechend bei einer geänderten Umsetzung zu ersetzen. Der Raspberry Pi befand sich innerhalb der Entwicklungsumgebung in einem lokalen Netz (192.168.178.0/24) eines Routers mit der lokalen IP: 192.168.178.1. An dem Netzwerk-Interface des Raspberry Pis wurde die statischen lokalen IP 192.168.178.42 angelegt. Damit die Domain "carchain-pi.dnsuser.de" stetig auf die sich ändernde öffentliche IP des Routers verweiset, wurde ein DynDNS-Dienst in der Konfiguration des Routers eingerichtet. Damit Anfragen aus dem Internet durch Router auf den Raspberry Pi innerhalb des lokalen Netzes weitergeleitet werden, wurde ein Port-Forwarding eingerichtet (Port: 22, für SSH-Verbindungen, Port 9100: für den "Prometheus-Node-Exporter").
 
-Über die eigentliche Zielsetung des Projekts hinaus wurde im Projektverlauf noch eine Automatisierte-Bereitstellungspipeline mit Ansible erstellt, um neue Raspberry Pis/Autos einfach automatisiert provisionieren zu können und ein Monitoring des Raspberry Pis/Autos mit Prometheus und Grafana eingerichtet. Hierfür ist es notwendig Ansible, Prometheus und Grafana auf einem Server zu installieren. Im Projektkontext wurde der gleiche Server verwendet auf dem auch die Blockchain läuft. Prometheus und Grafana wurden in zwei Docker Containern betrieben.
+Über die eigentliche Zielsetung des Projekts hinaus wurde im Projektverlauf noch eine Automatisierte-Bereitstellungspipeline mit Ansible erstellt, um neue Raspberry Pis/Autos einfach automatisiert provisionieren zu können und ein Monitoring des Raspberry Pis/Autos mit Prometheus und Grafana eingerichtet. Hierfür ist es notwendig Ansible, Prometheus und Grafana auf einem Server zu installieren. Im Projektkontext wurde der gleiche Server auf dem auch die Blockchain läuft verwendet. Prometheus und Grafana wurden dabei innerhalb von zwei Docker Containern betrieben.
 
-Wie bereits erwähnt wird Ansible für die automatisierte Bereitstellungspipeline verwendet. Ansible besteht aus drei elementaren Komponenten: Einer allgemeinen Konfigurationsdatei, die wir nicht nennenswert bearbeitet haben, wir haben lediglich den Pfad zu unserem Inventory angegeben. Das inventory enthält alle Ips oder Hostnames der Knoten bzw. Computern/Raspis die orchestriert werden sollen. in das inventory haben wir den hostname, also carchain-pi.
+Wie bereits erwähnt wird Ansible für die automatisierte Bereitstellungspipeline verwendet. Ansible besteht aus drei elementaren Komponenten:
+
+1. Eine allgemeinen Konfigurationsdatei, in der wir lediglich den Pfad zu unserem Inventory angegeben haben:
+https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/ansible.cfg
+2. Ein Inventory, dass alle IPs/Hostnames der Systeme/Autos die orchestriert werden sollen enthält (in dieses wurde der Hostname des Raspberry Pis zusammen mit den Zugangsdaten hinterlegt):
+https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/host.file
+3. Ein Playbook, dieses enthält eine Menge von Tasks, also Aufgaben die von Ansbile auf der liste von Systemen in dem Inventory durchgeführt werden. Hier kann man deklarativ im yaml format den gewünschten Systemzustand beschreiben.
+https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/ansible_rapi/rapi_playbook.yml
+Unser Playbook enthält dabei folgende Tasks: 
+  * Installieren von NodeJS, NPM und dem Node-Exporter über APT + enable Node-Repository 
+  * Kopieren des privaten SSH-Schlüssels für Zugriff auf Git
+  * Konfiguration von OpenSSH (durch ssh_config.j2) & ssh-keyscan git.smagcloud.de
+  * Klonen des Repos (git@git.smagcloud.de:DHBW17B/carchain.git)
+  * Installieren der benötigten NPM-Pakete (aus npm-requirements.txt)
+  * Kopieren des angelegten Unit-Files (durch car_js.service) für automatisches Starten
+  * Konfiguration von Systemd (car_js.service & node-exporter starten + enablen)
+  * Ausführen von register_car.js (Registrieren des PIs an der BC + Bild-Upload an DB)
+
 
 # Beschreibung der Funktionalität
 
