@@ -55,7 +55,7 @@ Um das gleiche Setup zu bekommen wie bisher genutzt wurde und damit richtige Tes
 Zur Installation von Ganache Desktop: https://www.trufflesuite.com/ganache <br>
 Zur Installation von Ganache-cli: https://github.com/trufflesuite/ganache-cli <br>
 <br>
-Wie man die Einstellungen ändert, unterscheidet sich zwischen der Cli und der Desktop Variante. Im Folgenden wird sich auf die CLI Variante beschränkt, da diese am besten einzusetzten sit wenn man nicht nur an der Blockchain entwicklen will sondern auch die Verbindung zu der App oder dem RaspberryPie testen möchte. <br>
+Wie man die Einstellungen ändert, unterscheidet sich zwischen der Cli und der Desktop Variante. Im Folgenden wird sich auf die CLI Variante beschränkt, da diese am besten einzusetzten sit wenn man nicht nur an der Blockchain entwicklen will sondern auch die Verbindung zu der App oder dem Raspberry Pi testen möchte. <br>
 Einstellungen zum Start der Blockchain:<br>
 ganache-cli -m "dragon canoe knife need marine business arctic honey make layer company solar" -h "<IP-Adresse>" -p <Port> -e 10000 &<br>
 <br>
@@ -271,7 +271,7 @@ Die implementierten public Funktionen sind im Folgenden aufgelistet mit ihrer m�
       <td>Ja</td>
       <td>Boolean Value</td>
       <td>Nein</td>
-      <td>RaspberryPie</td>
+      <td>Raspberry Pi</td>
     </tr>
     <tr>
       <td>returnCarToCarpool</td>
@@ -305,7 +305,7 @@ Die App besitzt die drei Hauptreiter “Entdecken/Durchsuchen”, “Digitale Sc
 
 Im “Entdecken”-Reiter können die verfügbaren Fahrzeuge eingesehen und gefiltert werden. Standardmäßig ist die Liste nach Entfernung des Autos in aufsteigender Reihenfolge sortiert. Mit einem Klick auf das Auto können Detail-Informationen angezeigt werden und die gewünschte Mietdauer eingestellt werden. Mit einem Klick auf “Mieten” wird eine Miete initiiert - sofern genug Guthaben im Wallet verfügbar ist.
 
-Das gemietete Fahrzeug wird dann im Reiter “Digitale Schlüssel / aktive Mieten” angezeigt. Hier kann eingesehen werden, wie weit das Auto entfernt ist und wie lange die Miete noch läuft. Ein Klick auf das Auto generiert den digitalen Autoschlüssel - einen QR-Code - der Informationen enthält, mit der das Auto (RaspberryPi) den Mieter identifizieren kann und überprüfen, ob der Nutzer zum Zutritt berechtigt ist.
+Das gemietete Fahrzeug wird dann im Reiter “Digitale Schlüssel / aktive Mieten” angezeigt. Hier kann eingesehen werden, wie weit das Auto entfernt ist und wie lange die Miete noch läuft. Ein Klick auf das Auto generiert den digitalen Autoschlüssel - einen QR-Code - der Informationen enthält, mit der das Auto (Raspberry Pi) den Mieter identifizieren kann und überprüfen, ob der Nutzer zum Zutritt berechtigt ist.
 
 Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden können.
 
