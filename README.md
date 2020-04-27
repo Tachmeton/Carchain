@@ -1,8 +1,32 @@
 # Verteilte Systeme - Projekt “Carchain”
 
-[TOC]
+# Table of Contents
 
-## Aufgabenstellung, Beschreibung
+1. [Aufgabenstellung und Beschreibung](#chapter-001)
+2. [Architektur](#chapter-002)
+  2.1 [Komponenten](#chapter-0021)<br>
+3. [Setup](#chapter-003)<br>
+  3.1 [Blockchain](#chapter-0031)<br>
+  3.2 [Smart Contract](#chapter-0032)<br>
+  3.3 [Datenbank](#chapter-0033)<br>
+  3.4 [App](#chapter-0034)<br>
+  3.5 [Raspberry Pi](#chapter-0035)
+4. [Beschreibung der Funktionalität](#chapter-004)
+  4.1 [Blockchain](#chapter-0041)<br>
+  4.2 [Smart Contract](#chapter-0042)<br>
+      4.2.1 [Speicherung der Daten](#chapter-00421)<br>
+      4.2.2 [Modifier](#chapter-00422)<br>
+      4.2.3 [Funktionen des Smart Contract](#chapter-00423)
+  4.3 [Datenbank](#chapter-0043)<br>
+  4.4 [App](#chapter-0044)<br>
+  4.5 [Raspberry Pi](#chapter-0045)
+      4.5.1 [Allgemein](#chapter-00451)<br>
+      4.5.2 [Regestrieren](#chapter-00452)<br>
+      4.5.3 [QR-Lookup](#chapter-00453)
+5. [Offene Punkte](#chapter-005)
+6. [Bisherige Verantwortliche](#chapter-006)
+
+# Aufgabenstellung, Beschreibung<a id="chapter-001"></a>
 
 Mit “ChainCar” soll eine dezentrale Plattform zum Mieten & Vermieten von Automobilen entstehen. Ziel ist die dezentrale Abwicklung der Mietvorgänge sowie der Zugriffskontrolle auf die Fahrzeuge.
 
@@ -12,13 +36,13 @@ Möchte der Kunde ein verfügbares Fahrzeug mieten, wird eine Transaktion ausgel
 
 Zu klären ist, ob der Eigentümer Zugriff auf sein Fahrzeug haben soll/kann, während ein Kunde dieses gemietet hat oder nicht.
 
-# Architektur
+# Architektur<a id="chapter-002"></a>
 
-## Komponenten
+## Komponenten<a id="chapter-0021"></a>
 
 ![Komponentendiagramm_01](Doku/assets/komponenten.png)
 
-# Setup
+# Setup<a id="chapter-003"></a>
 Im Folgenden wird das Setup für die Carchain beschrieben. Um ein funktioniertendes Setup zu erstellen müssen alle Komponenten provisioniert werden.<br><br>
 Empfohlene Reihenfolge beim bereitstellen:
 1. Blockchain
@@ -27,7 +51,7 @@ Empfohlene Reihenfolge beim bereitstellen:
 4. Raspberry Pi
 5. App installieren
 
-## Blockchain
+## Blockchain<a id="chapter-0031"></a>
 Um am Smart Contract zu entwicklen wird eine Blockchain gebraucht um den Smart Contrac auch deployen zu können.
 Biser wird dazu Ganache genutzt. Es ist egal ob dabei die Desktop Variante oder Kommandozeielnvariante (Ganache-cli) genutzt wird. <br>
 Um das gleiche Setup zu bekommen wie bisher genutzt wurde und damit richtige Testeinstellungen zu bkeommen muss Ganache installiert werden.<br><br>
@@ -40,7 +64,7 @@ ganache-cli -m "dragon canoe knife need marine business arctic honey make layer 
 <br>
 Die Message die hier Ganache mitgegeben wird bestimmt welche Adressen die Wallets, die schon vornherien genereiert und zur Verfügung gestellt werden, haben. Voreingestllt ist für die Entwicklung 10.000 Ether, die jede Wallet von vornherein bekommt. Sobald der Command ausgeführt wurde gibt es nun eine Blockchian, die für die weitere Entwicklung genutzt werden kann.
 
-## Smart Contract
+## Smart Contract<a id="chapter-0032"></a>
 Um mit den Smart Contracts arbeiten zu können sind einige Installationen nötig.
 Diese werden mit npm (dem Node Package Manager) installiert. Zur Installation:<br><br>
 https://www.npmjs.com/get-npm <br><br>
@@ -55,9 +79,9 @@ Der Network-Name ist dabei der Name, der in der truffle-config.js in den network
 https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations<br><br>
 zu finden.
 
-## Datenbank
+## Datenbank<a id="chapter-0033"></a>
 
-## App
+## App<a id="chapter-0034"></a>
 
 Derzeit wird die App als APK-Paket angeboten und muss manuell installiert werden. Eine Distribution über die gängigen AppStores wie bspw. GooglePlay ist natürlich angedacht, sobald eine Veröffentlichung denkbar ist.
 
@@ -67,7 +91,7 @@ Zum aktuellen Zeitpunkt wird die entsprechende Wallet-Adresse noch vorgegeben un
 
 Beim starten der App wird automatisch der aktuelle Standort abgerufen (sofern Berechtigung erteilt) und die verfügbaren Autos im Umkreis geladen und angezeigt [aktuell Demodaten].
 
-## Raspberry Pi
+## Raspberry Pi<a id="chapter-0035"></a>
 Um die Funktionalitäten des Raspberry Pi's im Gesamtkontext des Projekts nutzen zu können muss zunächst eine passende Entwicklungsumgebung aufgebaut werden. Hierfür ist es notwendig an das Camera Serial Interface des Pi's eine Kamera anzuschließen und diese in den Einstellungen zu aktivieren (sudo raspi-config --> Enable Camera).
 
 Desweiteren sind für den produktiven Betrieb 3 LEDs und 2 Buttons notwendig. Diese werden über die GPIO-Pins des Raspberry Pi's angesteuert werden. Dabei ist folgende Zuordnung zwischen den Pins und der Hardware zu treffen:
@@ -118,15 +142,15 @@ Damit auf dem Raspberry Pi überhaupt an einem HTTP-Endpunkt Metriken bereitgest
 
 Damit wir auf die von Prometheus gesammelten und gespeicherten Daten übersichtlich zugreifen können verwenden wir Grafana. Mit Grafana lassen sich einfach Dashboards anlegen. Die Dashboards werden dabei im JSON-Format beschrieben, für den Node-Exporter haben wir dann ein vorgefertigtes Dashboard genommen und nur geringfügig angepasst: <br>https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/monitoring_rapi/grafana_dashboard_carchain.json<br> Das Dashboard ist in unserem Fall unter der Domain unserers Entwicklungsserveers auf Port 3000 erreichbar. Auch lassen sich in Grafana Alerts festlegen, so das wir automatisch benachrichtigt werden sobald z.B. ein Raspi ausfällt oder die System-Werte so aussehen das er in Zukunft ausfallen könnte.
 
-# Beschreibung der Funktionalität
+# Beschreibung der Funktionalität<a id="chapter-004"></a>
 
-## Blockchain
+## Blockchain<a id="chapter-0041"></a>
 Die Blockchain an sich dient als Hub für die Smart Contracts. Auf geschieht alles, was mit der Verwaltung der Mietdaten. Des Weiteren läuft über die Blockchain die Bezahlung um Autos zu mieten. Deswegen ist es im späteren Sinnvoll die Contracts auf eine Public Blockchain zu deployen, damit die Bezahlung auch wirklich einen Impakt hat. Aktuell ist der Smart Contract der weiter unten beschrieben wird nur auf der Development Blockchain Ganache getestet.
 
-## Smart Contract
+## Smart Contract<a id="chapter-0042"></a>
 Der Smart Contract ist im Ordner Blockchain/ethereum in der Datei carchain.sol implementiert. Als Smart Contract Programmiersprahce wurde Solidity benutzt.
 
-### Speichern der Auto Daten
+### Speicherung der Daten<a id="chapter-00421"></a>
 Die wichtigste Aufgabe, die der Smart Contract übernimmt, ist das speichern, der Daten über die zu vermietenden Autos. Diese sind in einer Map gespeichert, die bei Erstellung des Contracts aufgebaut wird. Die Map bildet die Wallet Adressen der Autos auf eine Car-Struktur ab.<br>
 In selbiger Car Struktur sind gespeichert:
 * Daten über den Owner
@@ -137,7 +161,7 @@ In selbiger Car Struktur sind gespeichert:
 * Daten über das Auto an sich
 * Konditionen zum Mieten des Autos <br>
 
-### Modifier
+### Modifier<a id="chapter-00422"></a>
 Solidity bietet die Möglichkeit Modifier, mithilfe von requires zu defineiren. Modifier dienen in diesem Projekt dazu, vor dem richtigen Start einer Funktion zu checken ob der Aufrufer dazu berechtigt ist selbige aufzurufen und ob alle Vorraussetzungen für einen kompletten Durchlauf der Funktion gegeben ist. Bisher implementierte Modifier:<br>
 <table>
   <thead>
@@ -177,7 +201,8 @@ Solidity bietet die Möglichkeit Modifier, mithilfe von requires zu defineiren. 
 </table>
 <br><br>
 Bei allen Methoden, wo ein Auto mit beeinflusst ist, sollte die Funktion knownCar vorher aufgerufen werden um während der Ausführung der Funktion nicht auf Fehler zu stoßen. Auch die Restriktion auf Adressen die nur bestimmt Funktionen ausführen dürfen sit wichtig. Hierfür sollte der Modifier onlyOwner verwendet werden. Man köannte noch andenken, dass ein Auto mehrere Owner hat. Dies ist aktuell aebr nciht implementiert. Die Checks ob ein Auto schon geleased ist oder von wem geleased wurde oder es frei ist, werden natürlich dann eingesetzt wenn es um den akuten Mietvorgang geht.
-### Funktionen des Smart Contract
+
+### Funktionen des Smart Contract<a id="chapter-00423"></a>
 Über das Speichern der Autodaten hinaus bietet der Smart Contract die Möglichkeit die Daten zu verändern. Dazu dienen verschiedene Arten von Funktionen.<br>
 Die implementierten public Funktionen sind im Folgenden aufgelistet mit ihrer möglichen Einsatzfunktion:<br>
 <table>
@@ -271,9 +296,9 @@ Die implementierten public Funktionen sind im Folgenden aufgelistet mit ihrer m�
 Will man die Funktionen einmal ausprobieren oder einen kompletten Durchlauf sehen und ob dieser funktioniert. Eignet sich neben Unit Tests, die noch zu implementieren sind die Dateien carchain_interact.js und carchain_interact2.js im Ordner /Blockchain/ethereum. Die erste carchain_interact Datei legt eine Auto an, was in Folge dessen gemietet wird. Darufhin werden einzelne Attribute des Autos abgefragt und das Auto zum Schluss wieder gelöscht. In der zweiten Datei wird ein Auto angelegt, woraufhin alle verfügbaren Auots angefragt weren und danach die Blockchain wieder resettet wird. Beide Dateien sind dazu gedacht mit der Blockchian rumspielen zu können und Funktionen mit der Hilfe von Java Script zu testen und ein Gfefühl für die Blockchian zu bekommen.
 <br>
 
-## Datenbank
+## Datenbank<a id="chapter-0043"></a>
 
-## App
+## App<a id="chapter-0044"></a>
 
 Die App besitzt die drei Hauptreiter “Entdecken/Durchsuchen”, “Digitale Schlüssel/akt. Mieten” und “Einstellungen”.
 
@@ -283,12 +308,12 @@ Das gemietete Fahrzeug wird dann im Reiter “Digitale Schlüssel / aktive Miete
 
 Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden können.
 
-## RaspberryPi
+## RaspberryPi<a id="chapter-0045"></a>
 
 Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in Node.Js umgesetzten Funktionen aus der Datei car.js stichpunktartig beschrieben:
 <br> https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/car.js <br>
 
-### Allgemein
+### Allgemein<a id="chapter-00451"></a>
 * OnOff-Modul für das Steuern der GPIO-Pins verwendet (LEDs+Buttons)
 * Einbinden der Web3-Schnittstelle
 * Über den Node package manager müssen im Voraus folgende Pakete installiert werden (werden aber eigentlich automatisiert in der Bereitstellungs-Pipeline installiert)
@@ -301,14 +326,14 @@ Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in 
   * solc@0.4.25
   * web3@1.2.6
 
-### Regestrieren
+### Regestrieren<a id="chapter-00452"></a>
 
 * Bei Knopfdruck: Registrieren (auch realisiert in Bereitstellungs-Pipeline, aber gleiche ausgeführte Funktion)
 * Nutzen der Smart-Contract Funktion: “addCar”
 * Picture Upload über HTTP-Put mit newman
 * register-collection.json für Beschreibung der HTTP-Anfrage
 
-### QR-Lookup
+### QR-Lookup<a id="chapter-00453"></a>
 * Bei Knopfdruck: QR-Lookup → Gelbe “In Bearbeitung”-LED
 * Aufnahme und speichern eines Fotos mit Pi-Camera-Modul
 * Suchen nach QR-Code mit Qrcode-Reader-Modul
@@ -319,12 +344,12 @@ Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in 
 * 15 s Intervall-Schleife im Hintergrund: Überprüfen von “isLegalLeaser” + LED-Steuerung
 
 
-# Offene Punkte
+# Offene Punkte<a id="chapter-005"></a>
 * Web3 Implementierung in der App
 * Unit Tests für Smart Contract schreiben
 * Smart Contract auf Public Blockchain einsetzen
 
-# Bisherige Verantwortliche
+# Bisherige Verantwortliche<a id="chapter-006"></a>
 Blockchain - Tachmeton (Bastian Frewert)<br>
 App - Simon Gaugler, Jan Quintus<br>
 Datenbank - lfs1991 (Lukas Faiß)<br>
