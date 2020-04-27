@@ -89,7 +89,7 @@ Zum aktuellen Zeitpunkt wird die entsprechende Wallet-Adresse noch vorgegeben un
 Beim starten der App wird automatisch der aktuelle Standort abgerufen (sofern Berechtigung erteilt) und die verfügbaren Autos im Umkreis geladen und angezeigt [aktuell Demodaten].
 
 ## Raspberry Pi<a id="chapter-0035"></a>
-**Raspberry Pi**
+**Raspberry Pi**<p>
 Um die Funktionalitäten des Raspberry Pi's im Gesamtkontext des Projekts nutzen zu können muss zunächst eine passende Entwicklungsumgebung aufgebaut werden. Hierfür ist es notwendig an das Camera Serial Interface des Pi's eine Kamera anzuschließen und diese in den Einstellungen zu aktivieren (sudo raspi-config --> Enable Camera).
 
 Desweiteren sind für den produktiven Betrieb 3 LEDs und 2 Buttons notwendig. Diese werden über die GPIO-Pins des Raspberry Pi's angesteuert werden. Dabei ist folgende Zuordnung zwischen den Pins und der Hardware zu treffen:
@@ -108,7 +108,7 @@ Der Zugriff auf den Raspberry Pi in diesem Projekt geschieht über die Domain "c
 
 Über die eigentliche Zielsetung des Projekts hinaus wurde im Projektverlauf noch eine Automatisierte-Bereitstellungspipeline mit Ansible erstellt, um neue Raspberry Pis/Autos einfach automatisiert provisionieren zu können und ein Monitoring des Raspberry Pis/Autos mit Prometheus und Grafana eingerichtet. Hierfür ist es notwendig Ansible, Prometheus und Grafana auf einem Server zu installieren. Im Projektkontext wurde der gleiche Server auf dem auch die Blockchain läuft verwendet. Prometheus und Grafana wurden dabei innerhalb von zwei Docker Containern betrieben.
 
-**Automatisierte Bereitstellungspipeline**
+**Automatisierte Bereitstellungspipeline**<p>
 Wie bereits erwähnt wird Ansible für die optional entwickelte automatisierte Bereitstellungspipeline verwendet. Ansible besteht aus drei elementaren Komponenten:
 
 1. Eine allgemeinen Konfigurationsdatei, in der wir lediglich den Pfad zu unserem Inventory angegeben haben:
@@ -131,7 +131,7 @@ https://github.com/Tachmeton/Carchain/tree/master/RaspberryPi/ansible_rapi/data<
 
 Das Playbook kann durch den Befehl "ansible-playbook rapi_playbook.yaml" ausgeführt werden. Ansible provisioniert anschließend den Raspberry Pi automatisiert. Das Ergebnis ist, dass das Entwicklungs-Repository auf den Raspberry Pi gekloned wurde, alle benötigten Abhängigkeiten installiert und das Node-JS Skript, dass die Funktionen "Regestrieren" und "QR-Lookup" bereitstellt, als Systemd-Dienst gestartet wurde. Ebenfalls wird der für das Monitoring benötigte sogenannte "Prometheus-Node-Exporter" installiert und gestartet.
 
-**Monitoring**
+**Monitoring**<p>
 
 Das optional umgesetzte Monitoring des RaPis mit Prometheus und Grafana wurde erstellt, da es sinnvoll ist ein Monitoring der Autos zu haben, wenn die Anwendung eines Tages produktiv zum Einatz kommen sollte, um Festzzustellen das alles korrekt funktioniert. Hierfür wurde um nicht immer mit einer abstrakten IP zu arbeiten, eine kostenlose ".tk" Domain für unseren Entwicklungs-/Blockchainserver eingerichtet. Angelegt wurde ein DNS-Eintrag der Domain "carchain-server.tk", die auf den Server mit der IP "193.196.54.51" verweist. Die entsprechenden Stellen im Quellcode sind entsprechend bei einer geänderten Umsetzung zu ersetzen.
 
