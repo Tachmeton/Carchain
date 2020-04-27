@@ -285,6 +285,9 @@ Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden k
 
 ## RaspberryPi
 
+Im Folgenden werden die beiden wesentlichen im Pflichtenheft geforderten und in Node.Js umgesetzten Funktionen aus der Datei car.js beschrieben:
+<br> https://github.com/Tachmeton/Carchain/blob/master/RaspberryPi/car.js <br>
+
 ### Regestrieren
 * OnOff-Modul für steuern der GPIO-Pins (LEDs+Buttons)
 * Bei Knopfdruck: Registrieren (später realisiert in Bereitstellungs-Pipeline, gleiche Funktion)
@@ -299,8 +302,8 @@ Im Einstellungen-Reiter sollen künftig das Profil und Wallet verwaltet werden k
 * Suchen nach QR-Code mit Qrcode-Reader-Modul
 * Falls Wallet-Adresse gefunden: Abfragen ob existent an Blockchain (Web3)
 * Nutzen der Smart-Contract Funktion: “isLegalLeaser”
-** True: Grüne LED = Offen (+Gelb aus)
-** False: Rote LED = Geschlossen (+Gelb aus)
+  * True: Grüne LED = Offen (+Gelb aus)
+  * False: Rote LED = Geschlossen (+Gelb aus)
 * 15 s Intervall-Schleife im Hintergrund: Überprüfen von “isLegalLeaser” + LED-Steuerung
 
 
