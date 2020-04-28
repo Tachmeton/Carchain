@@ -28,7 +28,7 @@
 
 Mit “ChainCar” soll eine dezentrale Plattform zum Mieten & Vermieten von Automobilen entstehen. Ziel ist die dezentrale Abwicklung der Mietvorgänge sowie der Zugriffskontrolle auf die Fahrzeuge.
 
-Ein Fahrzeugbesitzer kann sich über die mobile App der Plattform registrieren und sein Fahrzeug zur Miete registrieren. Dazu gibt er die erforderlichen Daten im Fahrzeug an (Raspberry), und das Fahrzeug meldet sich dann selbstständig an der Blockchain an. Über einen SmartContract wird das Fahrzeug in der Blockchain persistiert und zur Miete verfügbar gemacht. Kunden können sich nun ebenfalls über die App registrieren (mit ihrer Wallet-Adresse) und verfügbare Fahrzeuge (in einer Liste, sortiert nach Nähe) einsehen.
+Ein Fahrzeugbesitzer kann sich über die mobile App der Plattform registrieren und sein Fahrzeug zur Miete anmelden. Dazu gibt er die erforderlichen Daten im Fahrzeug an (Raspberry), und das Fahrzeug meldet sich dann selbstständig an der Blockchain an. Über einen SmartContract wird das Fahrzeug in der Blockchain persistiert und zur Miete verfügbar gemacht. Kunden können sich nun ebenfalls über die App registrieren (mit ihrer Wallet-Adresse) und verfügbare Fahrzeuge (in einer Liste, sortiert nach Nähe) einsehen.
 
 Möchte der Kunde ein verfügbares Fahrzeug mieten, wird eine Transaktion ausgelöst. Ein SmartContract schreibt den Beginn der Transaktion sowie die Mietkonditionen (Preis, Leistungen, …) in die Blockchain, erhebt die Kosten für die Miete im Voraus und registriert den Kunden als legitimen Nutzer des Fahrzeuges. Der Kunde kann das Fahrzeug nun entsperren (siehe IoT-Team) und fahren. Soll der Mietvorgang beendet werden, wird wieder der SmartContract kontaktiert, welcher dem Mieter abschließend die Nutzungsrechte am Fahrzeug wieder entzieht.
 
@@ -63,8 +63,8 @@ Empfohlene Reihenfolge beim bereitstellen:
 5. App installieren
 
 ## Blockchain<a id="chapter-0031"></a>
-Um am Smart Contract zu entwickeln wird eine Blockchain gebraucht um den Smart Contract auch deployen zu können.
-Bisher wird dazu Ganache genutzt. Es ist egal ob dabei die Desktop Variante oder Kommandozeilenvariante (Ganache-cli) genutzt wird. <br>
+Um die Daten der Carchain in einem Smart Contract speichern zu können wird zu allererst eine Blockchain benötigt auf der der Smart Contract deployed werden kann. 
+Für die Entwicklung wird dazu Ganache genutzt. Es ist egal ob dabei die Desktop Variante oder Kommandozeilenvariante (Ganache-cli) genutzt wird. <br>
 Um das gleiche Setup zu bekommen wie bisher genutzt wurde und damit richtige Testeinstellungen zu bekommen muss Ganache installiert werden.<br><br>
 Zur Installation von Ganache Desktop: https://www.trufflesuite.com/ganache <br>
 Zur Installation von Ganache-cli: https://github.com/trufflesuite/ganache-cli <br>
@@ -79,12 +79,12 @@ Die Message die hier Ganache mitgegeben wird bestimmt welche Adressen die Wallet
 Um mit den Smart Contracts arbeiten zu können sind einige Installationen nötig.
 Diese werden mit npm (dem Node Package Manager) installiert. Zur Installation:<br><br>
 https://www.npmjs.com/get-npm <br><br>
-Dazu einfach nach Download des Git Repositpries im Blockchain Ordner folgenden Befehl ausführen:<br>
+Nach der Isntallation von npm muss um alle Dependencys des Smart Contracts aufzulösen folgender Befehl im Blockchain Ordner ausgeführt werden:<br>
 npm install<br>
 <br>
 Das Kompilieren, Testen und das Deployen des Smart Contracts geschieht nun mit Truffle. Zu aller erst muss dazu im Ordner /Blockchain/ethereum/ die Datei truffle-config.js angepasst werden. Dazu kann ein Server erstellt werden. Ein Beispiel hierfür ist hier zu sehen:<br>
 ![Einstellungen zum Deployen](Doku/assets/Einstellungen_Blockchian_Deploy.PNG)<br>
-Neben Host und Port gibt es gas. Gas dient dazu zu bestimmen wieviel maximal an Gas ausgegeben werden darf um den Contract zu deployen. Network_id ist auch speziell für die Blockchain, falls es unterschiedlcihe Blockchians auf der gleichen IP gibt. Nachdem die Einstellungen getätigt sind kann nun der Contract compiled und deployed werden. Dazu dient das Kommando:<br>
+Neben Host und Port gibt es gas. Gas dient dazu zu bestimmen wieviel maximal an Gas ausgegeben werden darf um den Contract zu deployen. Network_id ist auch speziell für die Blockchain, falls es unterschiedlcihe Blockchains auf der gleichen IP gibt. Nachdem die Einstellungen getätigt sind kann nun der Contract compiled und deployed werden. Dazu dient das Kommando:<br>
 truffle migrate --network <Network-Name> <br>
 Der Network-Name ist dabei der Name, der in der truffle-config.js in den networks eingetragen wurde. Weitere Dokumentation zu dem Kommando truffle migrate ist unter<br><br>
 https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations<br><br>
